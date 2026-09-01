@@ -18,22 +18,35 @@ dsgo-website/
 │   ├── logo.jpg / logo-transparent*.png   Uploaded logo, processed versions
 │   ├── icon-mark.png     Cropped logo icon used in the header/footer
 │   ├── favicon*.png       Generated favicons
-│   ├── placeholders/     Large section/hero placeholder photos
-│   └── gallery/          Placeholder gallery photos (7 categories × 4)
+│   ├── real/             Real DSGO outreach photography (2024–2025), processed into
+│   │                      hero/gallery-ready crops — see "Real photography" below
+│   ├── placeholders/     Remaining section/hero placeholder photos, still awaiting real shots
+│   └── gallery/          Remaining placeholder gallery photos (a few slots per category)
 ├── robots.txt
 └── sitemap.xml
 ```
 
-## Replacing placeholder photos
+## Real photography
 
-Every placeholder image is a generated graphic labeled "PLACEHOLDER — REPLACE WITH REAL PHOTO" so nothing is mistaken for a real photo of a real person. To swap one in:
+`images/real/` holds the real outreach photos supplied for the site, each processed into up to four files (using the shared `{slug}` name):
 
-1. Name your real photo the same as the placeholder it replaces (e.g. a real outreach-day shot becomes `images/gallery/outreach-days-1.jpg`), **or**
-2. Keep your own filenames and update the `src`/`href` in the relevant HTML file to match.
+- `{slug}.jpg` — full working copy (long edge ≤1800px), used as the large lightbox image in the gallery.
+- `{slug}-land.jpg` — 16:9 landscape crop, used for hero/banner slots on desktop.
+- `{slug}-port.jpg` — 4:5 portrait crop, used for hero/banner slots on mobile (served via `<picture><source media="(max-width: 640px)">`) and for split/story image blocks.
+- `{slug}-sm.jpg` — small natural-aspect thumbnail, used in the gallery masonry grid.
 
-No layout changes are required either way — the CSS uses `object-fit: cover` and flexible aspect ratios, so photos of different orientations still look intentional. Portrait photos work well in the `split-media` and gallery blocks; wide landscape photos work best for hero and collage sections.
+The homepage hero is a carousel (`js/main.js`, "Hero carousel" section) that cycles through six real photos, auto-advancing every ~6.5s, pausable on hover/focus, swipeable on touch, and respecting `prefers-reduced-motion`. Each `<picture>` slide swaps to the `-port` crop under 640px so mobile visitors see a portrait-framed subject instead of a cropped-down landscape shot.
 
-The gallery (`gallery.html`) is organized into seven categories that match the brief: Outreach Days, Donations, Volunteers, Community, Young Mothers, Children, Behind the Scenes. Add more photos by copying an existing `<a class="masonry-item" data-category="...">` block and pointing it at your new image.
+## Replacing/adding placeholder photos
+
+The few remaining placeholder images are generated graphics labeled "PLACEHOLDER — REPLACE WITH REAL PHOTO" so nothing is mistaken for a real photo of a real person. To swap one in:
+
+1. Process it the same way as the existing real photos (crop to `-land`/`-port`/`-sm` variants as needed — see above), name it to match the placeholder it replaces, and update the `src`/`href`/`srcset` in the relevant HTML file, **or**
+2. For a simple 1:1 swap with no responsive art-direction, just replace the placeholder file in place under the same filename.
+
+No layout changes are required either way — the CSS uses `object-fit: cover` and flexible aspect ratios, so photos of different orientations still look intentional.
+
+The gallery (`gallery.html`) is organized into seven categories that match the brief: Outreach Days, Donations, Volunteers, Community, Young Mothers, Children, Behind the Scenes. Most now show real 2024–2025 photos; Behind the Scenes is still all placeholders. Add more photos by copying an existing `<a class="masonry-item" data-category="...">` block and pointing it at your new image (add `data-full="images/real/your-photo.jpg"` if you want the lightbox to open a larger version than the thumbnail).
 
 ## Replacing placeholder text
 
