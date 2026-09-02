@@ -3,8 +3,12 @@
    A warm, editorial, photography-driven humanitarian aesthetic.
    ========================================================================== */
 
-/* ---------- Fonts ---------- */
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600;700&display=swap');
+/* ---------- Fonts ----------
+   Loaded via <link rel="preconnect"> + <link rel="stylesheet"> in each
+   page's <head> (not @import) — @import blocks the browser from fetching
+   the font in parallel with the stylesheet, which both delays the swap
+   from fallback to Fraunces/Inter (visible as "off" text on first paint)
+   and slows the whole page down. */
 
 /* ---------- Design tokens ---------- */
 :root{
@@ -16,15 +20,19 @@
   --cream:           #efe7d6;
   --paper:           #fbf8f1;
 
-  --gold:            #c6912e;
-  --gold-light:      #e2b563;
-  --gold-dim:        #9c7327;
+  /* Richer, more saturated gold — the previous tone read as flat/bland */
+  --gold:            #dd9a1f;
+  --gold-light:      #f3c05e;
+  --gold-dim:        #a86c0e;
 
   --earth:           #8a6a45;
   --earth-deep:      #5b4530;
 
-  --green:           #3a4632;
-  --burgundy:        #6d2c37;
+  /* Deeper, more vivid green + burgundy accents for contrast against the gold */
+  --green:           #445c34;
+  --green-light:     #7fa563;
+  --burgundy:        #8a2f42;
+  --burgundy-light:  #c15872;
 
   --ink:             #161310;
   --ink-soft:        rgba(22,19,16,0.68);
@@ -32,6 +40,9 @@
 
   --line:            rgba(22,19,16,0.12);
   --line-light:      rgba(247,242,231,0.18);
+
+  --whatsapp:        #25d366;
+  --whatsapp-dark:   #128c4a;
 
   /* Type */
   --font-display: 'Fraunces', 'Iowan Old Style', Georgia, serif;
@@ -62,7 +73,7 @@
 
 /* ---------- Reset ---------- */
 *, *::before, *::after{ box-sizing: border-box; }
-html{ scroll-behavior: smooth; }
+html{ scroll-behavior: smooth; font-synthesis: none; }
 body, h1, h2, h3, h4, p, figure, blockquote, dl, dd{ margin: 0; }
 ul[class], ol[class]{ margin: 0; padding: 0; list-style: none; }
 img, picture, svg{ display: block; max-width: 100%; }
@@ -106,7 +117,12 @@ body{
 
 .section{ padding-block: var(--section-space); }
 .section--tight{ padding-block: clamp(3rem, 5vw, 5.5rem); }
-.section--dark{ background: var(--charcoal); color: var(--offwhite); }
+.section--dark{
+  background: radial-gradient(120% 140% at 12% -10%, rgba(138,47,66,0.22) 0%, rgba(22,19,16,0) 45%),
+              radial-gradient(100% 120% at 100% 120%, rgba(68,92,52,0.22) 0%, rgba(22,19,16,0) 50%),
+              var(--charcoal);
+  color: var(--offwhite);
+}
 .section--panel{ background: var(--cream); }
 
 .eyebrow{
@@ -265,6 +281,13 @@ body{
               linear-gradient(90deg, rgba(15,13,10,0.55) 0%, rgba(15,13,10,0.05) 45%);
 }
 .hero-content{ padding-block: clamp(6rem,14vh,9rem) clamp(3.5rem,8vh,5.5rem); width: 100%; }
+/* The carousel's caption + dots strip is absolutely positioned over the
+   bottom of .hero-content — give the CTA row enough clearance above it so
+   the two never crowd together. */
+.hero-carousel .hero-content{ padding-bottom: clamp(7.5rem, 17vh, 10.5rem); }
+@media (max-width: 700px){
+  .hero-carousel .hero-content{ padding-bottom: clamp(10.5rem, 24vh, 13rem); }
+}
 html.js .hero-content > *{ opacity: 0; transform: translateY(18px); animation: hero-content-in .9s var(--ease) forwards; }
 html.js .hero-content .eyebrow{ animation-delay: .15s; }
 html.js .hero-content h1{ animation-delay: .28s; }
@@ -336,6 +359,13 @@ html.js .hero-content .cta-row{ animation-delay: .56s; }
 }
 .split.reverse .split-media{ order: 2; }
 .split-media{ position: relative; }
+[data-lightbox]{ cursor: zoom-in; }
+[data-lightbox] .zoom-icon{
+  position: absolute; top: 0.8rem; right: 0.8rem; width: 34px; height: 34px; border-radius: 50%;
+  background: rgba(22,19,16,0.55); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center;
+  color: var(--offwhite); opacity: 0; transform: scale(0.8); transition: all .3s ease; pointer-events: none; z-index: 2;
+}
+[data-lightbox]:hover .zoom-icon, [data-lightbox]:focus-visible .zoom-icon{ opacity: 1; transform: scale(1); }
 .split-media img{ width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
 .split-media .frame-tag{
   position: absolute; bottom: -1px; left: -1px; background: var(--charcoal); color: var(--offwhite);
@@ -488,7 +518,7 @@ html.js .masonry-item.is-visible{ opacity: 1; transform: translateY(0); transiti
 
 /* Story cards */
 .story-card{ display: flex; flex-direction: column; }
-.story-card .story-media{ aspect-ratio: 4/5; overflow: hidden; margin-bottom: 1.3rem; }
+.story-card .story-media{ position: relative; aspect-ratio: 4/5; overflow: hidden; margin-bottom: 1.3rem; }
 .story-card .story-media img{ width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--ease); }
 .story-card:hover .story-media img{ transform: scale(1.04); }
 .story-card .story-kicker{ font-size: var(--fs-xs); letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.5rem; }
@@ -574,6 +604,30 @@ html.js .masonry-item.is-visible{ opacity: 1; transform: translateY(0); transiti
   background: var(--charcoal); padding: 0.8rem var(--gutter); border-top: 1px solid var(--line-light);
 }
 @media (max-width: 700px){ .mobile-donate-bar{ display: block; } body{ padding-bottom: 62px; } }
+
+/* ---------- Floating WhatsApp button ---------- */
+.whatsapp-float{
+  position: fixed; right: clamp(1.1rem,3vw,2rem); bottom: clamp(1.3rem,3vw,2.2rem); z-index: 450;
+  width: 58px; height: 58px; border-radius: 50%; background: var(--whatsapp);
+  display: flex; align-items: center; justify-content: center; color: #fff;
+  box-shadow: 0 10px 26px rgba(18,140,74,0.4), 0 2px 8px rgba(0,0,0,0.22);
+  transition: transform .35s var(--ease), box-shadow .35s ease, background .3s ease;
+}
+.whatsapp-float:hover, .whatsapp-float:focus-visible{
+  background: var(--whatsapp-dark); transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 14px 30px rgba(18,140,74,0.5), 0 2px 8px rgba(0,0,0,0.24);
+}
+.whatsapp-float svg{ width: 29px; height: 29px; position: relative; z-index: 1; }
+.whatsapp-float::before{
+  content: ''; position: absolute; inset: 0; border-radius: 50%; background: var(--whatsapp);
+  opacity: .55; animation: whatsapp-pulse 2.6s ease-out infinite;
+}
+@keyframes whatsapp-pulse{ 0%{ transform: scale(1); opacity: .45; } 100%{ transform: scale(1.9); opacity: 0; } }
+@media (prefers-reduced-motion: reduce){ .whatsapp-float::before{ animation: none; } }
+@media (max-width: 700px){
+  .whatsapp-float{ bottom: calc(62px + 0.9rem); width: 52px; height: 52px; }
+  .whatsapp-float svg{ width: 25px; height: 25px; }
+}
 
 /* ---------- Reveal-on-scroll ----------
    Scoped under html.js so content is visible by default; the inline

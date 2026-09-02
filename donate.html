@@ -14,6 +14,9 @@
 <meta property="og:image" content="images/real/outreach-distribution-crowd-land.jpg">
 <link rel="icon" href="images/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="images/favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600;700&display=swap">
 <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -71,7 +74,12 @@
 
     <div class="split reveal">
       <div class="split-text">
-        <div class="give-panel">
+        <div class="give-panel" style="border-color:var(--whatsapp);">
+          <h3>Give via WhatsApp <span style="color:var(--whatsapp-dark); font-family:var(--font-body); font-size:var(--fs-xs); text-transform:uppercase; letter-spacing:0.08em; font-weight:700;">Fastest &amp; live now</span></h3>
+          <p class="body-copy" style="margin-bottom:1.2rem;">While Mobile Money and bank details are being verified, message DSGO directly and we'll arrange your donation right away.</p>
+          <a href="https://wa.me/233266284398?text=Hi%20DSGO%2C%20I%27d%20like%20to%20make%20a%20donation." target="_blank" rel="noopener" class="btn" style="background:var(--whatsapp); color:#fff;">Message +233 26 628 4398</a>
+        </div>
+        <div class="give-panel mt-lg">
           <h3>Mobile Money</h3>
           <div class="detail-row"><span>Network</span><span>[Placeholder — e.g. MTN MoMo]</span></div>
           <div class="detail-row"><span>Number</span><span>[Placeholder number] <button class="copy-btn" data-copy="0000000000">Copy</button></span></div>
@@ -91,9 +99,9 @@
         <div class="give-panel" style="height:100%; display:flex; flex-direction:column; justify-content:center;">
           <h3>Give Internationally</h3>
           <p class="body-copy" style="margin-bottom:1.4rem;">For donors outside Ghana, international transfer and card donation options will be added here as they become available.</p>
-          <a href="mailto:info@divineselasi.org?subject=International%20Donation" class="btn btn--outline-dark" style="display:inline-flex;">Ask About International Giving</a>
+          <a href="https://wa.me/233266284398?text=Hi%20DSGO%2C%20I%27d%20like%20to%20ask%20about%20giving%20internationally." target="_blank" rel="noopener" class="btn btn--outline-dark" style="display:inline-flex;">Ask About International Giving</a>
           <hr class="divider" style="margin-block:2rem;">
-          <p class="body-copy" style="font-size: var(--fs-sm);">Prefer to confirm details before sending anything? Email <a href="mailto:info@divineselasi.org" style="text-decoration:underline;">info@divineselasi.org</a> and we'll respond promptly.</p>
+          <p class="body-copy" style="font-size: var(--fs-sm);">Prefer to confirm details before sending anything? Message us on <a href="https://wa.me/233266284398" target="_blank" rel="noopener" style="text-decoration:underline;">WhatsApp at +233 26 628 4398</a> and we'll respond promptly.</p>
         </div>
       </div>
     </div>
@@ -175,6 +183,7 @@
         </div>
         <button type="submit" class="btn btn--gold mt-lg">Submit Donation Details</button>
         <p class="form-status" role="status"></p>
+        <p class="form-note">Prefer to skip the form? <a href="https://wa.me/233266284398?text=Hi%20DSGO%2C%20I%27d%20like%20to%20donate%20items." target="_blank" rel="noopener" style="color:var(--gold-dim); text-decoration:underline;">Message us on WhatsApp</a> instead.</p>
       </form>
     </div>
   </section>
@@ -259,7 +268,7 @@
         </form>
         <p style="font-size: var(--fs-xs); color: rgba(247,242,231,0.5); margin-top: 1rem;">
           [Placeholder] Accra, Ghana<br>
-          <a href="mailto:info@divineselasi.org">info@divineselasi.org</a>
+          <a href="https://wa.me/233266284398" target="_blank" rel="noopener">WhatsApp +233 26 628 4398</a>
         </p>
       </div>
     </div>
@@ -273,6 +282,10 @@
 <div class="mobile-donate-bar">
   <a href="#money" class="btn btn--gold btn--block">Jump to Giving Options</a>
 </div>
+
+<a class="whatsapp-float" href="https://wa.me/233266284398?text=Hi%20DSGO%2C%20I%27d%20like%20to%20get%20in%20touch." target="_blank" rel="noopener" aria-label="Chat with DSGO on WhatsApp">
+  <svg viewBox="0 0 32 32" fill="currentColor"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.386.7 4.605 1.909 6.472L4 29l7.727-1.867A11.94 11.94 0 0 0 16.001 27C22.627 27 28 21.627 28 15S22.627 3 16.001 3zm6.983 16.845c-.297.836-1.47 1.53-2.404 1.73-.639.135-1.474.243-4.284-.92-3.594-1.487-5.906-5.13-6.086-5.367-.173-.237-1.457-1.938-1.457-3.696s.906-2.62 1.228-2.98c.297-.332.647-.415.863-.415.216 0 .432.002.622.012.216.011.482-.082.755.577.297.708.996 2.446 1.083 2.623.086.177.144.383.028.62-.115.238-.173.383-.343.59-.173.207-.36.462-.514.62-.173.177-.353.368-.152.723.202.354.9 1.487 1.933 2.408 1.328 1.184 2.446 1.55 2.8 1.727.354.177.56.15.767-.09.216-.238.882-1.03 1.117-1.383.238-.354.475-.295.8-.177.325.118 2.06.972 2.414 1.15.354.177.59.265.677.412.086.147.086.85-.211 1.686z"/></svg>
+</a>
 
 <script src="js/main.js"></script>
 </body>

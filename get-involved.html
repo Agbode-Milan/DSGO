@@ -14,6 +14,9 @@
 <meta property="og:image" content="images/real/funfest-change-kindness-land.jpg">
 <link rel="icon" href="images/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="images/favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600;700&display=swap">
 <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -57,9 +60,10 @@
   <!-- VOLUNTEER -->
   <section id="volunteer" class="section container">
     <div class="split reveal">
-      <div class="split-media">
+      <div class="split-media" data-lightbox data-full="images/real/outreach-bp-crowd.jpg" data-caption="Volunteers carrying out health checks at a DSGO outreach">
         <img src="images/real/outreach-bp-crowd-port.jpg" alt="Volunteers carrying out health checks at a DSGO outreach" loading="lazy">
         <span class="frame-tag">Volunteers, outreach day</span>
+        <span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="16" height="16"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg></span>
       </div>
       <div class="split-text">
         <p class="eyebrow">01 — Volunteer</p>
@@ -97,6 +101,7 @@
       </div>
       <button type="submit" class="btn btn--gold mt-lg">Submit Interest</button>
       <p class="form-status" role="status"></p>
+      <p class="form-note">Prefer to skip the form? <a href="https://wa.me/233266284398?text=Hi%20DSGO%2C%20I%27d%20like%20to%20volunteer." target="_blank" rel="noopener" style="color:var(--gold-dim); text-decoration:underline;">Message us on WhatsApp</a> instead.</p>
     </form>
   </section>
 
@@ -104,9 +109,10 @@
   <section id="partner" class="section section--panel">
     <div class="container">
       <div class="split reverse reveal">
-        <div class="split-media">
+        <div class="split-media" data-lightbox data-full="images/real/donation-boxes-medicine.jpg" data-caption="Donated medicine and essentials from DSGO partners">
           <img src="images/real/donation-boxes-medicine-port.jpg" alt="Donated medicine and essentials from DSGO partners" loading="lazy">
           <span class="frame-tag">Partnerships</span>
+          <span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="16" height="16"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg></span>
         </div>
         <div class="split-text">
           <p class="eyebrow">02 — Partner</p>
@@ -115,7 +121,7 @@
             <p>Businesses, churches, schools and other organizations can partner with DSGO through in-kind donations, corporate sponsorship, or by hosting a collection drive for the December outreach.</p>
             <p>We'll work with your team to agree on what's needed, when, and how the partnership will be recognized.</p>
           </div>
-          <a href="mailto:info@divineselasi.org?subject=Partnership%20Enquiry" class="btn btn--outline-dark mt-lg" style="display:inline-flex;">Start a Partnership Conversation</a>
+          <a href="https://wa.me/233266284398?text=Hi%20DSGO%2C%20I%27d%20like%20to%20talk%20about%20a%20partnership." target="_blank" rel="noopener" class="btn btn--outline-dark mt-lg" style="display:inline-flex;">Start a Partnership Conversation</a>
         </div>
       </div>
     </div>
@@ -159,8 +165,8 @@
     <div class="container hero-content" style="padding-block: clamp(4rem,10vh,6rem);">
       <h2 class="headline headline--xl">Ready to help?</h2>
       <div class="cta-row">
-        <a href="donate.html" class="btn btn--gold">Donate Now</a>
-        <a href="#volunteer" class="btn btn--outline-light">Become a Volunteer</a>
+        <a href="https://wa.me/233266284398?text=Hi%20DSGO%2C%20I%27d%20like%20to%20make%20a%20donation." target="_blank" rel="noopener" class="btn btn--gold">Donate Now</a>
+        <a href="https://wa.me/233266284398?text=Hi%20DSGO%2C%20I%27d%20like%20to%20volunteer." target="_blank" rel="noopener" class="btn btn--outline-light">Become a Volunteer</a>
       </div>
     </div>
   </section>
@@ -210,7 +216,7 @@
         </form>
         <p style="font-size: var(--fs-xs); color: rgba(247,242,231,0.5); margin-top: 1rem;">
           [Placeholder] Accra, Ghana<br>
-          <a href="mailto:info@divineselasi.org">info@divineselasi.org</a>
+          <a href="https://wa.me/233266284398" target="_blank" rel="noopener">WhatsApp +233 26 628 4398</a>
         </p>
       </div>
     </div>
@@ -222,8 +228,29 @@
 </footer>
 
 <div class="mobile-donate-bar">
-  <a href="donate.html" class="btn btn--gold btn--block">Donate Now</a>
+  <a href="https://wa.me/233266284398?text=Hi%20DSGO%2C%20I%27d%20like%20to%20make%20a%20donation." target="_blank" rel="noopener" class="btn btn--gold btn--block">Donate Now</a>
 </div>
+
+<!-- Lightbox -->
+<div class="lightbox" aria-hidden="true">
+  <button class="lightbox-close" aria-label="Close">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="18" height="18"><path d="M4 4l16 16M20 4L4 20"/></svg>
+  </button>
+  <button class="lightbox-prev" aria-label="Previous image">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="18" height="18"><path d="M15 5l-7 7 7 7"/></svg>
+  </button>
+  <figure class="lightbox-figure">
+    <img src="" alt="">
+    <figcaption></figcaption>
+  </figure>
+  <button class="lightbox-next" aria-label="Next image">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="18" height="18"><path d="M9 5l7 7-7 7"/></svg>
+  </button>
+</div>
+
+<a class="whatsapp-float" href="https://wa.me/233266284398?text=Hi%20DSGO%2C%20I%27d%20like%20to%20get%20in%20touch." target="_blank" rel="noopener" aria-label="Chat with DSGO on WhatsApp">
+  <svg viewBox="0 0 32 32" fill="currentColor"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.386.7 4.605 1.909 6.472L4 29l7.727-1.867A11.94 11.94 0 0 0 16.001 27C22.627 27 28 21.627 28 15S22.627 3 16.001 3zm6.983 16.845c-.297.836-1.47 1.53-2.404 1.73-.639.135-1.474.243-4.284-.92-3.594-1.487-5.906-5.13-6.086-5.367-.173-.237-1.457-1.938-1.457-3.696s.906-2.62 1.228-2.98c.297-.332.647-.415.863-.415.216 0 .432.002.622.012.216.011.482-.082.755.577.297.708.996 2.446 1.083 2.623.086.177.144.383.028.62-.115.238-.173.383-.343.59-.173.207-.36.462-.514.62-.173.177-.353.368-.152.723.202.354.9 1.487 1.933 2.408 1.328 1.184 2.446 1.55 2.8 1.727.354.177.56.15.767-.09.216-.238.882-1.03 1.117-1.383.238-.354.475-.295.8-.177.325.118 2.06.972 2.414 1.15.354.177.59.265.677.412.086.147.086.85-.211 1.686z"/></svg>
+</a>
 
 <script src="js/main.js"></script>
 <script>

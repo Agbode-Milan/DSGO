@@ -28,14 +28,22 @@ dsgo-website/
 
 ## Real photography
 
-`images/real/` holds the real outreach photos supplied for the site, each processed into up to four files (using the shared `{slug}` name):
+`images/real/` holds the real outreach photos supplied for the site (31 photos as of the last update), each processed into up to four files (using the shared `{slug}` name):
 
-- `{slug}.jpg` — full working copy (long edge ≤1800px), used as the large lightbox image in the gallery.
+- `{slug}.jpg` — full working copy (long edge ≤1800px), used as the large lightbox image.
 - `{slug}-land.jpg` — 16:9 landscape crop, used for hero/banner slots on desktop.
 - `{slug}-port.jpg` — 4:5 portrait crop, used for hero/banner slots on mobile (served via `<picture><source media="(max-width: 640px)">`) and for split/story image blocks.
 - `{slug}-sm.jpg` — small natural-aspect thumbnail, used in the gallery masonry grid.
 
 The homepage hero is a carousel (`js/main.js`, "Hero carousel" section) that cycles through six real photos, auto-advancing every ~6.5s, pausable on hover/focus, swipeable on touch, and respecting `prefers-reduced-motion`. Each `<picture>` slide swaps to the `-port` crop under 640px so mobile visitors see a portrait-framed subject instead of a cropped-down landscape shot.
+
+### Site-wide clickable gallery
+
+Almost every real photo on the site — hero collage tiles, split/story images on Our Story, Our Impact and Get Involved, and the full masonry grid on `gallery.html` — carries `data-lightbox` (plus `data-full` for a larger image and `data-caption`). Clicking any of them opens the same lightbox used on the gallery page, with prev/next arrows that cycle through every photo visible on that page. To make a new image clickable this way, add `data-lightbox`, `data-full="images/real/your-photo.jpg"` and `data-caption="..."` to its container, and (outside the gallery masonry, which already has its own zoom icon) add `<span class="zoom-icon">...</span>` inside it, copying the icon markup from a neighbouring image — the hover icon and cursor are handled by CSS automatically for anything with `data-lightbox`. Pages that use this (`our-story.html`, `our-impact.html`, `get-involved.html`, `index.html`, `gallery.html`) each need the `<div class="lightbox">…</div>` markup once near the bottom of `<body>` — copy it from an existing page if you add lightbox images to a page that doesn't have one yet (`donate.html` currently doesn't).
+
+### WhatsApp contact
+
+"Donate Now" buttons, volunteering CTAs, and all direct-contact links (partnership enquiries, international giving, footer contact) point to DSGO's WhatsApp number via `https://wa.me/233266284398` (optionally with a pre-filled `?text=` message). The nav/header "Donate" button and the main giving options on `donate.html` (Mobile Money, bank transfer, the physical-donation form) still route to the full donate page, since that's where the actual giving methods live — WhatsApp is offered there too, as the option that works today while Mobile Money/bank details are still placeholders. A floating WhatsApp button (`.whatsapp-float`, bottom-right, all pages) links to the same number. To change the number, update `233266284398` (and the display text `+233 26 628 4398`) across the HTML files.
 
 ## Replacing/adding placeholder photos
 
@@ -46,7 +54,7 @@ The few remaining placeholder images are generated graphics labeled "PLACEHOLDER
 
 No layout changes are required either way — the CSS uses `object-fit: cover` and flexible aspect ratios, so photos of different orientations still look intentional.
 
-The gallery (`gallery.html`) is organized into seven categories that match the brief: Outreach Days, Donations, Volunteers, Community, Young Mothers, Children, Behind the Scenes. Most now show real 2024–2025 photos; Behind the Scenes is still all placeholders. Add more photos by copying an existing `<a class="masonry-item" data-category="...">` block and pointing it at your new image (add `data-full="images/real/your-photo.jpg"` if you want the lightbox to open a larger version than the thumbnail).
+The gallery (`gallery.html`) is organized into seven categories that match the brief: Outreach Days, Donations, Volunteers, Community, Young Mothers, Children, Behind the Scenes. All but Volunteers and Behind the Scenes are now fully real photos. Add more photos by copying an existing `<a class="masonry-item" data-category="...">` block and pointing it at your new image (add `data-full="images/real/your-photo.jpg"` if you want the lightbox to open a larger version than the thumbnail).
 
 ## Replacing placeholder text
 
