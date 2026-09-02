@@ -126,7 +126,7 @@ body{
 .section--panel{ background: var(--cream); }
 
 .eyebrow{
-  display: inline-flex; align-items: center; gap: 0.6em;
+  display: inline-flex; align-items: center;
   font-family: var(--font-body);
   font-size: var(--fs-xs);
   letter-spacing: 0.22em;
@@ -135,9 +135,6 @@ body{
   color: var(--gold-dim);
 }
 .section--dark .eyebrow{ color: var(--gold-light); }
-.eyebrow::before{
-  content: ''; width: 28px; height: 1px; background: currentColor; display: inline-block;
-}
 
 .headline{
   font-family: var(--font-display);
@@ -482,15 +479,6 @@ html.js .masonry-item.is-visible{ opacity: 1; transform: translateY(0); transiti
 .masonry-item:hover .cap{ opacity: 1; }
 @media (max-width: 900px){ .masonry{ columns: 2 200px; } }
 @media (max-width: 520px){ .masonry{ columns: 1; } }
-
-/* Gallery grouped by year */
-.gallery-year{ margin-bottom: clamp(3rem,6vw,5.5rem); }
-.gallery-year-head{
-  display: flex; align-items: baseline; gap: 1rem; margin-bottom: clamp(1.4rem,2.5vw,2rem);
-  padding-bottom: 0.9rem; border-bottom: 1px solid var(--line);
-}
-.gallery-year-head h2{ font-family: var(--font-display); font-size: var(--fs-lg); }
-.gallery-year-head span{ font-size: var(--fs-xs); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); }
 
 /* Lightbox */
 .lightbox{

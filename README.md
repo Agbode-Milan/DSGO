@@ -9,7 +9,7 @@ dsgo-website/
 ├── index.html          Home
 ├── our-story.html       About / Our Story
 ├── our-impact.html      Impact numbers and stories
-├── gallery.html         Full photo gallery (masonry + lightbox, grouped by year)
+├── gallery.html         Full photo gallery (masonry + lightbox)
 ├── get-involved.html    Volunteer / Partner / Spread the word
 ├── donate.html           Give money (via WhatsApp), give items, sponsorship
 ├── css/styles.css       All styles (design tokens at the top)
@@ -28,7 +28,7 @@ dsgo-website/
 
 ## Real photography
 
-`images/real/` holds the real outreach photos supplied for the site (31 photos as of the last update), each processed into up to four files (using the shared `{slug}` name):
+`images/real/` holds the real outreach photos supplied for the site (47 photos as of the last update), each processed into up to four files (using the shared `{slug}` name):
 
 - `{slug}.jpg` — full working copy (long edge ≤1800px), used as the large lightbox image.
 - `{slug}-land.jpg` — 16:9 landscape crop, used for hero/banner slots on desktop.
@@ -60,7 +60,7 @@ The few remaining placeholder images are generated graphics labeled "PLACEHOLDER
 
 No layout changes are required either way — the CSS uses `object-fit: cover` and flexible aspect ratios, so photos of different orientations still look intentional.
 
-The gallery (`gallery.html`) is grouped into year sections (2025, 2023, 2022, 2021 — newest first), each its own `<div class="gallery-year">` with a heading and a `.masonry` grid inside it, rather than filterable categories. The year a photo was placed under is a best guess where the real capture date isn't known; to move a photo to a different year, just cut its `<a class="masonry-item">` block from one `.gallery-year` and paste it into another (the lightbox works the same no matter which section a photo lives in). Add more photos the same way: copy an existing `<a class="masonry-item">` block into the right year section and point it at your new image (add `data-full="images/real/your-photo.jpg"` if you want the lightbox to open a larger version than the thumbnail).
+The gallery (`gallery.html`) is a single masonry grid, one flat list of photos with no year or category grouping. Add more photos by copying an existing `<a class="masonry-item">` block anywhere in the grid and pointing it at your new image (add `data-full="images/real/your-photo.jpg"` if you want the lightbox to open a larger version than the thumbnail, and a `-sm.jpg` thumbnail sized to roughly 640px wide for the grid itself).
 
 ## Team photos on Our Story
 
