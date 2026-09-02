@@ -20,8 +20,7 @@ dsgo-website/
 │   ├── favicon*.png       Generated favicons
 │   ├── real/             Real DSGO outreach photography (2024–2025), processed into
 │   │                      hero/gallery-ready crops — see "Real photography" below
-│   ├── placeholders/     Remaining section/hero placeholder photos, still awaiting real shots
-│   └── gallery/          Remaining placeholder gallery photos (a few slots per category)
+│   └── placeholders/     Remaining section/hero placeholder photos, still awaiting real shots
 ├── robots.txt
 └── sitemap.xml
 ```
