@@ -172,23 +172,6 @@
     setTimeout(() => pending.forEach((el) => reveal(el)), 4000);
   }
 
-  /* ---------- Gallery filtering ---------- */
-  const filterBtns = document.querySelectorAll(".filter-btn");
-  const galleryItems = document.querySelectorAll(".masonry-item");
-  if (filterBtns.length && galleryItems.length) {
-    filterBtns.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        filterBtns.forEach((b) => b.classList.remove("is-active"));
-        btn.classList.add("is-active");
-        const cat = btn.dataset.filter;
-        galleryItems.forEach((item) => {
-          const match = cat === "all" || item.dataset.category === cat;
-          item.style.display = match ? "" : "none";
-        });
-      });
-    });
-  }
-
   /* ---------- Lightbox ---------- */
   const lightbox = document.querySelector(".lightbox");
   if (lightbox) {
@@ -269,7 +252,62 @@
     );
   }
 
-  /* ---------- Forms (no backend yet — friendly confirmation state) ---------- */
+  /* ---------- Forms ----------
+     The volunteer and donation forms don't have a backend, so instead of a
+     fake "recorded" confirmation, submitting them builds a plain-language
+     message from what was entered and opens WhatsApp with it pre-filled,
+     ready to send straight to DSGO. */
+  const WHATSAPP_NUMBER = "233266284398";
+
+  function fieldVal(form, selector) {
+    const el = form.querySelector(selector);
+    return el ? el.value.trim() : "";
+  }
+  function checkedLabel(form, name) {
+    const el = form.querySelector('input[name="' + name + '"]:checked');
+    if (!el) return "";
+    const span = el.closest("label")?.querySelector("span");
+    return span ? span.textContent.trim() : "";
+  }
+  function selectLabel(form, selector) {
+    const el = form.querySelector(selector);
+    if (!el || el.selectedIndex < 0) return "";
+    const opt = el.options[el.selectedIndex];
+    return opt ? opt.textContent.trim() : "";
+  }
+
+  function buildVolunteerMessage(form) {
+    const lines = ["Hi DSGO, I'd like to volunteer."];
+    const name = fieldVal(form, "#v-name");
+    const contact = fieldVal(form, "#v-contact");
+    const role = checkedLabel(form, "v-role");
+    const message = fieldVal(form, "#v-message");
+    if (name) lines.push("Name: " + name);
+    if (contact) lines.push("Contact: " + contact);
+    if (role) lines.push("How I'd like to help: " + role);
+    if (message) lines.push("Message: " + message);
+    return lines.join("\n");
+  }
+
+  function buildDonationMessage(form) {
+    const lines = ["Hi DSGO, I'd like to donate items."];
+    const name = fieldVal(form, "#d-name");
+    const contact = fieldVal(form, "#d-contact");
+    const type = checkedLabel(form, "d-type");
+    const desc = fieldVal(form, "#d-desc");
+    const quantity = fieldVal(form, "#d-quantity");
+    const handover = selectLabel(form, "#d-handover");
+    const message = fieldVal(form, "#d-message");
+    if (name) lines.push("Name: " + name);
+    if (contact) lines.push("Contact: " + contact);
+    if (type) lines.push("Type: " + type);
+    if (desc) lines.push("Description: " + desc);
+    if (quantity) lines.push("Quantity: " + quantity);
+    if (handover) lines.push("Handover preference: " + handover);
+    if (message) lines.push("Message: " + message);
+    return lines.join("\n");
+  }
+
   document.querySelectorAll("form[data-form]").forEach((form) => {
     form.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -283,11 +321,22 @@
         }
         return;
       }
+
+      if (form.dataset.form === "volunteer" || form.dataset.form === "donation") {
+        const text =
+          form.dataset.form === "volunteer" ? buildVolunteerMessage(form) : buildDonationMessage(form);
+        const url = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(text);
+        if (status) {
+          status.textContent = "Opening WhatsApp with your details filled in, just hit send.";
+          status.className = "form-status is-success";
+        }
+        window.open(url, "_blank", "noopener");
+        form.reset();
+        return;
+      }
+
       if (status) {
-        status.textContent =
-          form.dataset.form === "donation"
-            ? "Thank you — your donation details have been recorded. Our team will contact you shortly to arrange handover."
-            : "Thank you — we've received your message and will be in touch soon.";
+        status.textContent = "Thank you, we've received your message and will be in touch soon.";
         status.className = "form-status is-success";
       }
       form.reset();

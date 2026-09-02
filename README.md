@@ -8,12 +8,12 @@ A static, mobile-first website for DSGO. No build step — plain HTML, CSS and J
 dsgo-website/
 ├── index.html          Home
 ├── our-story.html       About / Our Story
-├── our-impact.html      Impact numbers, stories, transparency
-├── gallery.html         Full photo gallery (masonry + lightbox, filterable by category)
+├── our-impact.html      Impact numbers and stories
+├── gallery.html         Full photo gallery (masonry + lightbox, grouped by year)
 ├── get-involved.html    Volunteer / Partner / Spread the word
-├── donate.html           Give money, give items, sponsorship
+├── donate.html           Give money (via WhatsApp), give items, sponsorship
 ├── css/styles.css       All styles (design tokens at the top)
-├── js/main.js           Nav, scroll reveal, gallery filter + lightbox, forms
+├── js/main.js           Nav, scroll reveal, lightbox, forms (submit → WhatsApp)
 ├── images/
 │   ├── logo.jpg / logo-transparent*.png   Uploaded logo, processed versions
 │   ├── icon-mark.png     Cropped logo icon used in the header/footer
@@ -43,7 +43,13 @@ Almost every real photo on the site — hero collage tiles, split/story images o
 
 ### WhatsApp contact
 
-"Donate Now" buttons, volunteering CTAs, and all direct-contact links (partnership enquiries, international giving, footer contact) point to DSGO's WhatsApp number via `https://wa.me/233266284398` (optionally with a pre-filled `?text=` message). The nav/header "Donate" button and the main giving options on `donate.html` (Mobile Money, bank transfer, the physical-donation form) still route to the full donate page, since that's where the actual giving methods live — WhatsApp is offered there too, as the option that works today while Mobile Money/bank details are still placeholders. A floating WhatsApp button (`.whatsapp-float`, bottom-right, all pages) links to the same number. To change the number, update `233266284398` (and the display text `+233 26 628 4398`) across the HTML files.
+The whole site is built around one WhatsApp number, `https://wa.me/233266284398`, and almost everything now goes there directly:
+
+- **Volunteer and donation forms** (`get-involved.html`, `donate.html`) no longer show a fake "we've received it" confirmation. On submit, `js/main.js` reads the filled-in fields, builds a readable multi-line message (name, contact, what they chose, any notes), and opens WhatsApp in a new tab with that message pre-filled via `?text=`, so the visitor just has to hit send.
+- **Quick-tap buttons** on `get-involved.html` (Outreach Day, Sorting & Packing, Offer a Skill, Year-Round) and `donate.html` (Mobile Money, Bank Transfer, plus every "Enquire"/"Sign Up" link under Other Ways to Help) are plain `wa.me` links, each with its own pre-filled message, for anyone who'd rather skip the form entirely.
+- The floating WhatsApp button (`.whatsapp-float`, bottom-right, all pages) and the footer contact line link to the same number.
+
+To change the number, update `233266284398` (and the display text `+233 26 628 4398`) across the HTML and JS files — it appears in `js/main.js` as the `WHATSAPP_NUMBER` constant plus in every `wa.me` link in the HTML.
 
 ## Replacing/adding placeholder photos
 
@@ -54,19 +60,15 @@ The few remaining placeholder images are generated graphics labeled "PLACEHOLDER
 
 No layout changes are required either way — the CSS uses `object-fit: cover` and flexible aspect ratios, so photos of different orientations still look intentional.
 
-The gallery (`gallery.html`) is organized into seven categories that match the brief: Outreach Days, Donations, Volunteers, Community, Young Mothers, Children, Behind the Scenes. All but Volunteers and Behind the Scenes are now fully real photos. Add more photos by copying an existing `<a class="masonry-item" data-category="...">` block and pointing it at your new image (add `data-full="images/real/your-photo.jpg"` if you want the lightbox to open a larger version than the thumbnail).
+The gallery (`gallery.html`) is grouped into year sections (2025, 2023, 2022, 2021 — newest first), each its own `<div class="gallery-year">` with a heading and a `.masonry` grid inside it, rather than filterable categories. The year a photo was placed under is a best guess where the real capture date isn't known; to move a photo to a different year, just cut its `<a class="masonry-item">` block from one `.gallery-year` and paste it into another (the lightbox works the same no matter which section a photo lives in). Add more photos the same way: copy an existing `<a class="masonry-item">` block into the right year section and point it at your new image (add `data-full="images/real/your-photo.jpg"` if you want the lightbox to open a larger version than the thumbnail).
 
-## Replacing placeholder text
+## Team photos on Our Story
 
-Search for `[Placeholder` or `[X]` across the HTML files — these mark:
+The "The people behind DSGO" section on `our-story.html` currently shows a simple 4-photo grid with no names or bios, written that way on purpose since real team photos hadn't been supplied yet. Once they're available, drop each photo in under `images/real/` and swap the `src` in the matching `.story-card .story-media img`; add a name/role caption underneath if you'd like one, following the pattern of any other captioned photo on the site.
 
-- Impact statistics (people supported, families reached, items distributed)
-- Mobile Money / bank donation details on `donate.html`
-- Team bios on `our-story.html`
-- Beneficiary stories on `index.html` and `our-impact.html`
-- Contact address and registration details in the footer and `our-impact.html`
+## Updating the impact numbers
 
-**Do not publish the donation page until the Mobile Money and bank details are filled in and verified** — the placeholder copy explicitly warns visitors not to send funds until the notice is removed.
+The stat strip on `index.html` and `our-impact.html` ("500+ people supported", "200+ families reached", the descriptive line about what's given out) is meant to be refreshed after each outreach rather than tracked to the exact person or item. Just edit the numbers directly in both files (search for `500+` and `200+`) and update the `stat-note` line beneath them if the phrasing needs to change.
 
 ## Social media links
 
@@ -84,4 +86,4 @@ Update the canonical URLs in each page's `<head>` and in `sitemap.xml`/`robots.t
 
 ## Forms
 
-The volunteer, physical-donation and newsletter forms currently show a confirmation message on submit but do not send data anywhere (there's no backend yet). To make them functional, connect them to a form service (e.g. Formspree, Netlify Forms) or a custom backend, and update `js/main.js`'s submit handler accordingly.
+The volunteer form (`get-involved.html`) and the physical-donation form (`donate.html`) don't send data anywhere on their own (there's no backend). Instead, `js/main.js` builds a WhatsApp message from what was filled in and opens `wa.me` with it pre-filled, so submissions arrive as ordinary WhatsApp messages DSGO can reply to directly. The newsletter/contact form still just shows an on-page confirmation; if you want it to actually deliver messages (or want the WhatsApp forms to *also* log to a spreadsheet or inbox), connect it to a form service (e.g. Formspree, Netlify Forms) or a custom backend and update the relevant handler in `js/main.js`.

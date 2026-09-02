@@ -183,6 +183,9 @@ body{
 .btn--gold{ background: var(--gold); color: var(--charcoal); }
 .btn--gold:hover{ background: var(--gold-light); }
 
+.btn--whatsapp{ background: var(--whatsapp); color: #fff; }
+.btn--whatsapp:hover{ background: var(--whatsapp-dark); }
+
 .btn--outline-dark{ border-color: var(--ink); color: var(--ink); }
 .btn--outline-dark:hover{ background: var(--ink); color: var(--offwhite); }
 
@@ -384,6 +387,7 @@ html.js .hero-content .cta-row{ animation-delay: .56s; }
 .stat{ padding: clamp(2rem,4vw,3rem) clamp(1rem,2vw,2rem); border-left: 1px solid var(--line-light); text-align: left; }
 .stat:first-child{ border-left: none; }
 .stat-num{ font-family: var(--font-display); font-size: var(--fs-xl); color: var(--gold-light); line-height: 1; display: block; }
+.stat-num--sm{ font-size: var(--fs-md); line-height: 1.2; }
 .stat-label{ font-size: var(--fs-xs); letter-spacing: 0.1em; text-transform: uppercase; color: rgba(247,242,231,0.65); margin-top: 0.7rem; display: block; }
 .stat-note{ font-size: var(--fs-xs); color: rgba(247,242,231,0.42); margin-top: 1.4rem; }
 @media (max-width: 760px){
@@ -478,6 +482,15 @@ html.js .masonry-item.is-visible{ opacity: 1; transform: translateY(0); transiti
 .masonry-item:hover .cap{ opacity: 1; }
 @media (max-width: 900px){ .masonry{ columns: 2 200px; } }
 @media (max-width: 520px){ .masonry{ columns: 1; } }
+
+/* Gallery grouped by year */
+.gallery-year{ margin-bottom: clamp(3rem,6vw,5.5rem); }
+.gallery-year-head{
+  display: flex; align-items: baseline; gap: 1rem; margin-bottom: clamp(1.4rem,2.5vw,2rem);
+  padding-bottom: 0.9rem; border-bottom: 1px solid var(--line);
+}
+.gallery-year-head h2{ font-family: var(--font-display); font-size: var(--fs-lg); }
+.gallery-year-head span{ font-size: var(--fs-xs); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); }
 
 /* Lightbox */
 .lightbox{
