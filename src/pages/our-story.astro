@@ -1,0 +1,296 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import Photo from '../components/Photo.astro';
+import Icon from '../components/Icon.astro';
+import CtaBand from '../components/CtaBand.astro';
+
+const steps = [
+  {
+    when: 'Before',
+    title: 'Collect & sort',
+    text: 'In the weeks before, volunteers gather, sort and pack donated clothing, food, stationery and essentials, so every bag is ready to go.',
+    slug: 'donation-boxes-medicine',
+  },
+  {
+    when: 'On the day',
+    title: 'Show up at Agbogbloshie',
+    text: 'We travel to Agbogbloshie and hand items directly to Kayayes and their children, in person and with conversation, never just a handout.',
+    slug: 'outreach-distribution-crowd',
+  },
+  {
+    when: 'After',
+    title: 'Record & learn',
+    text: 'We note what was given and to whom, so next year’s outreach, and any support in between, can do even more good.',
+    slug: 'outreach-bp-smiles',
+  },
+];
+---
+
+<Layout
+  title="Our Story"
+  description="How Divine Selasi Global Outreach began, who we serve at Agbogbloshie, Accra, and why we show up every 26th December."
+  ogPhoto="tiedye-group-3"
+>
+  <PageHero eyebrow="Who we are" slug="tiedye-group-3" position="50% 40%">
+    <Fragment slot="title">Built around <span class="hl">one community.</span></Fragment>
+    <p>Divine Selasi Global Outreach began with a simple belief: real help works best when it’s close, consistent and given with dignity.</p>
+  </PageHero>
+
+  <!-- Mission -->
+  <section class="section split">
+    <div class="wrap split__grid">
+      <div class="split__media reveal">
+        <Photo slug="jeans-handover" sizes="(max-width: 860px) 100vw, 45vw" />
+      </div>
+      <div>
+        <p class="eyebrow reveal">Our mission</p>
+        <h2 class="reveal" style="--d:1">Practical help, placed straight into people’s hands.</h2>
+        <p class="reveal" style="--d:2">
+          We exist to provide practical support to less privileged and vulnerable people, with a special focus on Kayayes (head porters) at Agbogbloshie, Accra, and especially young mothers.
+        </p>
+        <p class="reveal" style="--d:3">
+          We’re not asking you to give into the void. We connect people who want to help with people who truly need it, and we make sure what’s given actually arrives.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Who we serve -->
+  <section class="section serve">
+    <div class="wrap">
+      <div class="serve__card">
+        <div class="serve__copy">
+          <p class="eyebrow reveal">Who we serve</p>
+          <h2 class="reveal" style="--d:1">Kayayes, and the children who depend on them.</h2>
+          <p class="reveal" style="--d:2">
+            Kayayes are young women and girls, many of them migrants from the north, who earn a living carrying goods on their heads through Accra’s markets. Many are mothers, raising children through long, physically demanding days, often with nowhere safe to sleep.
+          </p>
+          <p class="reveal" style="--d:3">
+            Agbogbloshie has one of the largest communities of Kayayes in the city. That’s where we focus, coming back to the same faces year after year instead of moving on.
+          </p>
+        </div>
+        <div class="serve__photos">
+          <Photo slug="mother-baby-water" class="reveal" sizes="(max-width: 860px) 50vw, 22vw" position="50% 25%" />
+          <Photo slug="funfest-red-veil-duo" class="reveal" style="--d:1" sizes="(max-width: 860px) 50vw, 22vw" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vision quote -->
+  <section class="section vision">
+    <div class="wrap">
+      <p class="eyebrow reveal">Our vision</p>
+      <blockquote class="reveal" style="--d:1">
+        A Ghana where <span class="scribble">dignity</span> isn’t conditional on income.
+      </blockquote>
+      <p class="vision__sub reveal" style="--d:2">
+        We dream of a growing family of donors, volunteers and partners who treat supporting vulnerable communities as normal and dependable: not a once-a-year act of charity, but a relationship.
+      </p>
+    </div>
+  </section>
+
+  <!-- Why 26 Dec -->
+  <section class="section why26">
+    <div class="wrap">
+      <div class="why26__head">
+        <p class="eyebrow reveal">The annual outreach</p>
+        <h2 class="reveal" style="--d:1">Why 26th December?</h2>
+        <p class="lede reveal" style="--d:2">The day after Christmas is when families gather, and when the gap between those who have and those who don’t is easiest to see. We chose it on purpose.</p>
+      </div>
+      <ol class="steps">
+        {
+          steps.map((s, i) => (
+            <li class="step reveal" style={`--d:${i}`}>
+              <Photo slug={s.slug} sizes="(max-width: 860px) 100vw, 33vw" />
+              <div class="step__body">
+                <span class="step__when">
+                  <b>{i + 1}</b> {s.when}
+                </span>
+                <h3>{s.title}</h3>
+                <p>{s.text}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+      <a href="/gallery" class="link-arrow reveal">See outreach day photos</a>
+    </div>
+  </section>
+
+  <!-- Team -->
+  <section class="section team">
+    <div class="wrap team__grid">
+      <div>
+        <p class="eyebrow reveal">The people behind DSGO</p>
+        <h2 class="reveal" style="--d:1">Hands-on, every single time.</h2>
+        <p class="reveal" style="--d:2">
+          DSGO is run by a small group of organisers and volunteers who turn up to every outreach themselves: sorting donations, setting up on the day and getting to know the people we serve. It’s hands-on work, done by people who care about getting it right.
+        </p>
+        <a href="/get-involved" class="btn reveal" style="--d:3">Join the team <Icon name="arrow" /></a>
+      </div>
+      <div class="team__photos">
+        <Photo slug="funfest-team-group-1" class="t1 reveal" sizes="(max-width: 860px) 100vw, 50vw" />
+        <Photo slug="funfest-team-member-dance" class="reveal" style="--d:1" sizes="(max-width: 860px) 50vw, 25vw" />
+        <Photo slug="funfest-team-pair" class="reveal" style="--d:2" sizes="(max-width: 860px) 50vw, 25vw" />
+      </div>
+    </div>
+  </section>
+
+  <CtaBand slug="funfest-team-crowd-cheer" title="Want to be part of this story?" text="Give, volunteer or partner with us. There’s a seat at this table for you." />
+</Layout>
+
+<style>
+  .split__grid,
+  .team__grid {
+    display: grid;
+    gap: 2.5rem;
+    align-items: center;
+  }
+  .split__media :global(.ph) {
+    aspect-ratio: 5 / 4;
+    border-radius: 30px;
+  }
+  .split p:not(.eyebrow),
+  .team p:not(.eyebrow) {
+    color: var(--ink-soft);
+    max-width: 52ch;
+  }
+  @media (min-width: 860px) {
+    .split__grid,
+    .team__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+    }
+  }
+
+  .serve {
+    padding-top: 0;
+  }
+  .serve__card {
+    display: grid;
+    gap: 2rem;
+    background: var(--navy);
+    color: #fff;
+    border-radius: clamp(26px, 4vw, 44px);
+    padding: clamp(1.5rem, 5vw, 4rem);
+  }
+  .serve .eyebrow {
+    color: var(--sun);
+  }
+  .serve__copy p:not(.eyebrow) {
+    color: #d6d5ec;
+  }
+  .serve__photos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .serve__photos :global(.ph) {
+    aspect-ratio: 3 / 4;
+  }
+  .serve__photos :global(.ph:nth-child(2)) {
+    margin-top: 2rem;
+  }
+  @media (min-width: 860px) {
+    .serve__card {
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 4rem;
+      align-items: center;
+    }
+  }
+
+  .vision {
+    text-align: center;
+    padding-top: 0;
+  }
+  .vision .eyebrow {
+    justify-content: center;
+  }
+  .vision blockquote {
+    margin: 0 auto 1.5rem;
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(2.2rem, 1.4rem + 4.2vw, 5rem);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    max-width: 16ch;
+  }
+  .vision__sub {
+    max-width: 52ch;
+    margin-inline: auto;
+    color: var(--ink-soft);
+    font-size: 1.1rem;
+  }
+
+  .why26 {
+    background: var(--blush);
+  }
+  .why26__head {
+    margin-bottom: 2.5rem;
+  }
+  .steps {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem;
+    display: grid;
+    gap: 14px;
+  }
+  .step {
+    background: #fff;
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .step :global(.ph) {
+    aspect-ratio: 16 / 10;
+    border-radius: 0;
+  }
+  .step__body {
+    padding: 1.4rem;
+  }
+  .step__body p {
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .step__when {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 800;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--orange-deep);
+    margin-bottom: 0.7rem;
+  }
+  .step__when b {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--orange);
+    color: #fff;
+    letter-spacing: 0;
+  }
+  @media (min-width: 860px) {
+    .steps {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+  }
+
+  .team__photos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .team__photos :global(.ph) {
+    aspect-ratio: 1;
+  }
+  .team__photos :global(.t1) {
+    grid-column: span 2;
+    aspect-ratio: 16 / 10;
+  }
+</style>

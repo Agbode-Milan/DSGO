@@ -1,0 +1,646 @@
+---
+import '../styles/global.css';
+import { Image, getImage } from 'astro:assets';
+import Icon from '../components/Icon.astro';
+import logo from '../assets/logo.png';
+import mark from '../assets/icon-mark.png';
+import { photo } from '../data/photos';
+import { site, wa } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  ogPhoto?: string;
+  overHero?: boolean;
+  hideGiveBar?: boolean;
+}
+
+const {
+  title,
+  description,
+  ogPhoto = 'outreach-distribution-crowd',
+  overHero = false,
+  hideGiveBar = false,
+} = Astro.props;
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const nav = [
+  { href: '/our-story', label: 'Our Story' },
+  { href: '/our-impact', label: 'Impact' },
+  { href: '/gallery', label: 'Gallery' },
+  { href: '/get-involved', label: 'Get Involved' },
+];
+const og = await getImage({ src: photo[ogPhoto], width: 1200, height: 630, format: 'jpg', fit: 'cover' });
+const fullTitle = path === '/' ? `${site.name} | Standing with Kayayes in Accra` : `${title} | ${site.name}`;
+const canonical = new URL(path, site.url).href;
+const socials = Object.entries(site.socials).filter(([, url]) => url);
+const giveHref = '/donate#give';
+---
+
+<!doctype html>
+<html lang="en-GH">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#fff6ea" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+    <link rel="apple-touch-icon" href="/favicon-180.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(og.src, site.url).href} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+  </head>
+  <body class:list={[{ 'over-hero': overHero }]} data-wa={site.whatsappNumber}>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <header class="hdr" data-hdr>
+      <div class="hdr__in wrap">
+        <a href="/" class="hdr__logo" aria-label={`${site.name}, home`}>
+          <Image src={mark} alt="" width={48} height={48} loading="eager" />
+          <span class="hdr__name"><b>Divine Selasi</b><small>Global Outreach</small></span>
+        </a>
+        <nav class="hdr__nav" aria-label="Main">
+          {nav.map((n) => (
+            <a href={n.href} aria-current={path === n.href ? 'page' : undefined}>{n.label}</a>
+          ))}
+        </nav>
+        <a href={giveHref} class="btn hdr__give"><Icon name="heart" /> Give</a>
+        <button class="hdr__burger" aria-expanded="false" aria-controls="menu" data-menu-open>
+          <Icon name="menu" size={26} /><span class="sr-only">Open menu</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="menu" id="menu" hidden data-menu>
+      <div class="menu__top wrap">
+        <a href="/" class="hdr__logo" aria-label="Home">
+          <Image src={mark} alt="" width={44} height={44} />
+          <span class="hdr__name"><b>Divine Selasi</b><small>Global Outreach</small></span>
+        </a>
+        <button class="hdr__burger" data-menu-close><Icon name="close" size={26} /><span class="sr-only">Close menu</span></button>
+      </div>
+      <nav class="menu__nav wrap" aria-label="Mobile">
+        <a href="/" style="--i:0">Home</a>
+        {nav.map((n, i) => <a href={n.href} style={`--i:${i + 1}`} aria-current={path === n.href ? 'page' : undefined}>{n.label}</a>)}
+      </nav>
+      <div class="menu__foot wrap">
+        <a href={giveHref} class="btn btn--block"><Icon name="heart" /> Give to the December outreach</a>
+        <a href={wa('Hi DSGO! 👋')} class="btn btn--ghost btn--block" target="_blank" rel="noopener"><Icon name="whatsapp" /> Chat on WhatsApp</a>
+      </div>
+    </div>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="ftr">
+      <div class="wrap ftr__grid">
+        <div class="ftr__brand">
+          <Image src={logo} alt={site.name} width={190} class="ftr__logo" />
+          <p>Showing up for Kayayes, young mothers and their children at Agbogbloshie, Accra, and for vulnerable communities across Ghana.</p>
+          {socials.length > 0 && (
+            <div class="ftr__social">
+              {socials.map(([name, url]) => (
+                <a href={url} target="_blank" rel="noopener" aria-label={name}><Icon name={name} size={20} /></a>
+              ))}
+            </div>
+          )}
+        </div>
+        <div>
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="/our-story">Our Story</a></li>
+            <li><a href="/our-impact">Our Impact</a></li>
+            <li><a href="/gallery">Gallery</a></li>
+            <li><a href="/get-involved">Get Involved</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Give</h4>
+          <ul>
+            <li><a href="/donate#give">Give money</a></li>
+            <li><a href="/donate#items">Give items</a></li>
+            <li><a href="/get-involved#volunteer">Volunteer</a></li>
+            <li><a href="/get-involved#partner">Partner with us</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Say hello</h4>
+          <ul>
+            <li class="ftr__ico"><Icon name="pin" size={18} /> {site.location}</li>
+            <li><a class="ftr__ico" href={wa('Hi DSGO! 👋')} target="_blank" rel="noopener"><Icon name="whatsapp" size={18} /> {site.whatsappDisplay}</a></li>
+            <li><a class="ftr__ico" href={wa('Hi DSGO! Please add me to your outreach updates.')} target="_blank" rel="noopener"><Icon name="sparkle" size={18} /> Get outreach updates</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="wrap ftr__base">
+        <span>© {new Date().getFullYear()} {site.name}</span>
+        <span>Made with love in Accra</span>
+      </div>
+    </footer>
+
+    {
+      !hideGiveBar && (
+        <div class="givebar" data-givebar aria-hidden="true">
+          <a href={giveHref} class="givebar__main" tabindex="-1">
+            <span class="givebar__pulse"><Icon name="heart" /></span>
+            <span class="givebar__txt"><b>Help a family on 26 Dec</b><small>Gifts from GH₵50</small></span>
+            <span class="givebar__go">Give</span>
+          </a>
+          <a href={wa('Hi DSGO! 👋')} class="givebar__wa" target="_blank" rel="noopener" tabindex="-1" aria-label="WhatsApp"><Icon name="whatsapp" /></a>
+        </div>
+      )
+    }
+    <a href={wa('Hi DSGO! 👋')} class="wa-float" target="_blank" rel="noopener" aria-label="Chat with DSGO on WhatsApp"><Icon name="whatsapp" /></a>
+
+    <div class="lb" data-lb hidden role="dialog" aria-modal="true" aria-label="Photo viewer">
+      <button class="lb__btn lb__close" data-lb-close aria-label="Close"><Icon name="close" /></button>
+      <button class="lb__btn lb__prev" data-lb-prev aria-label="Previous photo"><Icon name="chevL" /></button>
+      <figure class="lb__fig">
+        <img data-lb-img alt="" />
+        <figcaption><span data-lb-cap></span><span class="lb__count" data-lb-count></span></figcaption>
+      </figure>
+      <button class="lb__btn lb__next" data-lb-next aria-label="Next photo"><Icon name="chevR" /></button>
+    </div>
+
+    <script>
+      import '../scripts/main.ts';
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  /* ── Header ─────────────────────────── */
+  .hdr {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    transition:
+      background 0.35s,
+      box-shadow 0.35s,
+      color 0.35s;
+    background: color-mix(in srgb, var(--cream) 88%, transparent);
+    backdrop-filter: saturate(1.4) blur(14px);
+    -webkit-backdrop-filter: saturate(1.4) blur(14px);
+  }
+  .hdr.scrolled {
+    box-shadow: 0 1px 0 var(--line);
+  }
+  .over-hero .hdr {
+    position: fixed;
+    inset: 0 0 auto;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    color: #fff;
+  }
+  .over-hero .hdr.scrolled {
+    background: color-mix(in srgb, var(--cream) 90%, transparent);
+    backdrop-filter: saturate(1.4) blur(14px);
+    -webkit-backdrop-filter: saturate(1.4) blur(14px);
+    color: var(--ink);
+  }
+  .hdr__in {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    height: 74px;
+  }
+  .hdr__logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    margin-right: auto;
+  }
+  .hdr__logo img {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #fff;
+    padding: 3px;
+  }
+  .hdr__name {
+    display: grid;
+    line-height: 1.05;
+  }
+  .hdr__name b {
+    font-family: var(--display);
+    font-size: 1.08rem;
+    letter-spacing: -0.01em;
+  }
+  .hdr__name small {
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0.8;
+  }
+  .hdr__nav {
+    display: none;
+    gap: 0.3rem;
+  }
+  .hdr__nav a {
+    padding: 0.55rem 0.9rem;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 650;
+    transition: background 0.2s;
+  }
+  .hdr__nav a:hover {
+    background: color-mix(in srgb, currentColor 10%, transparent);
+  }
+  .hdr__nav a[aria-current] {
+    background: color-mix(in srgb, currentColor 12%, transparent);
+  }
+  .hdr__give {
+    min-height: 44px;
+    padding: 0.6em 1.2em;
+  }
+  .hdr__burger {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 0;
+    background: color-mix(in srgb, currentColor 10%, transparent);
+    color: inherit;
+    cursor: pointer;
+  }
+  @media (max-width: 420px) {
+    .hdr__name small {
+      display: none;
+    }
+    .hdr__give {
+      padding: 0.6em 1em;
+    }
+  }
+  @media (min-width: 960px) {
+    .hdr__nav {
+      display: flex;
+    }
+    .hdr__burger {
+      display: none;
+    }
+  }
+
+  /* ── Mobile menu ─────────────────────── */
+  .menu {
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    background: var(--navy);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+    overflow-y: auto;
+  }
+  .menu[hidden] {
+    display: none;
+  }
+  .menu__top {
+    display: flex;
+    align-items: center;
+    height: 74px;
+  }
+  .menu__nav {
+    display: grid;
+    gap: 0.2rem;
+    margin-block: auto;
+    padding-block: 2rem;
+  }
+  .menu__nav a {
+    font-family: var(--display);
+    font-size: clamp(2.2rem, 10vw, 3.2rem);
+    font-weight: 750;
+    letter-spacing: -0.03em;
+    text-decoration: none;
+    line-height: 1.15;
+    opacity: 0;
+    transform: translateY(18px);
+    animation: menuIn 0.6s var(--ease) forwards;
+    animation-delay: calc(var(--i) * 55ms + 80ms);
+  }
+  .menu__nav a[aria-current] {
+    color: var(--sun);
+  }
+  .menu__foot {
+    display: grid;
+    gap: 0.7rem;
+  }
+  @keyframes menuIn {
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* ── Footer ─────────────────────────── */
+  .ftr {
+    background: var(--ink);
+    color: #e9e7f3;
+    padding-top: clamp(3.5rem, 6vw, 5.5rem);
+    padding-bottom: calc(6rem + env(safe-area-inset-bottom));
+  }
+  .ftr__grid {
+    display: grid;
+    gap: 2.5rem;
+    grid-template-columns: 1fr 1fr;
+  }
+  .ftr__brand {
+    grid-column: 1 / -1;
+  }
+  .ftr__logo {
+    background: #fff;
+    padding: 12px 16px;
+    border-radius: 16px;
+    margin-bottom: 1.2rem;
+  }
+  .ftr__brand p {
+    max-width: 36ch;
+    color: #bdbbd2;
+  }
+  .ftr h4 {
+    font-size: 0.82rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--sun);
+    font-family: var(--body);
+    margin-bottom: 1rem;
+  }
+  .ftr ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.6rem;
+  }
+  .ftr a {
+    text-decoration: none;
+    color: #e9e7f3;
+  }
+  .ftr a:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+  .ftr__ico {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .ftr__social {
+    display: flex;
+    gap: 0.6rem;
+  }
+  .ftr__social a {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+  }
+  .ftr__base {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.88rem;
+    color: #9d9bb6;
+  }
+  @media (min-width: 860px) {
+    .ftr__grid {
+      grid-template-columns: 1.6fr 1fr 1fr 1.2fr;
+    }
+    .ftr__brand {
+      grid-column: auto;
+    }
+    .ftr {
+      padding-bottom: 2rem;
+    }
+  }
+
+  /* ── Mobile give bar ─────────────────── */
+  .givebar {
+    position: fixed;
+    left: 10px;
+    right: 10px;
+    bottom: max(10px, env(safe-area-inset-bottom));
+    z-index: 40;
+    display: flex;
+    gap: 8px;
+    transform: translateY(140%);
+    transition: transform 0.5s var(--ease);
+  }
+  .givebar.show {
+    transform: none;
+  }
+  .givebar__main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 8px 8px 8px 10px;
+    border-radius: 999px;
+    background: var(--navy);
+    color: #fff;
+    text-decoration: none;
+    box-shadow: var(--shadow-lg);
+  }
+  .givebar__pulse {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--orange);
+    flex: none;
+    animation: beat 2.4s infinite;
+  }
+  .givebar__pulse svg {
+    width: 20px;
+    height: 20px;
+  }
+  .givebar__txt {
+    display: grid;
+    line-height: 1.2;
+    min-width: 0;
+  }
+  .givebar__txt b {
+    font-size: 0.92rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .givebar__txt small {
+    font-size: 0.76rem;
+    opacity: 0.75;
+  }
+  .givebar__go {
+    margin-left: auto;
+    background: var(--sun);
+    color: var(--ink);
+    font-weight: 800;
+    padding: 0.7rem 1.1rem;
+    border-radius: 999px;
+  }
+  .givebar__wa {
+    display: grid;
+    place-items: center;
+    width: 56px;
+    border-radius: 50%;
+    background: #1fa855;
+    color: #fff;
+    box-shadow: var(--shadow-lg);
+  }
+  .givebar__wa svg {
+    width: 26px;
+    height: 26px;
+  }
+  @keyframes beat {
+    0%,
+    60%,
+    100% {
+      transform: scale(1);
+    }
+    20% {
+      transform: scale(1.12);
+    }
+    40% {
+      transform: scale(0.96);
+    }
+  }
+  .wa-float {
+    display: none;
+  }
+  @media (min-width: 860px) {
+    .givebar {
+      display: none;
+    }
+    .wa-float {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      z-index: 40;
+      display: grid;
+      place-items: center;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #1fa855;
+      color: #fff;
+      box-shadow: var(--shadow-lg);
+      transition: transform 0.25s var(--ease);
+    }
+    .wa-float:hover {
+      transform: scale(1.08);
+    }
+    .wa-float svg {
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  /* ── Lightbox ─────────────────────────── */
+  .lb {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    background: rgba(12, 12, 30, 0.94);
+    display: grid;
+    place-items: center;
+    padding: 64px 12px;
+    animation: fade 0.25s;
+  }
+  .lb[hidden] {
+    display: none;
+  }
+  .lb__fig {
+    margin: 0;
+    display: grid;
+    gap: 0.8rem;
+    justify-items: center;
+    max-width: 100%;
+  }
+  .lb__fig img {
+    max-width: min(100%, 1400px);
+    max-height: calc(100dvh - 170px);
+    border-radius: 12px;
+    object-fit: contain;
+    touch-action: pan-y;
+  }
+  .lb__fig figcaption {
+    color: #fff;
+    text-align: center;
+    display: grid;
+    gap: 0.2rem;
+  }
+  .lb__count {
+    font-size: 0.85rem;
+    opacity: 0.6;
+  }
+  .lb__btn {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 0;
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    cursor: pointer;
+  }
+  .lb__btn svg {
+    width: 24px;
+    height: 24px;
+  }
+  .lb__btn:hover {
+    background: rgba(255, 255, 255, 0.24);
+  }
+  .lb__close {
+    top: 12px;
+    right: 12px;
+  }
+  .lb__prev {
+    left: 12px;
+    top: 50%;
+    translate: 0 -50%;
+  }
+  .lb__next {
+    right: 12px;
+    top: 50%;
+    translate: 0 -50%;
+  }
+  @media (max-width: 700px) {
+    .lb__prev,
+    .lb__next {
+      top: auto;
+      bottom: 14px;
+      translate: none;
+    }
+    .lb__prev {
+      left: calc(50% - 60px);
+    }
+    .lb__next {
+      right: calc(50% - 60px);
+    }
+  }
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+  }
+</style>

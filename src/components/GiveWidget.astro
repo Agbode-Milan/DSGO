@@ -1,0 +1,230 @@
+---
+import Icon from './Icon.astro';
+import { giftTiers, site } from '../data/site';
+
+interface Props {
+  id?: string;
+  compact?: boolean;
+}
+const { id = 'give-box', compact = false } = Astro.props;
+const featured = giftTiers.find((t) => t.featured) ?? giftTiers[0];
+---
+
+<div class:list={['give', { 'give--compact': compact }]} data-give data-link={site.paymentLink} id={id}>
+  <div class="give__head">
+    <span class="give__tag"><Icon name="calendar" size={16} /> For 26th December</span>
+    <h3>Choose your gift</h3>
+  </div>
+
+  <fieldset class="give__tiers">
+    <legend class="sr-only">Gift amount</legend>
+    {
+      giftTiers.map((t) => (
+        <label class="tier">
+          <input type="radio" name="amt" value={t.amount} data-impact={t.impact} checked={t === featured} />
+          <span class="tier__amt">
+            <small>GH₵</small>
+            {t.amount}
+          </span>
+          <span class="tier__title">{t.title}</span>
+          {t.featured && <span class="tier__pop">Most loved</span>}
+        </label>
+      ))
+    }
+    <label class="tier tier--other">
+      <input type="radio" name="amt" value="other" />
+      <span class="tier__amt tier__amt--sm">Other</span>
+      <span class="tier__title">Your amount</span>
+    </label>
+  </fieldset>
+
+  <div class="give__custom">
+    <label for={`${id}-custom`} class="sr-only">Custom amount in cedis</label>
+    <span>GH₵</span>
+    <input id={`${id}-custom`} type="number" inputmode="numeric" min="1" step="1" placeholder="Enter amount" data-custom />
+  </div>
+
+  <p class="give__impact" aria-live="polite"><Icon name="sparkle" size={18} /> <span data-impact>{featured.impact}</span></p>
+
+  <a href="/donate" class="btn btn--block give__btn" data-give-btn target="_blank" rel="noopener">
+    <Icon name="heart" /> Give <span data-give-amt>GH₵{featured.amount}</span>
+  </a>
+  <p class="give__fine">
+    <Icon name="shield" size={16} />
+    {site.paymentLink ? 'Secure payment by card or Mobile Money.' : 'Opens WhatsApp with your gift written in. We’ll send Mobile Money or bank details straight back.'}
+  </p>
+</div>
+
+<style>
+  .give {
+    background: #fff;
+    border-radius: 28px;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    box-shadow: var(--shadow-lg);
+    color: var(--ink);
+  }
+  .give__head h3 {
+    margin: 0.6rem 0 1.1rem;
+    font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+  }
+  .give__tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    background: var(--sun-soft);
+    color: #7a4a00;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+  }
+  .give__tiers {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+  }
+  @media (min-width: 520px) {
+    .give:not(.give--compact) .give__tiers {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .tier {
+    position: relative;
+    display: grid;
+    gap: 0.1rem;
+    padding: 0.9rem 0.95rem;
+    border-radius: 18px;
+    border: 2px solid var(--line);
+    background: var(--paper);
+    cursor: pointer;
+    transition:
+      border-color 0.2s,
+      background 0.2s,
+      transform 0.2s var(--ease);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .tier:hover {
+    border-color: color-mix(in srgb, var(--orange) 50%, transparent);
+  }
+  .tier:active {
+    transform: scale(0.97);
+  }
+  .tier--other {
+    grid-column: span 2;
+  }
+  .tier input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .tier:has(input:checked) {
+    border-color: var(--orange);
+    background: #fff4ec;
+    box-shadow: 0 8px 20px -12px var(--orange);
+  }
+  .tier:has(input:focus-visible) {
+    outline: 3px solid var(--sun);
+    outline-offset: 2px;
+  }
+  .tier__amt {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 1.65rem;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+  .tier__amt small {
+    font-size: 0.55em;
+    margin-right: 2px;
+    vertical-align: 0.35em;
+    opacity: 0.7;
+  }
+  .tier__amt--sm {
+    font-size: 1.35rem;
+    line-height: 1.35;
+  }
+  .tier__title {
+    font-size: 0.86rem;
+    color: var(--ink-soft);
+    font-weight: 600;
+  }
+  .tier__pop {
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    background: var(--orange);
+    color: #fff;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+  }
+  .give__custom {
+    display: none;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.8rem;
+    border: 2px solid var(--orange);
+    border-radius: 16px;
+    padding: 0 1rem;
+    background: #fff;
+  }
+  .give.is-other .give__custom {
+    display: flex;
+  }
+  .give__custom span {
+    font-weight: 800;
+    font-family: var(--display);
+    font-size: 1.3rem;
+  }
+  .give__custom input {
+    flex: 1;
+    border: 0;
+    outline: 0;
+    font: 800 1.3rem var(--display);
+    padding: 0.8rem 0;
+    min-width: 0;
+    background: transparent;
+  }
+  .give__impact {
+    display: flex;
+    gap: 0.55rem;
+    align-items: flex-start;
+    margin: 1.1rem 0 1.1rem;
+    padding: 0.9rem 1rem;
+    border-radius: 16px;
+    background: var(--cream);
+    font-weight: 600;
+    line-height: 1.45;
+    min-height: 4.4em;
+  }
+  .give__impact svg {
+    color: var(--orange);
+    flex: none;
+    margin-top: 2px;
+  }
+  .give__btn {
+    min-height: 60px;
+    font-size: 1.12rem;
+  }
+  .give__fine {
+    display: flex;
+    gap: 0.45rem;
+    align-items: flex-start;
+    justify-content: center;
+    font-size: 0.84rem;
+    color: var(--ink-soft);
+    margin: 0.8rem 0 0;
+    text-align: left;
+  }
+  .give__fine svg {
+    flex: none;
+    margin-top: 3px;
+    color: var(--leaf);
+  }
+</style>

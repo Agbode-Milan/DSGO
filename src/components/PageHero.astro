@@ -1,0 +1,77 @@
+---
+import Photo from './Photo.astro';
+
+interface Props {
+  eyebrow: string;
+  slug: string;
+  position?: string;
+}
+const { eyebrow, slug, position } = Astro.props;
+---
+
+<section class="phero">
+  <div class="wrap phero__in">
+    <div class="phero__copy">
+      <p class="eyebrow reveal">{eyebrow}</p>
+      <h1 class="reveal" style="--d:1"><slot name="title" /></h1>
+      <div class="phero__lede reveal" style="--d:2"><slot /></div>
+    </div>
+    <div class="phero__media reveal" style="--d:2">
+      <Photo slug={slug} eager sizes="(max-width: 860px) 100vw, 45vw" position={position} />
+      <span class="phero__blob" aria-hidden="true"></span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .phero {
+    padding-block: clamp(1.5rem, 4vw, 4rem) clamp(3rem, 6vw, 6rem);
+    overflow: hidden;
+  }
+  .phero__in {
+    display: grid;
+    gap: 2rem;
+    align-items: center;
+  }
+  .phero h1 {
+    font-size: clamp(2.5rem, 1.6rem + 4.2vw, 5rem);
+  }
+  .phero__lede {
+    font-size: clamp(1.1rem, 1rem + 0.5vw, 1.32rem);
+    color: var(--ink-soft);
+    max-width: 40ch;
+  }
+  .phero__lede :global(.btn) {
+    margin-top: 0.6rem;
+  }
+  .phero__media {
+    position: relative;
+  }
+  .phero__media :global(.ph) {
+    aspect-ratio: 4 / 4.4;
+    border-radius: 32px;
+    box-shadow: var(--shadow-lg);
+    z-index: 1;
+  }
+  .phero__blob {
+    position: absolute;
+    width: 46%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--sun);
+    right: -10%;
+    top: -8%;
+    z-index: 0;
+  }
+  @media (max-width: 859px) {
+    .phero__media :global(.ph) {
+      aspect-ratio: 4 / 3.4;
+    }
+  }
+  @media (min-width: 860px) {
+    .phero__in {
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 4rem;
+    }
+  }
+</style>

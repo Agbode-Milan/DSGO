@@ -1,0 +1,761 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Photo from '../components/Photo.astro';
+import Icon from '../components/Icon.astro';
+import GiveWidget from '../components/GiveWidget.astro';
+import Stats from '../components/Stats.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { site } from '../data/site';
+
+const slides = [
+  { slug: 'tiedye-group-2', pos: '55% 40%' },
+  { slug: 'funfest-crowd-cheering', pos: '50% 40%' },
+  { slug: 'mother-child-crowd', pos: '45% 35%' },
+  { slug: 'funfest-dancing-kids', pos: '50% 40%' },
+];
+
+const ways = [
+  { icon: 'heart', title: 'Money', text: 'Lets us buy exactly what’s missing and fill the gaps item donations can’t.', href: '/donate#give' },
+  { icon: 'shirt', title: 'Clothes', text: 'New or gently used outfits for Kayayes, young mothers and their little ones.', href: '/donate#items' },
+  { icon: 'book', title: 'Stationery', text: 'Books, pens and bags that keep a child in the classroom and learning.', href: '/donate#items' },
+  { icon: 'basket', title: 'Essentials', text: 'Toiletries, food and household basics that are always running low.', href: '/donate#items' },
+  { icon: 'hand', title: 'Your time', text: 'Sort, pack, serve and share a smile, before, during and after outreach day.', href: '/get-involved#volunteer' },
+];
+
+const stories = [
+  {
+    slug: 'mother-baby-water',
+    tag: 'Young mothers',
+    title: 'A little breathing room',
+    text: 'Many of the mothers we meet carry loads through Accra’s markets all day with a baby close by. Outreach day means food, supplies and, for once, a moment to rest.',
+    pos: '50% 25%',
+  },
+  {
+    slug: 'funfest-eating-5',
+    tag: 'Children',
+    title: 'Room to just be a child',
+    text: 'A warm plate of food. New shoes. Games with friends. Small things that tell a child they matter, and they remember it.',
+    pos: '50% 50%',
+  },
+  {
+    slug: 'funfest-team-crowd-cheer',
+    tag: 'Community',
+    title: 'People who show up',
+    text: 'None of this happens alone. Volunteers, neighbours and local partners give their time freely, and that’s what makes every outreach possible.',
+    pos: '50% 40%',
+  },
+];
+---
+
+<Layout
+  title="Home"
+  description="DSGO stands with Kayayes, young mothers and their children at Agbogbloshie, Accra. Help us bring food, clothing and school supplies to families this 26th December."
+  overHero
+>
+  <!-- ── Hero ───────────────────────────── -->
+  <section class="hero">
+    <div class="hero__slides" data-slides>
+      {
+        slides.map((s, i) => (
+          <div class:list={['slide', { on: i === 0 }]}>
+            <Photo slug={s.slug} lightbox={false} eager={i === 0} sizes="100vw" widths={[640, 960, 1400, 1800]} position={s.pos} alt="" />
+          </div>
+        ))
+      }
+    </div>
+    <div class="wrap hero__in">
+      <a href="/donate#give" class="hero__count reveal" data-countdown={`${site.outreachMonth}-${site.outreachDay}`}>
+        <span class="hero__dot"></span>
+        <b data-days>—</b> <span data-days-label>days to go</span><span class="hero__count-x">· 26th Dec outreach</span>
+      </a>
+      <h1 class="reveal" style="--d:1">Everyone deserves a chance to <em class="scribble">thrive.</em></h1>
+      <p class="hero__sub reveal" style="--d:2">
+        We show up for the Kayayes of Agbogbloshie, the young women who carry Accra on their heads, and for the children who depend on them.
+      </p>
+      <div class="hero__btns reveal" style="--d:3">
+        <a href="/donate#give" class="btn btn--lg"><Icon name="heart" /> Give a family a good day</a>
+        <a href="/our-story" class="btn btn--ghost">Our story</a>
+      </div>
+    </div>
+    <a href="#why" class="hero__scroll" aria-label="Scroll to read more"><span></span></a>
+  </section>
+
+  <!-- ── Why ───────────────────────────── -->
+  <section class="section why" id="why">
+    <div class="wrap why__grid">
+      <div class="why__photos">
+        <Photo slug="mother-baby-water" class="why__p1 reveal" sizes="(max-width: 860px) 70vw, 30vw" position="50% 25%" />
+        <Photo slug="boy-blue-stool" class="why__p2 reveal" style="--d:2" sizes="(max-width: 860px) 45vw, 20vw" />
+        <span class="why__badge reveal" style="--d:3"><Icon name="pin" size={18} /> Agbogbloshie, Accra</span>
+      </div>
+      <div class="why__copy">
+        <p class="eyebrow reveal">Why we exist</p>
+        <h2 class="reveal" style="--d:1">She carries the market on her head. <span class="hl">Often with a baby on her back.</span></h2>
+        <p class="reveal" style="--d:2">
+          Kayayes, the girls and young women who carry loads for a living in Accra’s markets, are some of the hardest-working and least-supported people in the city. Many are mothers, working long hours for little pay and sleeping in the open.
+        </p>
+        <p class="reveal" style="--d:3">
+          Divine Selasi Global Outreach exists to close that gap. We connect people who want to help with people who truly need it, and turn that connection into clothing, food, stationery and everyday essentials, handed over in person and with dignity.
+        </p>
+        <a href="/our-story" class="link-arrow reveal" style="--d:4">Read our story</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── The ask ───────────────────────── -->
+  <section class="section ask" id="give">
+    <div class="wrap ask__grid">
+      <div class="ask__copy">
+        <p class="eyebrow reveal">This December</p>
+        <h2 class="reveal" style="--d:1">Every 26th December, <span class="scribble">we show up.</span> Come with us.</h2>
+        <p class="reveal" style="--d:2">
+          While most families gather around full tables, we take clothes, hot food, school supplies and essentials straight to Kayayes and their children at Agbogbloshie, in person and with a smile.
+        </p>
+        <ul class="ask__list">
+          <li class="reveal" style="--d:3"><Icon name="check" size={20} /> Every cedi goes to outreach day</li>
+          <li class="reveal" style="--d:4"><Icon name="check" size={20} /> Handed over in person, never left in a pile</li>
+          <li class="reveal" style="--d:5"><Icon name="camera" size={20} /> You’ll see the photos afterwards</li>
+        </ul>
+      </div>
+      <div class="reveal" style="--d:2">
+        <GiveWidget id="home-give" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Impact ────────────────────────── -->
+  <section class="section impact">
+    <div class="wrap">
+      <div class="head-row">
+        <div>
+          <p class="eyebrow reveal">Our impact so far</p>
+          <h2 class="reveal" style="--d:1">Numbers that come with names.</h2>
+        </div>
+        <p class="reveal" style="--d:2">They only tell part of the story, but they grow every time we go out, and every one of them was a face we met.</p>
+      </div>
+      <Stats />
+    </div>
+  </section>
+
+  <!-- ── Mosaic ────────────────────────── -->
+  <section class="section mosaic-sec">
+    <div class="wrap">
+      <div class="head-row">
+        <div>
+          <p class="eyebrow reveal">Outreach day</p>
+          <h2 class="reveal" style="--d:1">This is what your kindness looks like.</h2>
+        </div>
+        <a href="/gallery" class="btn btn--navy reveal" style="--d:2">See all photos <Icon name="arrow" /></a>
+      </div>
+      <div class="mosaic">
+        <Photo slug="outreach-distribution-crowd" class="m1 reveal" sizes="(max-width: 760px) 100vw, 50vw" />
+        <Photo slug="funfest-red-veil-duo" class="m2 reveal" style="--d:1" sizes="(max-width: 760px) 50vw, 25vw" />
+        <Photo slug="children-eating" class="m3 reveal" style="--d:2" sizes="(max-width: 760px) 50vw, 25vw" />
+        <Photo slug="outreach-bp-smiles" class="m4 reveal" style="--d:1" sizes="(max-width: 760px) 50vw, 25vw" />
+        <Photo slug="donation-boxes-medicine" class="m5 reveal" style="--d:2" sizes="(max-width: 760px) 50vw, 25vw" />
+        <Photo slug="funfest-team-group-1" class="m6 reveal" style="--d:3" sizes="(max-width: 760px) 100vw, 50vw" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Stories ───────────────────────── -->
+  <section class="section stories">
+    <div class="wrap">
+      <p class="eyebrow reveal">Beyond the numbers</p>
+      <h2 class="reveal" style="--d:1">Real people. Real dignity.</h2>
+      <div class="stories__row">
+        {
+          stories.map((s, i) => (
+            <article class="story reveal" style={`--d:${i}`}>
+              <Photo slug={s.slug} sizes="(max-width: 760px) 85vw, 33vw" position={s.pos} />
+              <div class="story__body">
+                <span class="story__tag">{s.tag}</span>
+                <h3>{s.title}</h3>
+                <p>{s.text}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+      <a href="/our-impact" class="link-arrow reveal">Read more stories</a>
+    </div>
+  </section>
+
+  <!-- ── Ways to give ──────────────────── -->
+  <section class="section ways">
+    <div class="wrap">
+      <div class="head-row">
+        <div>
+          <p class="eyebrow reveal">More than money</p>
+          <h2 class="reveal" style="--d:1">What can you give?</h2>
+        </div>
+        <p class="reveal" style="--d:2">Everything below reaches someone directly, often within weeks.</p>
+      </div>
+      <div class="ways__row">
+        {
+          ways.map((w, i) => (
+            <a href={w.href} class="way reveal" style={`--d:${i}`}>
+              <span class="way__n">0{i + 1}</span>
+              <span class="way__icon"><Icon name={w.icon} size={28} /></span>
+              <h3>{w.title}</h3>
+              <p>{w.text}</p>
+              <span class="way__go"><Icon name="arrow" size={20} /></span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Join ──────────────────────────── -->
+  <section class="section join">
+    <div class="wrap join__grid">
+      <div>
+        <p class="eyebrow reveal">Join us</p>
+        <h2 class="reveal" style="--d:1">There’s a place for you in this.</h2>
+        <p class="lede reveal" style="--d:2">Give, volunteer, partner or simply share. Every one of these moves a family closer to a better day.</p>
+      </div>
+      <div class="join__list">
+        <a href="/donate#give" class="joinc reveal"><Icon name="heart" size={26} /><span><b>Donate</b>Money, clothing, food or essentials that help right away.</span></a>
+        <a href="/get-involved#volunteer" class="joinc reveal" style="--d:1"><Icon name="hand" size={26} /><span><b>Volunteer</b>From packing boxes to outreach day itself.</span></a>
+        <a href="/get-involved#partner" class="joinc reveal" style="--d:2"><Icon name="handshake" size={26} /><span><b>Partner</b>Businesses, churches and schools, let’s build something together.</span></a>
+        <button type="button" class="joinc reveal" style="--d:3" data-share><Icon name="megaphone" size={26} /><span><b>Spread the word</b>Share DSGO with one friend who’d care.</span></button>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Layout>
+
+<style>
+  /* Hero */
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: flex-end;
+    color: #fff;
+    isolation: isolate;
+    overflow: hidden;
+    padding-bottom: clamp(5rem, 10vh, 7rem);
+  }
+  .hero__slides,
+  .slide {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+  }
+  .slide {
+    opacity: 0;
+    transition: opacity 1.6s ease;
+  }
+  .slide.on {
+    opacity: 1;
+  }
+  .slide :global(.ph) {
+    height: 100%;
+    border-radius: 0;
+  }
+  .slide.on :global(img) {
+    animation: kb 12s ease-out forwards;
+  }
+  @keyframes kb {
+    from {
+      transform: scale(1.12);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(180deg, rgba(23, 24, 58, 0.55) 0%, rgba(23, 24, 58, 0) 26%),
+      linear-gradient(0deg, rgba(23, 24, 58, 0.92) 8%, rgba(23, 24, 58, 0.45) 50%, rgba(23, 24, 58, 0.1) 75%);
+  }
+  .hero__in {
+    padding-top: 110px;
+  }
+  .hero h1 {
+    max-width: 12ch;
+    margin-bottom: 0.35em;
+    text-shadow: 0 2px 30px rgba(0, 0, 0, 0.25);
+  }
+  .hero .scribble::after {
+    background: var(--orange);
+    height: 0.2em;
+    bottom: 0.06em;
+  }
+  .hero__sub {
+    max-width: 36ch;
+    font-size: clamp(1.1rem, 1rem + 0.5vw, 1.35rem);
+    opacity: 0.94;
+    margin-bottom: 1.8rem;
+  }
+  .hero__btns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .btn--lg {
+    min-height: 60px;
+    font-size: 1.1rem;
+    padding-inline: 1.8em;
+  }
+  .hero__count {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    flex-wrap: wrap;
+    padding: 0.5rem 1rem 0.5rem 0.8rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    margin-bottom: 1.3rem;
+  }
+  .hero__count b {
+    color: var(--sun);
+    font-family: var(--display);
+    font-size: 1.1rem;
+  }
+  .hero__dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--sun);
+    box-shadow: 0 0 0 0 rgba(255, 194, 61, 0.7);
+    animation: ping 2s infinite;
+  }
+  @keyframes ping {
+    70% {
+      box-shadow: 0 0 0 10px rgba(255, 194, 61, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(255, 194, 61, 0);
+    }
+  }
+  .hero__scroll {
+    position: absolute;
+    bottom: 22px;
+    left: 50%;
+    translate: -50% 0;
+    width: 26px;
+    height: 42px;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    border-radius: 20px;
+  }
+  .hero__scroll span {
+    position: absolute;
+    left: 50%;
+    top: 8px;
+    width: 4px;
+    height: 8px;
+    margin-left: -2px;
+    background: #fff;
+    border-radius: 4px;
+    animation: wheel 1.8s infinite;
+  }
+  @keyframes wheel {
+    to {
+      transform: translateY(14px);
+      opacity: 0;
+    }
+  }
+  @media (max-width: 520px) {
+    .hero__btns .btn {
+      width: 100%;
+    }
+    .hero__scroll {
+      display: none;
+    }
+    .hero {
+      padding-bottom: 2.5rem;
+    }
+  }
+
+  /* Why */
+  .why__grid {
+    display: grid;
+    gap: 3rem;
+    align-items: center;
+  }
+  .why__photos {
+    position: relative;
+    padding: 0 18% 14% 0;
+  }
+  .why__photos :global(.why__p1) {
+    aspect-ratio: 4 / 5;
+    border-radius: 30px;
+  }
+  .why__photos :global(.why__p2) {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 46%;
+    aspect-ratio: 1;
+    border: 6px solid var(--cream);
+    border-radius: 26px;
+    box-shadow: var(--shadow);
+  }
+  .why__badge {
+    position: absolute;
+    left: 14px;
+    top: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: #fff;
+    padding: 0.45rem 0.85rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    box-shadow: var(--shadow);
+  }
+  .why__badge :global(svg) {
+    color: var(--orange);
+  }
+  .why__copy p:not(.eyebrow) {
+    color: var(--ink-soft);
+    max-width: 52ch;
+  }
+  @media (min-width: 860px) {
+    .why__grid {
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 5rem;
+    }
+  }
+
+  /* Ask */
+  .ask {
+    background: var(--navy);
+    color: #fff;
+    border-radius: clamp(28px, 5vw, 56px);
+    margin-inline: clamp(8px, 1.5vw, 20px);
+    position: relative;
+    overflow: hidden;
+  }
+  .ask::before {
+    content: '';
+    position: absolute;
+    width: 620px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(242, 106, 27, 0.5), transparent 65%);
+    left: -220px;
+    top: -200px;
+  }
+  .ask .eyebrow {
+    color: var(--sun);
+  }
+  .ask__grid {
+    position: relative;
+    display: grid;
+    gap: 2.5rem;
+    align-items: center;
+  }
+  .ask__copy > p {
+    color: #d6d5ec;
+    max-width: 46ch;
+  }
+  .ask .scribble::after {
+    background: var(--orange);
+    height: 0.18em;
+  }
+  .ask__list {
+    list-style: none;
+    padding: 0;
+    margin: 1.6rem 0 0;
+    display: grid;
+    gap: 0.75rem;
+  }
+  .ask__list li {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+    font-weight: 650;
+  }
+  .ask__list :global(svg) {
+    flex: none;
+    color: var(--ink);
+    background: var(--sun);
+    border-radius: 50%;
+    padding: 4px;
+    width: 28px;
+    height: 28px;
+  }
+  @media (min-width: 960px) {
+    .ask__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+    }
+  }
+
+  /* Shared head row */
+  .head-row {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+  }
+  .head-row > p {
+    color: var(--ink-soft);
+    max-width: 42ch;
+    margin: 0;
+  }
+  .head-row h2 {
+    margin: 0;
+  }
+  @media (min-width: 860px) {
+    .head-row {
+      grid-template-columns: 1.3fr 1fr;
+      align-items: end;
+      gap: 3rem;
+    }
+    .head-row > .btn {
+      justify-self: end;
+    }
+  }
+
+  /* Mosaic */
+  .mosaic {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: clamp(150px, 26vw, 230px);
+    gap: 10px;
+  }
+  .mosaic :global(.m1) {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+  .mosaic :global(.m6) {
+    grid-column: span 2;
+  }
+  @media (min-width: 760px) {
+    .mosaic {
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: 230px;
+      gap: 14px;
+    }
+    .mosaic :global(.m2) {
+      grid-row: span 2;
+    }
+    .mosaic :global(.m6) {
+      grid-column: span 3;
+    }
+  }
+
+  /* Stories */
+  .stories {
+    background: var(--blush);
+  }
+  .stories__row {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: min(84%, 380px);
+    gap: 14px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    margin: 2rem calc(-1 * var(--gutter)) 2rem;
+    padding: 0 var(--gutter) 10px;
+    scrollbar-width: none;
+  }
+  .stories__row::-webkit-scrollbar {
+    display: none;
+  }
+  .story {
+    scroll-snap-align: start;
+    background: #fff;
+    border-radius: var(--radius);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .story :global(.ph) {
+    aspect-ratio: 4 / 3.2;
+    border-radius: 0;
+  }
+  .story__body {
+    padding: 1.4rem 1.4rem 1.6rem;
+  }
+  .story__body p {
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .story__tag {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--orange-deep);
+    margin-bottom: 0.6rem;
+  }
+  @media (min-width: 900px) {
+    .stories__row {
+      grid-auto-flow: row;
+      grid-template-columns: repeat(3, 1fr);
+      overflow: visible;
+      margin-inline: 0;
+      padding: 0;
+    }
+  }
+
+  /* Ways */
+  .ways__row {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: min(72%, 270px);
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    margin-inline: calc(-1 * var(--gutter));
+    padding: 6px var(--gutter) 14px;
+    scrollbar-width: none;
+  }
+  .ways__row::-webkit-scrollbar {
+    display: none;
+  }
+  .way {
+    position: relative;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    background: var(--paper);
+    border: 1.5px solid var(--line);
+    text-decoration: none;
+    transition:
+      transform 0.35s var(--ease),
+      box-shadow 0.35s var(--ease),
+      border-color 0.3s;
+  }
+  .way:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow);
+    border-color: transparent;
+  }
+  .way__n {
+    position: absolute;
+    right: 1.2rem;
+    top: 1.1rem;
+    font-family: var(--display);
+    font-weight: 800;
+    color: var(--line);
+    font-size: 1.6rem;
+  }
+  .way__icon {
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 18px;
+    background: var(--sun-soft);
+    color: var(--orange-deep);
+    margin-bottom: 1.2rem;
+  }
+  .way:nth-child(2n) .way__icon {
+    background: #e4f2ea;
+    color: var(--leaf);
+  }
+  .way:nth-child(3n) .way__icon {
+    background: #e6e7f7;
+    color: var(--navy);
+  }
+  .way h3 {
+    margin-bottom: 0.4em;
+  }
+  .way p {
+    color: var(--ink-soft);
+    font-size: 0.97rem;
+    margin-bottom: 1.2rem;
+  }
+  .way__go {
+    margin-top: auto;
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--orange);
+    color: #fff;
+    transition: transform 0.3s var(--ease);
+  }
+  .way:hover .way__go {
+    transform: translateX(4px);
+  }
+  @media (min-width: 1000px) {
+    .ways__row {
+      grid-auto-flow: row;
+      grid-template-columns: repeat(5, 1fr);
+      overflow: visible;
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  /* Join */
+  .join {
+    padding-top: 0;
+  }
+  .join__grid {
+    display: grid;
+    gap: 2rem;
+  }
+  .join__list {
+    display: grid;
+    gap: 10px;
+  }
+  .joinc {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1.2rem 1.3rem;
+    border-radius: var(--radius);
+    background: #fff;
+    border: 0;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 0 1px 0 var(--line);
+    transition:
+      transform 0.3s var(--ease),
+      box-shadow 0.3s;
+  }
+  .joinc:hover {
+    transform: translateX(6px);
+    box-shadow: var(--shadow);
+  }
+  .joinc :global(svg) {
+    flex: none;
+    color: var(--orange);
+    margin-top: 2px;
+  }
+  .joinc span {
+    display: grid;
+    gap: 0.15rem;
+    color: var(--ink-soft);
+    font-size: 0.97rem;
+  }
+  .joinc b {
+    font-family: var(--display);
+    font-size: 1.25rem;
+    color: var(--ink);
+  }
+  @media (min-width: 860px) {
+    .join__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+  }
+</style>

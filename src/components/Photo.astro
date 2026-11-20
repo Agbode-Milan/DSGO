@@ -1,0 +1,58 @@
+---
+import { Picture, getImage } from 'astro:assets';
+import { photo, captions } from '../data/photos';
+
+interface Props {
+  slug: string;
+  sizes?: string;
+  widths?: number[];
+  class?: string;
+  lightbox?: boolean;
+  eager?: boolean;
+  position?: string;
+  alt?: string;
+  style?: string;
+}
+
+const {
+  slug,
+  sizes = '(max-width: 760px) 100vw, 50vw',
+  widths = [480, 800, 1200, 1600],
+  class: cls = '',
+  lightbox = true,
+  eager = false,
+  position = 'center',
+  alt,
+  style = '',
+} = Astro.props;
+
+const src = photo[slug];
+if (!src) throw new Error(`Unknown photo: ${slug}`);
+const caption = alt ?? captions[slug] ?? '';
+const full = lightbox ? await getImage({ src, width: 1800, format: 'webp' }) : null;
+const usable = widths.filter((w) => w <= src.width);
+---
+
+<figure
+  class={`ph ${cls}`}
+  style={style}
+  data-lightbox={lightbox ? '' : undefined}
+  data-full={full?.src}
+  data-caption={lightbox ? caption : undefined}
+  tabindex={lightbox ? 0 : undefined}
+  role={lightbox ? 'button' : undefined}
+  aria-label={lightbox ? `View photo: ${caption}` : undefined}
+>
+  <Picture
+    src={src}
+    alt={caption}
+    widths={usable.length ? usable : [src.width]}
+    sizes={sizes}
+    formats={['avif', 'webp']}
+    loading={eager ? 'eager' : 'lazy'}
+    fetchpriority={eager ? 'high' : undefined}
+    decoding="async"
+    style={`object-position:${position}`}
+  />
+  <slot />
+</figure>

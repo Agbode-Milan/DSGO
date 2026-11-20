@@ -1,0 +1,102 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Photo from '../components/Photo.astro';
+import Icon from '../components/Icon.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { galleryOrder, photo } from '../data/photos';
+---
+
+<Layout
+  title="Gallery"
+  description="Photos from DSGO outreaches at Agbogbloshie, Accra: distribution days, the Funfest, health checks and the volunteers who make it happen."
+  ogPhoto="funfest-dancing-kids"
+>
+  <section class="ghead">
+    <div class="wrap">
+      <p class="eyebrow reveal">Gallery</p>
+      <h1 class="reveal" style="--d:1">Moments we <span class="hl">get to keep.</span></h1>
+      <p class="lede reveal" style="--d:2">Outreach days, Funfest smiles, health checks and the people who make it all happen. Tap any photo to see it full size.</p>
+    </div>
+  </section>
+
+  <section class="gsec">
+    <div class="wrap">
+      <div class="masonry">
+        {
+          galleryOrder.map((slug, i) => (
+            <Photo
+              slug={slug}
+              class="mitem"
+              style={`aspect-ratio:${photo[slug].width}/${photo[slug].height}`}
+              sizes="(max-width: 600px) 50vw, (max-width: 1000px) 33vw, 25vw"
+              widths={[360, 600, 900]}
+              eager={i < 4}
+            >
+              <span class="mitem__zoom"><Icon name="plus" size={18} /></span>
+            </Photo>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <CtaBand slug="funfest-dancing-kids" title="Help us make the next set of memories." />
+</Layout>
+
+<style>
+  .ghead {
+    padding-block: clamp(1.5rem, 4vw, 4rem) 2rem;
+  }
+  .gsec {
+    padding-bottom: clamp(4rem, 8vw, 7rem);
+  }
+  .masonry {
+    columns: 2;
+    column-gap: 10px;
+  }
+  @media (min-width: 600px) {
+    .masonry {
+      columns: 3;
+      column-gap: 14px;
+    }
+  }
+  @media (min-width: 1000px) {
+    .masonry {
+      columns: 4;
+    }
+  }
+  .masonry :global(.mitem) {
+    break-inside: avoid;
+    margin-bottom: 10px;
+    border-radius: 16px;
+  }
+  @media (min-width: 600px) {
+    .masonry :global(.mitem) {
+      margin-bottom: 14px;
+    }
+  }
+  .mitem__zoom {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--ink);
+    opacity: 0;
+    transform: scale(0.8);
+    transition: 0.3s var(--ease);
+  }
+  .masonry :global(.mitem:hover) .mitem__zoom {
+    opacity: 1;
+    transform: none;
+  }
+  @media (hover: none) {
+    .mitem__zoom {
+      display: none;
+    }
+  }
+</style>

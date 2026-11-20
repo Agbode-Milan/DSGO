@@ -1,0 +1,14 @@
+{
+  "framework": "astro",
+  "installCommand": "npm install",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "redirects": [
+    { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/our-story.html", "destination": "/our-story", "permanent": true },
+    { "source": "/our-impact.html", "destination": "/our-impact", "permanent": true },
+    { "source": "/gallery.html", "destination": "/gallery", "permanent": true },
+    { "source": "/get-involved.html", "destination": "/get-involved", "permanent": true },
+    { "source": "/donate.html", "destination": "/donate", "permanent": true }
+  ]
+}

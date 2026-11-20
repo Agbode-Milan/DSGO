@@ -1,0 +1,175 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import Photo from '../components/Photo.astro';
+import Icon from '../components/Icon.astro';
+import Stats from '../components/Stats.astro';
+import CtaBand from '../components/CtaBand.astro';
+
+const stories = [
+  {
+    tag: 'Young mothers',
+    title: 'Standing with young mothers',
+    text: 'Many of the women we meet are raising children while working long hours with very little support around them. We try to make that load a little lighter, one outreach at a time.',
+    slugs: ['mother-baby-water', 'mother-child-crowd'],
+    pos: '50% 25%',
+  },
+  {
+    tag: 'Children',
+    title: 'A childhood, looked after',
+    text: 'Children are at the heart of every outreach: shared meals, new clothes, or simply having fun with other kids. Small comforts add up to something they carry with them.',
+    slugs: ['funfest-eating-8', 'funfest-dancing-kids'],
+    pos: '50% 40%',
+  },
+  {
+    tag: 'Community',
+    title: 'Neighbours helping neighbours',
+    text: 'Every outreach depends on people who choose to show up: volunteers, neighbours and local partners who give their time freely. That generosity is what makes the work possible.',
+    slugs: ['funfest-team-crowd-cheer', 'outreach-table-service'],
+    pos: '50% 40%',
+  },
+];
+---
+
+<Layout
+  title="Our Impact"
+  description="500+ people supported and 200+ families reached at Agbogbloshie, Accra. See the stories behind DSGO's numbers."
+  ogPhoto="funfest-crowd-cheering"
+>
+  <PageHero eyebrow="What we've delivered" slug="funfest-crowd-cheering">
+    <Fragment slot="title">Every number <span class="hl">has a name.</span></Fragment>
+    <p>Each figure below is someone we met, listened to and supported in person.</p>
+  </PageHero>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <Stats />
+      <p class="note reveal"><Icon name="sparkle" size={16} /> We refresh these after every outreach, so they keep growing as more people are reached.</p>
+    </div>
+  </section>
+
+  <section class="section stories">
+    <div class="wrap">
+      <p class="eyebrow reveal">Beyond the numbers</p>
+      <h2 class="reveal" style="--d:1">Stories, not statistics.</h2>
+      <p class="lede reveal" style="--d:2">We share these stories with consent, and always with dignity, never pity.</p>
+
+      <div class="srows">
+        {
+          stories.map((s, i) => (
+            <article class:list={['srow', { flip: i % 2 === 1 }]}>
+              <div class="srow__media">
+                <Photo slug={s.slugs[0]} class="reveal" sizes="(max-width: 860px) 70vw, 30vw" position={s.pos} />
+                <Photo slug={s.slugs[1]} class="reveal srow__small" style="--d:1" sizes="(max-width: 860px) 45vw, 18vw" />
+              </div>
+              <div class="srow__copy">
+                <span class="tag reveal">{s.tag}</span>
+                <h3 class="reveal" style="--d:1">{s.title}</h3>
+                <p class="reveal" style="--d:2">{s.text}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section see">
+    <div class="wrap see__in">
+      <div>
+        <p class="eyebrow reveal">See it for yourself</p>
+        <h2 class="reveal" style="--d:1">Photos from every outreach.</h2>
+      </div>
+      <a href="/gallery" class="btn btn--navy reveal" style="--d:2"><Icon name="camera" /> Open the gallery</a>
+    </div>
+  </section>
+
+  <CtaBand slug="children-eating" title="Help us grow these numbers this December." text="Your support goes straight into the next outreach: more meals, more school bags, more families reached." />
+</Layout>
+
+<style>
+  .note {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    margin-top: 1.2rem;
+  }
+  .note :global(svg) {
+    color: var(--orange);
+    flex: none;
+  }
+  .stories {
+    background: var(--blush);
+  }
+  .srows {
+    display: grid;
+    gap: clamp(3rem, 7vw, 6rem);
+    margin-top: 3rem;
+  }
+  .srow {
+    display: grid;
+    gap: 2rem;
+    align-items: center;
+  }
+  .srow__media {
+    position: relative;
+    padding: 0 16% 12% 0;
+  }
+  .srow__media > :global(.ph:first-child) {
+    aspect-ratio: 4 / 3.6;
+    border-radius: 28px;
+  }
+  .srow__media :global(.srow__small) {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 44%;
+    aspect-ratio: 1;
+    border: 6px solid var(--blush);
+    border-radius: 24px;
+  }
+  .srow__copy p {
+    color: var(--ink-soft);
+    max-width: 46ch;
+    font-size: 1.08rem;
+  }
+  .srow__copy h3 {
+    font-size: clamp(1.7rem, 1.3rem + 1.6vw, 2.6rem);
+  }
+  .tag {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--orange);
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    margin-bottom: 1rem;
+  }
+  @media (min-width: 860px) {
+    .srow {
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+    }
+    .srow.flip .srow__media {
+      order: 2;
+    }
+  }
+  .see__in {
+    display: grid;
+    gap: 1.5rem;
+  }
+  .see h2 {
+    margin: 0;
+  }
+  @media (min-width: 860px) {
+    .see__in {
+      grid-template-columns: 1fr auto;
+      align-items: end;
+    }
+  }
+</style>

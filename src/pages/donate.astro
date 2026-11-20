@@ -1,0 +1,505 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Photo from '../components/Photo.astro';
+import Icon from '../components/Icon.astro';
+import GiveWidget from '../components/GiveWidget.astro';
+import { site, wa, giftTiers } from '../data/site';
+
+const items = [
+  { icon: 'shirt', title: 'Clothes', text: 'New or gently used clothing for adults and children.' },
+  { icon: 'book', title: 'Stationery', text: 'Books, pens, bags and other school supplies.' },
+  { icon: 'basket', title: 'Food', text: 'Non-perishable food that’s easy to share out.' },
+  { icon: 'gift', title: 'Toiletries & essentials', text: 'Soap, sanitary pads, baby items and household basics.' },
+];
+
+const more = [
+  { icon: 'card', title: 'Corporate sponsorship', text: 'Sponsor part or all of an outreach: transport, packaging, or a whole category of items.', cta: 'Enquire', msg: 'Hi DSGO! I’d like to ask about corporate sponsorship.' },
+  { icon: 'users', title: 'Run a collection drive', text: 'Churches, schools and community groups can collect items ahead of 26th December.', cta: 'Enquire', msg: 'Hi DSGO! We’d like to run a collection drive for the outreach.' },
+  { icon: 'hand', title: 'Give your time', text: 'Help sort, pack or hand out on the day. No money needed, just you.', cta: 'Sign up', href: '/get-involved#volunteer' },
+];
+
+const faqs = [
+  {
+    q: 'Where does my money actually go?',
+    a: 'Straight into the outreach: food, clothing, stationery and essentials for Kayayes, young mothers and their children at Agbogbloshie. We buy exactly what’s missing after item donations come in.',
+  },
+  {
+    q: 'How will I know my gift made a difference?',
+    a: 'We keep track of what comes in and how it’s used, and we share photos from every outreach in our gallery. Ask us on WhatsApp any time and we’ll tell you how it went.',
+  },
+  {
+    q: 'I live outside Ghana. Can I still give?',
+    a: 'Yes! Message us on WhatsApp and we’ll sort out the easiest way for you to give from wherever you are.',
+  },
+  {
+    q: 'Can I give items instead of money?',
+    a: 'Absolutely. Clothes, food, stationery, toiletries and children’s items are always needed. Use the form below and we’ll arrange pickup or drop-off.',
+  },
+];
+---
+
+<Layout
+  title="Donate"
+  description="Give to DSGO's 26th December outreach. GH₵50 gives a mother and child a warm meal; GH₵300 gives a young mother a full care bundle."
+  ogPhoto="mother-baby-water"
+  hideGiveBar
+>
+  <!-- Hero + give -->
+  <section class="dhero" id="give">
+    <div class="wrap dhero__grid">
+      <div class="dhero__copy">
+        <p class="eyebrow reveal">Give to the outreach</p>
+        <h1 class="reveal" style="--d:1">Give what you can. <span class="hl">It will reach someone.</span></h1>
+        <p class="lede reveal" style="--d:2">
+          Every gift goes straight into the 26th December outreach for Kayayes, young mothers and their children at Agbogbloshie.
+        </p>
+        <div class="dhero__face reveal" style="--d:3">
+          <Photo slug="mother-baby-water" sizes="(max-width: 960px) 40vw, 20vw" position="50% 22%" />
+          <p>For a mother carrying loads all day, outreach day means food, supplies and a little breathing room.<small>Agbogbloshie, Accra</small></p>
+        </div>
+      </div>
+      <div class="reveal" style="--d:1">
+        <GiveWidget id="donate-give" />
+        <div class="alt">
+          <a href={wa('Hi DSGO! I’m outside Ghana and would like to give. What’s the easiest way?')} target="_blank" rel="noopener"><Icon name="globe" size={18} /> Giving from abroad?</a>
+          <a href="#items"><Icon name="gift" size={18} /> Give items instead</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What it becomes -->
+  <section class="section becomes">
+    <div class="wrap">
+      <p class="eyebrow reveal">What your gift becomes</p>
+      <h2 class="reveal" style="--d:1">Real things, in real hands.</h2>
+      <div class="bgrid">
+        {
+          giftTiers.map((t, i) => (
+            <div class="bcard reveal" style={`--d:${i}`}>
+              <span class="bcard__amt">
+                <small>GH₵</small>
+                {t.amount}
+              </span>
+              <h3>{t.title}</h3>
+              <p>{t.impact}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Items -->
+  <section class="section items" id="items">
+    <div class="wrap items__grid">
+      <div>
+        <p class="eyebrow reveal">Give items</p>
+        <h2 class="reveal" style="--d:1">Got something to give? We’ll come and get it.</h2>
+        <p class="lede reveal" style="--d:2">These are always needed. Tell us what you have and we’ll sort out the details.</p>
+        <div class="ilist">
+          {
+            items.map((it, i) => (
+              <div class="iitem reveal" style={`--d:${i}`}>
+                <span class="iitem__ic"><Icon name={it.icon} size={24} /></span>
+                <span>
+                  <b>{it.title}</b>
+                  {it.text}
+                </span>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+      <div class="formcard reveal" style="--d:1">
+        <h3>Tell us what you have</h3>
+        <form data-wa-form="Hi DSGO! I’d like to donate items 🎁">
+          <div class="field">
+            <label for="d-name">Full name</label>
+            <input id="d-name" name="name" required autocomplete="name" />
+          </div>
+          <div class="field">
+            <label for="d-contact">Phone or email</label>
+            <input id="d-contact" name="contact" required autocomplete="tel" />
+          </div>
+          <div class="field">
+            <label for="d-type">Type of donation</label>
+            <select id="d-type" name="type" required>
+              <option value="">Choose one</option>
+              <option>Clothes</option>
+              <option>Stationery</option>
+              <option>Food</option>
+              <option>Toiletries</option>
+              <option>Children’s items</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="d-qty">What and roughly how much?</label>
+            <input id="d-qty" name="qty" placeholder="e.g. 2 bags of children’s clothes" />
+          </div>
+          <div class="field">
+            <label for="d-hand">How should we get it?</label>
+            <select id="d-hand" name="handover">
+              <option value="">Choose one</option>
+              <option>Please pick it up</option>
+              <option>I’ll drop it off</option>
+              <option>I’ll bring it to the outreach</option>
+              <option>Let’s discuss</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="d-msg">Message (optional)</label>
+            <textarea id="d-msg" name="message"></textarea>
+          </div>
+          <button class="btn btn--wa btn--block" type="submit"><Icon name="whatsapp" /> Send on WhatsApp</button>
+          <p class="form-note">This opens WhatsApp with your details filled in, so you just hit send.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- More -->
+  <section class="section more">
+    <div class="wrap">
+      <p class="eyebrow reveal">More ways to help</p>
+      <h2 class="reveal" style="--d:1">Sponsorship &amp; volunteering.</h2>
+      <div class="mgrid">
+        {
+          more.map((m, i) => (
+            <a class="mcard reveal" style={`--d:${i}`} href={m.href ?? wa(m.msg!)} target={m.href ? undefined : '_blank'} rel={m.href ? undefined : 'noopener'}>
+              <Icon name={m.icon} size={28} />
+              <h3>{m.title}</h3>
+              <p>{m.text}</p>
+              <span class="link-arrow">{m.cta}</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust + FAQ -->
+  <section class="section trust">
+    <div class="wrap trust__grid">
+      <div>
+        <div class="trust__badge reveal"><Icon name="shield" size={34} /></div>
+        <h2 class="reveal" style="--d:1">Every gift is tracked. Every outreach is shared.</h2>
+        <p class="reveal" style="--d:2">
+          We keep track of what’s received and how it’s used, and we post photos from every outreach in our <a href="/gallery">gallery</a>. Got a question before you give? Message us on WhatsApp at
+          <a href={wa('Hi DSGO! I have a question before I give.')} target="_blank" rel="noopener">{site.whatsappDisplay}</a>.
+        </p>
+      </div>
+      <div class="faq">
+        {
+          faqs.map((f, i) => (
+            <details class="reveal" style={`--d:${i}`} open={i === 0}>
+              <summary>
+                {f.q}
+                <Icon name="plus" size={20} />
+              </summary>
+              <p>{f.a}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .dhero {
+    padding-block: clamp(1rem, 3vw, 3rem) clamp(3rem, 6vw, 6rem);
+    background: linear-gradient(180deg, var(--cream), var(--blush));
+  }
+  .dhero__grid {
+    display: grid;
+    gap: 2rem;
+    align-items: center;
+  }
+  .dhero h1 {
+    font-size: clamp(2.3rem, 1.5rem + 3.6vw, 4.4rem);
+  }
+  .dhero__face {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 1.5rem;
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 0.8rem;
+    max-width: 460px;
+    box-shadow: var(--shadow);
+  }
+  .dhero__face :global(.ph) {
+    width: 92px;
+    height: 92px;
+    flex: none;
+    border-radius: 18px;
+  }
+  .dhero__face p {
+    margin: 0;
+    font-family: var(--display);
+    font-weight: 650;
+    font-size: 1.05rem;
+    line-height: 1.3;
+  }
+  .dhero__face small {
+    display: block;
+    font-family: var(--body);
+    font-weight: 500;
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+    margin-top: 0.35rem;
+  }
+  @media (max-width: 959px) {
+    .dhero__copy .lede,
+    .dhero__face {
+      display: none;
+    }
+    .dhero h1 {
+      margin-bottom: 0;
+    }
+  }
+  .alt {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.4rem 1.4rem;
+    margin-top: 1.1rem;
+  }
+  .alt a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 700;
+    color: var(--orange-deep);
+    text-decoration: none;
+  }
+  @media (min-width: 960px) {
+    .dhero__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+    }
+  }
+
+  .bgrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 2rem;
+  }
+  .bcard {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 1.3rem;
+    box-shadow: 0 1px 0 var(--line);
+  }
+  .bcard:nth-child(3) {
+    background: var(--orange);
+    color: #fff;
+  }
+  .bcard:nth-child(3) p,
+  .bcard:nth-child(3) .bcard__amt {
+    color: #fff;
+  }
+  .bcard__amt {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(2rem, 1.6rem + 1.6vw, 3rem);
+    letter-spacing: -0.04em;
+    color: var(--orange);
+    line-height: 1;
+    display: block;
+    margin-bottom: 0.8rem;
+  }
+  .bcard__amt small {
+    font-size: 0.45em;
+    vertical-align: 0.6em;
+    margin-right: 2px;
+  }
+  .bcard h3 {
+    font-size: 1.15rem;
+    margin-bottom: 0.3rem;
+  }
+  .bcard p {
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    margin: 0;
+    line-height: 1.45;
+  }
+  @media (min-width: 900px) {
+    .bgrid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .bcard {
+      padding: 1.8rem;
+    }
+  }
+
+  .items {
+    background: var(--paper);
+  }
+  .items__grid {
+    display: grid;
+    gap: 2.5rem;
+    align-items: start;
+  }
+  .ilist {
+    display: grid;
+    gap: 10px;
+    margin-top: 1.5rem;
+  }
+  .iitem {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1rem;
+    border-radius: 18px;
+    background: var(--cream);
+  }
+  .iitem > span:last-child {
+    display: grid;
+    color: var(--ink-soft);
+    font-size: 0.96rem;
+  }
+  .iitem b {
+    color: var(--ink);
+    font-size: 1.05rem;
+  }
+  .iitem__ic {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    background: var(--sun-soft);
+    color: var(--orange-deep);
+    flex: none;
+  }
+  .formcard {
+    background: #fff;
+    border-radius: 28px;
+    padding: clamp(1.3rem, 3vw, 2.2rem);
+    box-shadow: var(--shadow-lg);
+  }
+  .formcard h3 {
+    font-size: 1.7rem;
+  }
+  @media (min-width: 960px) {
+    .items__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+    .formcard {
+      position: sticky;
+      top: 100px;
+    }
+  }
+
+  .mgrid {
+    display: grid;
+    gap: 12px;
+    margin-top: 2rem;
+  }
+  .mcard {
+    display: grid;
+    gap: 0.3rem;
+    align-content: start;
+    padding: 1.6rem;
+    border-radius: var(--radius);
+    background: #fff;
+    text-decoration: none;
+    box-shadow: 0 1px 0 var(--line);
+    transition:
+      transform 0.3s var(--ease),
+      box-shadow 0.3s;
+  }
+  .mcard:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
+  }
+  .mcard > :global(svg) {
+    color: var(--orange);
+    margin-bottom: 0.6rem;
+  }
+  .mcard p {
+    color: var(--ink-soft);
+    font-size: 0.97rem;
+  }
+  @media (min-width: 860px) {
+    .mgrid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+  }
+
+  .trust {
+    background: var(--navy);
+    color: #fff;
+  }
+  .trust__grid {
+    display: grid;
+    gap: 2.5rem;
+  }
+  .trust p {
+    color: #d6d5ec;
+    max-width: 48ch;
+  }
+  .trust a {
+    color: var(--sun);
+    font-weight: 700;
+  }
+  .trust__badge {
+    display: grid;
+    place-items: center;
+    width: 66px;
+    height: 66px;
+    border-radius: 20px;
+    background: var(--sun);
+    color: var(--ink);
+    margin-bottom: 1.4rem;
+  }
+  .faq {
+    display: grid;
+    gap: 10px;
+  }
+  .faq details {
+    background: rgba(255, 255, 255, 0.07);
+    border-radius: 18px;
+    padding: 0 1.2rem;
+  }
+  .faq summary {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+    padding: 1.1rem 0;
+    font-weight: 700;
+    font-size: 1.05rem;
+    cursor: pointer;
+    list-style: none;
+  }
+  .faq summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq summary :global(svg) {
+    flex: none;
+    color: var(--sun);
+    transition: transform 0.3s var(--ease);
+  }
+  .faq details[open] summary :global(svg) {
+    transform: rotate(45deg);
+  }
+  .faq details p {
+    margin: 0 0 1.2rem;
+  }
+  @media (min-width: 860px) {
+    .trust__grid {
+      grid-template-columns: 1fr 1.1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+  }
+</style>
