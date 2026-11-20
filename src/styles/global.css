@@ -110,13 +110,6 @@ p {
   color: var(--orange-deep);
   margin-bottom: 1rem;
 }
-.eyebrow::before {
-  content: '';
-  width: 22px;
-  height: 3px;
-  border-radius: 3px;
-  background: currentColor;
-}
 
 .lede {
   font-size: clamp(1.12rem, 1rem + 0.5vw, 1.35rem);
