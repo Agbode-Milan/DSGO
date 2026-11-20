@@ -303,6 +303,7 @@ p {
 /* ── Forms ─────────────────────────────── */
 .field {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.4rem;
   margin-bottom: 1rem;
 }
@@ -321,6 +322,9 @@ p {
   border-radius: var(--radius-sm);
   padding: 0.85rem 1rem;
   min-height: 52px;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
   transition:
     border-color 0.2s,
     box-shadow 0.2s;

@@ -84,7 +84,7 @@ const firstSocial = Object.values(site.socials).find(Boolean);
   <!-- Partner -->
   <section class="section partner" id="partner">
     <div class="wrap partner__card">
-      <Photo slug="donation-boxes-medicine" class="partner__photo" sizes="(max-width: 860px) 100vw, 45vw" />
+      <Photo slug="volunteer-clothes" class="partner__photo" sizes="(max-width: 860px) 100vw, 45vw" />
       <div class="partner__copy">
         <p class="eyebrow reveal">02 · Partner</p>
         <h2 class="reveal" style="--d:1">Let’s do more, together.</h2>
@@ -153,6 +153,9 @@ const firstSocial = Object.values(site.socials).find(Boolean);
     display: grid;
     gap: 2.5rem;
     align-items: start;
+  }
+  .vol__grid > * {
+    min-width: 0;
   }
   .vol__copy p:not(.eyebrow) {
     color: var(--ink-soft);

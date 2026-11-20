@@ -54,7 +54,7 @@ const faqs = [
 <Layout
   title="Donate"
   description="Sponsor a child at the Child of Hope Funfest on 26 December. GH₵50 covers one child’s meal, Bible-story book and a day of play. Give by Mobile Money or bank transfer."
-  ogPhoto="mother-baby-water"
+  ogPhoto="same-child-greater-hope"
   hideGiveBar
 >
   <!-- Hero + give -->
@@ -182,6 +182,20 @@ const faqs = [
         </blockquote>
         <p class="book__meta reveal" style="--d:4">20 A4 pages · 1,000 copies · GH₵15,000 total</p>
       </div>
+      <div class="book__side">
+      <figure class="hope reveal">
+        <div class="hope__pair">
+          <div class="hope__one">
+            <Photo slug="toddler-walking" sizes="(max-width: 900px) 46vw, 22vw" position="50% 55%" alt="A little girl at the Funfest last year" />
+            <span class="hope__tag">Last year</span>
+          </div>
+          <div class="hope__one">
+            <Photo slug="girl-with-book" sizes="(max-width: 900px) 46vw, 22vw" position="50% 60%" alt="The same girl this year, holding her Child of Hope Bible-story book" />
+            <span class="hope__tag hope__tag--now">This year</span>
+          </div>
+        </div>
+        <figcaption><b>Same child. Greater hope.</b> One child, one book, eternal impact.</figcaption>
+      </figure>
       <div class="book__feats">
         {
           bookFeatures.map((f, i) => (
@@ -194,6 +208,7 @@ const faqs = [
             </div>
           ))
         }
+      </div>
       </div>
     </div>
   </section>
@@ -809,5 +824,57 @@ const faqs = [
     .bfeat {
       padding: 1.5rem;
     }
+  }
+
+  .book__side {
+    display: grid;
+    gap: 14px;
+  }
+  .hope {
+    margin: 0;
+    padding: 10px;
+    border-radius: 26px;
+    background: #fff;
+    box-shadow: var(--shadow);
+  }
+  .hope__pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .hope__one {
+    position: relative;
+  }
+  .hope__one :global(.ph) {
+    aspect-ratio: 3 / 4;
+    border-radius: 18px;
+  }
+  .hope__tag {
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    padding: 0.3rem 0.65rem;
+    border-radius: 999px;
+    background: var(--navy);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    pointer-events: none;
+  }
+  .hope__tag--now {
+    background: var(--orange);
+  }
+  .hope figcaption {
+    padding: 0.8rem 0.4rem 0.3rem;
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+  }
+  .hope figcaption b {
+    display: block;
+    font-family: var(--display);
+    font-size: 1.2rem;
+    color: var(--ink);
   }
 </style>
