@@ -1,6 +1,6 @@
 ---
 import Icon from './Icon.astro';
-import { giftTiers, site } from '../data/site';
+import { giftTiers, site, campaign } from '../data/site';
 
 interface Props {
   id?: string;
@@ -8,12 +8,14 @@ interface Props {
 }
 const { id = 'give-box', compact = false } = Astro.props;
 const featured = giftTiers.find((t) => t.featured) ?? giftTiers[0];
+const link = site.paymentLink;
 ---
 
-<div class:list={['give', { 'give--compact': compact }]} data-give data-link={site.paymentLink} id={id}>
+<div class:list={['give', { 'give--compact': compact }]} data-give data-link={link} data-per={campaign.perChild} id={id}>
   <div class="give__head">
-    <span class="give__tag"><Icon name="calendar" size={16} /> For 26th December</span>
-    <h3>Choose your gift</h3>
+    <span class="give__tag"><Icon name="calendar" size={16} /> Child of Hope Funfest · 26 Dec</span>
+    <h3>How many children will you send?</h3>
+    <p class="give__sub">GH₵{campaign.perChild} sponsors one child’s whole day.</p>
   </div>
 
   <fieldset class="give__tiers">
@@ -24,7 +26,7 @@ const featured = giftTiers.find((t) => t.featured) ?? giftTiers[0];
           <input type="radio" name="amt" value={t.amount} data-impact={t.impact} checked={t === featured} />
           <span class="tier__amt">
             <small>GH₵</small>
-            {t.amount}
+            {t.amount.toLocaleString()}
           </span>
           <span class="tier__title">{t.title}</span>
           {t.featured && <span class="tier__pop">Most loved</span>}
@@ -34,7 +36,7 @@ const featured = giftTiers.find((t) => t.featured) ?? giftTiers[0];
     <label class="tier tier--other">
       <input type="radio" name="amt" value="other" />
       <span class="tier__amt tier__amt--sm">Other</span>
-      <span class="tier__title">Your amount</span>
+      <span class="tier__title">Any amount</span>
     </label>
   </fieldset>
 
@@ -46,12 +48,64 @@ const featured = giftTiers.find((t) => t.featured) ?? giftTiers[0];
 
   <p class="give__impact" aria-live="polite"><Icon name="sparkle" size={18} /> <span data-impact>{featured.impact}</span></p>
 
-  <a href="/donate" class="btn btn--block give__btn" data-give-btn target="_blank" rel="noopener">
-    <Icon name="heart" /> Give <span data-give-amt>GH₵{featured.amount}</span>
-  </a>
+  {
+    link ? (
+      <a href={link} class="btn btn--block give__btn" data-give-btn target="_blank" rel="noopener">
+        <Icon name="heart" /> Give <span data-give-amt>GH₵{featured.amount}</span>
+      </a>
+    ) : (
+      <button type="button" class="btn btn--block give__btn" data-give-btn aria-expanded="false" aria-controls={`${id}-pay`}>
+        <Icon name="heart" /> Give <span data-give-amt>GH₵{featured.amount}</span>
+      </button>
+    )
+  }
+
+  {
+    !link && (
+      <div class="pay" id={`${id}-pay`} data-pay hidden>
+        <p class="pay__lead">
+          Send <b data-pay-amt>GH₵{featured.amount}</b> by either of these:
+        </p>
+        <div class="pay__card">
+          <span class="pay__kind"><Icon name="phone" size={18} /> Mobile Money</span>
+          <div class="pay__row">
+            <span>
+              <b class="pay__big">{site.momo.number}</b>
+              <small>{site.momo.name}</small>
+            </span>
+            <button type="button" class="pay__copy" data-copy={site.momo.number.replace(/\s/g, '')}>
+              <Icon name="copy" size={16} /> Copy
+            </button>
+          </div>
+          <span class="pay__ref">
+            Reference: <b>{site.momo.reference}</b>
+          </span>
+        </div>
+        <div class="pay__card">
+          <span class="pay__kind"><Icon name="bank" size={18} /> Bank transfer</span>
+          <div class="pay__row">
+            <span>
+              <b class="pay__big">{site.bank.account}</b>
+              <small>
+                {site.bank.name}
+                <br />
+                {site.bank.bank}
+              </small>
+            </span>
+            <button type="button" class="pay__copy" data-copy={site.bank.account}>
+              <Icon name="copy" size={16} /> Copy
+            </button>
+          </div>
+        </div>
+        <a class="btn btn--wa btn--block pay__done" data-pay-wa href="#" target="_blank" rel="noopener">
+          <Icon name="whatsapp" /> I’ve sent it, let DSGO know
+        </a>
+      </div>
+    )
+  }
   <p class="give__fine">
     <Icon name="shield" size={16} />
-    {site.paymentLink ? 'Secure payment by card or Mobile Money.' : 'Opens WhatsApp with your gift written in. We’ll send Mobile Money or bank details straight back.'}
+    {link ? 'Secure payment by card or Mobile Money.' : 'Every cedi goes into the Funfest. We’ll thank you personally on WhatsApp.'}
   </p>
 </div>
 
@@ -62,6 +116,11 @@ const featured = giftTiers.find((t) => t.featured) ?? giftTiers[0];
     padding: clamp(1.25rem, 3vw, 2rem);
     box-shadow: var(--shadow-lg);
     color: var(--ink);
+  }
+  .give__sub {
+    margin: -0.6rem 0 1.1rem;
+    color: var(--ink-soft);
+    font-size: 0.95rem;
   }
   .give__head h3 {
     margin: 0.6rem 0 1.1rem;
@@ -111,9 +170,6 @@ const featured = giftTiers.find((t) => t.featured) ?? giftTiers[0];
   }
   .tier:active {
     transform: scale(0.97);
-  }
-  .tier--other {
-    grid-column: span 2;
   }
   .tier input {
     position: absolute;
@@ -226,5 +282,92 @@ const featured = giftTiers.find((t) => t.featured) ?? giftTiers[0];
     flex: none;
     margin-top: 3px;
     color: var(--leaf);
+  }
+  .pay {
+    margin-top: 1rem;
+    display: grid;
+    gap: 0.6rem;
+    animation: payin 0.45s var(--ease);
+  }
+  @keyframes payin {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+  }
+  .pay[hidden] {
+    display: none;
+  }
+  .pay__lead {
+    margin: 0;
+    font-weight: 600;
+  }
+  .pay__lead b {
+    color: var(--orange-deep);
+  }
+  .pay__card {
+    display: grid;
+    gap: 0.5rem;
+    padding: 0.9rem 1rem;
+    border-radius: 16px;
+    background: var(--cream);
+  }
+  .pay__kind {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--orange-deep);
+  }
+  .pay__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .pay__row > span {
+    display: grid;
+    min-width: 0;
+  }
+  .pay__big {
+    font-family: var(--display);
+    font-size: 1.35rem;
+    letter-spacing: -0.01em;
+  }
+  .pay__row small {
+    color: var(--ink-soft);
+    font-size: 0.85rem;
+    line-height: 1.35;
+  }
+  .pay__ref {
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+  }
+  .pay__ref b {
+    color: var(--ink);
+  }
+  .pay__copy {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    min-height: 40px;
+    padding: 0 0.9rem;
+    border-radius: 999px;
+    border: 1.5px solid var(--line);
+    background: #fff;
+    font: 700 0.88rem var(--body);
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .pay__copy.done {
+    border-color: var(--leaf);
+    color: var(--leaf);
+  }
+  .pay__done {
+    margin-top: 0.2rem;
   }
 </style>

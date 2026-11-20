@@ -73,18 +73,23 @@ $$('[data-countdown]').forEach((el) => {
   const num = $('[data-days]', el);
   const label = $('[data-days-label]', el);
   if (num) num.textContent = days === 0 ? 'Today' : String(days);
-  if (label) label.textContent = days === 0 ? 'is outreach day' : days === 1 ? 'day to go' : 'days to go';
+  if (label) label.textContent = days === 0 ? 'is Funfest day!' : days === 1 ? 'day to go' : 'days to go';
   $$('[data-year]').forEach((y) => (y.textContent = String(target.getFullYear())));
 });
 
 /* ── Gift picker ──────────────────────────────── */
 $$<HTMLElement>('[data-give]').forEach((box) => {
   const link = box.dataset.link || '';
+  const per = Number(box.dataset.per) || 50;
   const radios = $$<HTMLInputElement>('input[name="amt"]', box);
   const custom = $<HTMLInputElement>('[data-custom]', box);
   const impact = $('[data-impact]', box);
-  const btn = $<HTMLAnchorElement>('[data-give-btn]', box);
+  const btn = $<HTMLElement>('[data-give-btn]', box);
   const btnAmt = $('[data-give-amt]', box);
+  const pay = $<HTMLElement>('[data-pay]', box);
+  const payAmt = $('[data-pay-amt]', box);
+  const payWa = $<HTMLAnchorElement>('[data-pay-wa]', box);
+  const kids = (n: number) => `${n} ${n === 1 ? 'child' : 'children'}`;
   const update = () => {
     const sel = radios.find((r) => r.checked);
     let amt = 0;
@@ -94,16 +99,22 @@ $$<HTMLElement>('[data-give]').forEach((box) => {
       text = sel.dataset.impact || '';
     } else {
       amt = Number(custom?.value) || 0;
-      text = amt
-        ? 'Every cedi goes straight into food, clothing and essentials for outreach day.'
-        : 'Type any amount. Every cedi counts.';
+      const n = Math.floor(amt / per);
+      text = !amt
+        ? `Type any amount. Every GH₵${per} brings one more child to the Funfest.`
+        : n >= 1
+          ? `That sponsors ${kids(n)} for the whole day. Thank you!`
+          : 'Every cedi helps. It goes straight into meals, books and games for the children.';
     }
+    const label = amt ? `GH₵${amt.toLocaleString()}` : '';
     box.classList.toggle('is-other', sel?.value === 'other');
     if (impact) impact.textContent = text;
-    if (btnAmt) btnAmt.textContent = amt ? `GH₵${amt.toLocaleString()}` : '';
-    if (btn) {
-      const msg = `Hi DSGO! I'd like to give${amt ? ` GH₵${amt.toLocaleString()}` : ''} towards the 26th December outreach. How do I send it?`;
-      btn.href = link || `https://wa.me/${WA}?text=${encodeURIComponent(msg)}`;
+    if (btnAmt) btnAmt.textContent = label;
+    if (payAmt) payAmt.textContent = label || 'your gift';
+    if (link && btn instanceof HTMLAnchorElement) btn.href = link;
+    if (payWa) {
+      const msg = `Hi DSGO! I’ve just sent${label ? ` ${label}` : ' a gift'} for the Child of Hope Funfest. God bless the children! 🙏`;
+      payWa.href = `https://wa.me/${WA}?text=${encodeURIComponent(msg)}`;
     }
   };
   radios.forEach((r) => r.addEventListener('change', () => {
@@ -118,8 +129,33 @@ $$<HTMLElement>('[data-give]').forEach((box) => {
       update();
     }
   });
+  if (pay && btn) {
+    btn.addEventListener('click', () => {
+      pay.hidden = false;
+      btn.setAttribute('aria-expanded', 'true');
+      pay.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'nearest' });
+    });
+  }
   update();
 });
+
+/* ── Copy buttons ─────────────────────────────── */
+$$<HTMLButtonElement>('[data-copy]').forEach((b) =>
+  b.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(b.dataset.copy || '');
+    } catch {
+      return;
+    }
+    const old = b.innerHTML;
+    b.textContent = 'Copied ✓';
+    b.classList.add('done');
+    setTimeout(() => {
+      b.innerHTML = old;
+      b.classList.remove('done');
+    }, 1800);
+  }),
+);
 
 /* ── Forms → WhatsApp ─────────────────────────── */
 $$<HTMLFormElement>('form[data-wa-form]').forEach((form) => {
@@ -140,7 +176,7 @@ $$<HTMLFormElement>('form[data-wa-form]').forEach((form) => {
 /* ── Share + copy ─────────────────────────────── */
 $$<HTMLButtonElement>('[data-share]').forEach((b) =>
   b.addEventListener('click', async () => {
-    const data = { title: 'Divine Selasi Global Outreach', text: 'Standing with Kayayes and young mothers in Accra. Take a look 👇', url: location.origin };
+    const data = { title: 'Divine Selasi Global Outreach', text: 'Help bring hope to 1,000 children in Agbogbloshie this Christmas. GH₵50 sponsors one child 👇', url: location.origin };
     if (navigator.share) return navigator.share(data).catch(() => {});
     await navigator.clipboard?.writeText(data.url);
     const old = b.innerHTML;

@@ -9,8 +9,8 @@ interface Props {
 }
 const {
   slug = 'funfest-crowd-reaching',
-  title = 'Someone is waiting for 26th December.',
-  text = 'Your gift, big or small, becomes a meal, a school bag or a warm outfit placed straight into someone’s hands.',
+  title = '1,000 children are waiting for 26 December.',
+  text = 'GH₵50 gives one child a hot meal, a Bible-story book of their own and a day full of joy. Who will you send?',
 } = Astro.props;
 ---
 
@@ -20,7 +20,7 @@ const {
     <h2 class="reveal">{title}</h2>
     <p class="reveal" style="--d:1">{text}</p>
     <div class="cta__btns reveal" style="--d:2">
-      <a href="/donate#give" class="btn btn--sun"><Icon name="heart" /> Give now</a>
+      <a href="/donate#give" class="btn btn--sun"><Icon name="heart" /> Sponsor a child</a>
       <a href="/get-involved#volunteer" class="btn btn--ghost">Volunteer with us</a>
     </div>
   </div>

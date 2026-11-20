@@ -7,10 +7,10 @@ import CtaBand from '../components/CtaBand.astro';
 import { site, wa } from '../data/site';
 
 const quick = [
-  { label: 'Outreach day', msg: 'Hi DSGO! I’d love to volunteer on outreach day (26th December).' },
-  { label: 'Sorting & packing', msg: 'Hi DSGO! I’d like to help with sorting and packing donations.' },
-  { label: 'Offer a skill', msg: 'Hi DSGO! I’d like to offer a skill (design, admin, photography, etc.).' },
-  { label: 'Year-round', msg: 'Hi DSGO! I’d like to help year-round, not just in December.' },
+  { label: 'Funfest day (26 Dec)', msg: 'Hi DSGO! I’d love to volunteer at the Child of Hope Funfest on 26 December.' },
+  { label: 'Packing & set-up', msg: 'Hi DSGO! I’d like to help pack gifts and set up for the Funfest.' },
+  { label: 'Offer a skill', msg: 'Hi DSGO! I’d like to offer a skill (health care, photography, design, music, etc.).' },
+  { label: 'Year-round', msg: 'Hi DSGO! I’d like to serve year-round, including The WinePress and The Seekers Tent.' },
 ];
 
 const firstSocial = Object.values(site.socials).find(Boolean);
@@ -18,16 +18,16 @@ const firstSocial = Object.values(site.socials).find(Boolean);
 
 <Layout
   title="Get Involved"
-  description="Volunteer, partner or spread the word. Join Divine Selasi Global Outreach and help us show up for Kayayes and young mothers in Accra."
+  description="Volunteer at the Child of Hope Funfest, partner with Divine Selasi Global Outreach, or pray and share. There’s a place for you in what God is doing in Agbogbloshie."
   ogPhoto="funfest-team-group-1"
 >
   <PageHero eyebrow="Join us" slug="funfest-team-member-dance" position="50% 30%">
-    <Fragment slot="title">You can be part of <span class="hl">the change.</span></Fragment>
-    <p>DSGO runs on people who show up, as volunteers, partners and champions. No special skills needed, just a big heart.</p>
+    <Fragment slot="title">There’s room for you <span class="hl">in this story.</span></Fragment>
+    <p>The Funfest runs on volunteers, partners and people who pray. No special skills needed, just a willing heart.</p>
     <div class="jumps">
       <a href="#volunteer" class="chip"><Icon name="hand" size={18} /> Volunteer</a>
       <a href="#partner" class="chip"><Icon name="handshake" size={18} /> Partner</a>
-      <a href="#share" class="chip"><Icon name="megaphone" size={18} /> Spread the word</a>
+      <a href="#share" class="chip"><Icon name="pray" size={18} /> Pray &amp; share</a>
     </div>
   </PageHero>
 
@@ -36,9 +36,9 @@ const firstSocial = Object.values(site.socials).find(Boolean);
     <div class="wrap vol__grid">
       <div class="vol__copy">
         <p class="eyebrow reveal">01 · Volunteer</p>
-        <h2 class="reveal" style="--d:1">Spend a day you’ll never forget.</h2>
+        <h2 class="reveal" style="--d:1">Spend 26 December where it really counts.</h2>
         <p class="reveal" style="--d:2">
-          Volunteers do everything from sorting and packing donations to travelling with us to Agbogbloshie on 26th December. All you need is time, energy and a willingness to show up.
+          Volunteers serve food, run games, help with health screenings, take photos, pray with families and pack gifts in the weeks before. Bring your energy and your love for people. We’ll find you a place.
         </p>
         <Photo slug="funfest-team-group-2" class="vol__photo reveal" style="--d:3" sizes="(max-width: 960px) 100vw, 45vw" />
       </div>
@@ -63,9 +63,10 @@ const firstSocial = Object.values(site.socials).find(Boolean);
             <label for="v-how">How would you like to help?</label>
             <select id="v-how" name="how" required>
               <option value="">Choose one</option>
-              <option>Outreach day (26 Dec)</option>
-              <option>Sorting &amp; packing</option>
-              <option>Skills-based (design, admin, etc.)</option>
+              <option>Funfest day (26 Dec)</option>
+              <option>Packing &amp; set-up</option>
+              <option>Health screenings</option>
+              <option>Skills-based (photography, design, music, etc.)</option>
               <option>Ongoing / year-round</option>
             </select>
           </div>
@@ -88,12 +89,15 @@ const firstSocial = Object.values(site.socials).find(Boolean);
         <p class="eyebrow reveal">02 · Partner</p>
         <h2 class="reveal" style="--d:1">Let’s do more, together.</h2>
         <p class="reveal" style="--d:2">
-          Businesses, churches, schools and organisations can partner with DSGO through in-kind donations, corporate sponsorship, or by hosting a collection drive for the December outreach.
+          Churches, businesses, schools and like-minded organisations can partner with us through sponsorship, in-kind gifts or a collection drive for the Child of Hope Funfest. Collaboration is one of our core values, and we’d love to work with you.
         </p>
-        <p class="reveal" style="--d:3">We’ll work with your team to agree what’s needed, when, and how your partnership will be recognised.</p>
-        <a href={wa('Hi DSGO! I’d like to talk about a partnership.')} target="_blank" rel="noopener" class="btn btn--sun reveal" style="--d:4">
-          <Icon name="handshake" /> Start a conversation
-        </a>
+        <p class="reveal" style="--d:3">We’ll agree together what’s needed, when, and how your support will be recognised.</p>
+        <div class="partner__btns reveal" style="--d:4">
+          <a href={wa('Hi DSGO! I’d like to talk about a partnership.')} target="_blank" rel="noopener" class="btn btn--sun">
+            <Icon name="handshake" /> Start a conversation
+          </a>
+          <a href={`mailto:${site.email}?subject=Partnership%20with%20DSGO`} class="btn btn--ghost"><Icon name="mail" /> Email us</a>
+        </div>
       </div>
     </div>
   </section>
@@ -101,35 +105,35 @@ const firstSocial = Object.values(site.socials).find(Boolean);
   <!-- Share -->
   <section class="section share" id="share">
     <div class="wrap">
-      <p class="eyebrow reveal">03 · Spread the word</p>
-      <h2 class="reveal" style="--d:1">Can’t give right now? Your voice still counts.</h2>
-      <p class="lede reveal" style="--d:2">Sharing DSGO costs nothing, and it works. Most of our volunteers found us through a friend.</p>
+      <p class="eyebrow reveal">03 · Pray &amp; share</p>
+      <h2 class="reveal" style="--d:1">Can’t give right now? You can still help.</h2>
+      <p class="lede reveal" style="--d:2">Prayer and a simple share cost nothing, and both make a real difference. Many of our volunteers found us through a friend.</p>
       <div class="share__grid">
-        <button type="button" class="sc sc--hot reveal" data-share>
+        <div class="sc sc--hot reveal">
+          <Icon name="pray" size={28} />
+          <b>Pray with us</b>
+          <span>For the children, their mothers and our team as we prepare for 26 December.</span>
+        </div>
+        <button type="button" class="sc reveal" style="--d:1" data-share>
           <Icon name="share" size={28} />
           <b>Share this site</b>
-          <span>Send DSGO to one person who’d care.</span>
+          <span>Send it to one person who would want to help.</span>
         </button>
-        <a class="sc reveal" style="--d:1" href={firstSocial || wa('Hi DSGO! Where can I follow you online?')} target="_blank" rel="noopener">
+        <a class="sc reveal" style="--d:2" href={firstSocial || wa('Hi DSGO! Where can I follow you online?')} target="_blank" rel="noopener">
           <Icon name="instagram" size={28} />
           <b>Follow along</b>
-          <span>Outreach updates, stories and photos.</span>
+          <span>{site.instagramHandle} for Funfest updates, stories and photos.</span>
         </a>
-        <div class="sc reveal" style="--d:2">
-          <Icon name="camera" size={28} />
-          <b>Tag us</b>
-          <span>Donated or volunteered? Post it and tag DSGO so others find us too.</span>
-        </div>
         <a class="sc reveal" style="--d:3" href="/our-story">
-          <Icon name="megaphone" size={28} />
-          <b>Talk about it</b>
-          <span>Mention DSGO at church, work or your community group.</span>
+          <Icon name="church" size={28} />
+          <b>Tell your church</b>
+          <span>Mention the Funfest at church, work or your fellowship group.</span>
         </a>
       </div>
     </div>
   </section>
 
-  <CtaBand slug="funfest-team-crowd-cheer" title="Ready to help?" text="Whether it’s a gift, a Saturday or a share, it all lands somewhere real." />
+  <CtaBand slug="funfest-team-crowd-cheer" title="Ready to help?" text="A gift, a day of your time, a prayer or a share: it all reaches a child in Agbogbloshie." />
 </Layout>
 
 <style>
@@ -221,6 +225,14 @@ const firstSocial = Object.values(site.socials).find(Boolean);
   }
   .partner__copy p:not(.eyebrow) {
     color: #d6d5ec;
+  }
+  .partner__btns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+  }
+  .partner__btns .btn--ghost {
+    color: #fff;
   }
   @media (min-width: 860px) {
     .partner__card {

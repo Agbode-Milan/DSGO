@@ -4,24 +4,26 @@ import PageHero from '../components/PageHero.astro';
 import Photo from '../components/Photo.astro';
 import Icon from '../components/Icon.astro';
 import CtaBand from '../components/CtaBand.astro';
+import Programmes from '../components/Programmes.astro';
+import { site, values } from '../data/site';
 
 const steps = [
   {
     when: 'Before',
-    title: 'Collect & sort',
-    text: 'In the weeks before, volunteers gather, sort and pack donated clothing, food, stationery and essentials, so every bag is ready to go.',
+    title: 'Gather & prepare',
+    text: 'For weeks beforehand, volunteers collect donations, pack gifts, pray over the day and print the Child of Hope Bible-story colouring books.',
     slug: 'donation-boxes-medicine',
   },
   {
     when: 'On the day',
-    title: 'Show up at Agbogbloshie',
-    text: 'We travel to Agbogbloshie and hand items directly to Kayayes and their children, in person and with conversation, never just a handout.',
+    title: 'Throw a funfair',
+    text: 'Hot meals, games, bouncy castles, horse rides, music, free health screenings and gifts, right in the heart of Agbogbloshie.',
     slug: 'outreach-distribution-crowd',
   },
   {
     when: 'After',
-    title: 'Record & learn',
-    text: 'We note what was given and to whom, so next year’s outreach, and any support in between, can do even more good.',
+    title: 'Keep hope going',
+    text: 'We follow up with families, share what your gifts made possible, and work towards skills training that helps Kayayei mothers earn a better living.',
     slug: 'outreach-bp-smiles',
   },
 ];
@@ -29,12 +31,12 @@ const steps = [
 
 <Layout
   title="Our Story"
-  description="How Divine Selasi Global Outreach began, who we serve at Agbogbloshie, Accra, and why we show up every 26th December."
+  description="Divine Selasi Global Outreach is a Christian non-profit founded in Ghana in 2022 to light up the world with the love of Jesus, through the Child of Hope Funfest, The WinePress and The Seekers Tent."
   ogPhoto="tiedye-group-3"
 >
   <PageHero eyebrow="Who we are" slug="tiedye-group-3" position="50% 40%">
-    <Fragment slot="title">Built around <span class="hl">one community.</span></Fragment>
-    <p>Divine Selasi Global Outreach began with a simple belief: real help works best when it’s close, consistent and given with dignity.</p>
+    <Fragment slot="title">Lighting up the world <span class="hl">with the love of Jesus.</span></Fragment>
+    <p>Divine Selasi Global Outreach is a Christian non-profit founded in Ghana in {site.founded}. We exist to touch lives, spread love and bring hope to the people who need it most.</p>
   </PageHero>
 
   <!-- Mission -->
@@ -45,12 +47,13 @@ const steps = [
       </div>
       <div>
         <p class="eyebrow reveal">Our mission</p>
-        <h2 class="reveal" style="--d:1">Practical help, placed straight into people’s hands.</h2>
-        <p class="reveal" style="--d:2">
-          We exist to provide practical support to less privileged and vulnerable people, with a special focus on Kayayes (head porters) at Agbogbloshie, Accra, and especially young mothers.
+        <h2 class="reveal" style="--d:1">Love you can see. Hope you can hold.</h2>
+        <p class="mission reveal" style="--d:2">
+          To light up the world with the love of Jesus by giving everyone the opportunity to experience the salvation and transformation Christ gives.
+          <cite>Inspired by Luke 4:18</cite>
         </p>
         <p class="reveal" style="--d:3">
-          We’re not asking you to give into the void. We connect people who want to help with people who truly need it, and we make sure what’s given actually arrives.
+          We do that two ways at once. We meet real, practical needs like food, health care and clothing, and we share the good news that every person is loved by God. One without the other would be only half the story.
         </p>
       </div>
     </div>
@@ -62,12 +65,12 @@ const steps = [
       <div class="serve__card">
         <div class="serve__copy">
           <p class="eyebrow reveal">Who we serve</p>
-          <h2 class="reveal" style="--d:1">Kayayes, and the children who depend on them.</h2>
+          <h2 class="reveal" style="--d:1">The Kayayei of Agbogbloshie, and their children.</h2>
           <p class="reveal" style="--d:2">
-            Kayayes are young women and girls, many of them migrants from the north, who earn a living carrying goods on their heads through Accra’s markets. Many are mothers, raising children through long, physically demanding days, often with nowhere safe to sleep.
+            Kayayei are young women and girls, many from northern Ghana, who earn a living carrying goods on their heads through Accra’s busiest markets. Many are mothers, raising little ones through long, exhausting days, often with nowhere safe to sleep.
           </p>
           <p class="reveal" style="--d:3">
-            Agbogbloshie has one of the largest communities of Kayayes in the city. That’s where we focus, coming back to the same faces year after year instead of moving on.
+            Agbogbloshie is home to one of the largest Kayayei communities in the city, and it is our focus for now. We keep coming back to the same families, year after year, so the hope we bring has room to grow.
           </p>
         </div>
         <div class="serve__photos">
@@ -78,26 +81,29 @@ const steps = [
     </div>
   </section>
 
-  <!-- Vision quote -->
+  <!-- Vision -->
   <section class="section vision">
     <div class="wrap">
       <p class="eyebrow reveal">Our vision</p>
       <blockquote class="reveal" style="--d:1">
-        A Ghana where <span class="scribble">dignity</span> isn’t conditional on income.
+        Whole lives, <span class="scribble">made new.</span>
       </blockquote>
       <p class="vision__sub reveal" style="--d:2">
-        We dream of a growing family of donors, volunteers and partners who treat supporting vulnerable communities as normal and dependable: not a once-a-year act of charity, but a relationship.
+        We long to see lives changed across Ghana and around the world, through care that reaches every part of a person: spiritual, physical and emotional, for believers and unbelievers alike.
       </p>
+      <p class="vision__ref reveal" style="--d:3">Isaiah 61:1–6</p>
     </div>
   </section>
+
+  <Programmes eyebrow="What we do" title="One ministry, three expressions." text="Everything we do flows from the same place: a desire to see people meet Jesus and be made whole." />
 
   <!-- Why 26 Dec -->
   <section class="section why26">
     <div class="wrap">
       <div class="why26__head">
-        <p class="eyebrow reveal">The annual outreach</p>
-        <h2 class="reveal" style="--d:1">Why 26th December?</h2>
-        <p class="lede reveal" style="--d:2">The day after Christmas is when families gather, and when the gap between those who have and those who don’t is easiest to see. We chose it on purpose.</p>
+        <p class="eyebrow reveal">Child of Hope Funfest</p>
+        <h2 class="reveal" style="--d:1">Why 26 December?</h2>
+        <p class="lede reveal" style="--d:2">The day after Christmas, when most families are gathered around full tables, we take the celebration to the children who would otherwise miss it.</p>
       </div>
       <ol class="steps">
         {
@@ -115,7 +121,28 @@ const steps = [
           ))
         }
       </ol>
-      <a href="/gallery" class="link-arrow reveal">See outreach day photos</a>
+      <a href="/gallery" class="link-arrow reveal">See Funfest photos</a>
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section class="section vals">
+    <div class="wrap">
+      <p class="eyebrow reveal">Our values</p>
+      <h2 class="reveal" style="--d:1">What we stand on.</h2>
+      <div class="vals__grid">
+        {
+          values.map((v, i) => (
+            <div class="val reveal" style={`--d:${i % 4}`}>
+              <span class="val__ic">
+                <Icon name={v.icon} size={24} />
+              </span>
+              <h3>{v.title}</h3>
+              <p>{v.text}</p>
+            </div>
+          ))
+        }
+      </div>
     </div>
   </section>
 
@@ -124,9 +151,9 @@ const steps = [
     <div class="wrap team__grid">
       <div>
         <p class="eyebrow reveal">The people behind DSGO</p>
-        <h2 class="reveal" style="--d:1">Hands-on, every single time.</h2>
+        <h2 class="reveal" style="--d:1">Ordinary people, serving an extraordinary God.</h2>
         <p class="reveal" style="--d:2">
-          DSGO is run by a small group of organisers and volunteers who turn up to every outreach themselves: sorting donations, setting up on the day and getting to know the people we serve. It’s hands-on work, done by people who care about getting it right.
+          DSGO is run by a small team of organisers and volunteers who are there in person at every outreach: sorting donations, serving food, praying with families and learning the names of the people we serve.
         </p>
         <a href="/get-involved" class="btn reveal" style="--d:3">Join the team <Icon name="arrow" /></a>
       </div>
@@ -138,7 +165,7 @@ const steps = [
     </div>
   </section>
 
-  <CtaBand slug="funfest-team-crowd-cheer" title="Want to be part of this story?" text="Give, volunteer or partner with us. There’s a seat at this table for you." />
+  <CtaBand slug="funfest-team-crowd-cheer" title="Want to be part of this story?" text="Give, serve, partner or pray with us. There’s a seat at this table for you." />
 </Layout>
 
 <style>
@@ -292,5 +319,75 @@ const steps = [
   .team__photos :global(.t1) {
     grid-column: span 2;
     aspect-ratio: 16 / 10;
+  }
+  .mission {
+    font-family: var(--display);
+    font-weight: 650;
+    font-size: clamp(1.2rem, 1.05rem + 0.6vw, 1.5rem);
+    line-height: 1.3;
+    color: var(--ink) !important;
+    padding-left: 1.1rem;
+    border-left: 4px solid var(--orange);
+  }
+  .mission cite {
+    display: block;
+    margin-top: 0.6rem;
+    font: 600 0.85rem var(--body);
+    font-style: normal;
+    color: var(--orange-deep);
+  }
+  .vision__ref {
+    margin-top: 1rem;
+    font-weight: 700;
+    color: var(--orange-deep);
+  }
+
+  .vals {
+    background: var(--paper);
+  }
+  .vals__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 2rem;
+  }
+  .val {
+    padding: 1.3rem;
+    border-radius: var(--radius);
+    background: var(--cream);
+  }
+  .val h3 {
+    font-size: 1.15rem;
+    margin-bottom: 0.35rem;
+  }
+  .val p {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 0.93rem;
+    line-height: 1.45;
+  }
+  .val__ic {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: var(--sun-soft);
+    color: var(--orange-deep);
+    margin-bottom: 0.9rem;
+  }
+  @media (max-width: 350px) {
+    .vals__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (min-width: 900px) {
+    .vals__grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .val {
+      padding: 1.6rem;
+    }
   }
 </style>

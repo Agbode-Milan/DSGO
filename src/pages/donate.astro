@@ -3,44 +3,57 @@ import Layout from '../layouts/Layout.astro';
 import Photo from '../components/Photo.astro';
 import Icon from '../components/Icon.astro';
 import GiveWidget from '../components/GiveWidget.astro';
-import { site, wa, giftTiers } from '../data/site';
+import { site, wa, campaign } from '../data/site';
+
+const pct = Math.min(100, Math.round((campaign.raised / campaign.goal) * 100));
 
 const items = [
-  { icon: 'shirt', title: 'Clothes', text: 'New or gently used clothing for adults and children.' },
-  { icon: 'book', title: 'Stationery', text: 'Books, pens, bags and other school supplies.' },
-  { icon: 'basket', title: 'Food', text: 'Non-perishable food that’s easy to share out.' },
-  { icon: 'gift', title: 'Toiletries & essentials', text: 'Soap, sanitary pads, baby items and household basics.' },
+  { icon: 'basket', title: 'Snacks, drinks & water', text: 'Bottled water, drinks and snacks for the children on the day.' },
+  { icon: 'shirt', title: 'Clothing', text: 'New or gently used clothes for children and their mothers.' },
+  { icon: 'book', title: 'Stationery & learning materials', text: 'Exercise books, pens, crayons and educational materials.' },
+  { icon: 'gift', title: 'Other essentials', text: 'Toiletries, sanitary items, baby items and anything else that directly helps a family.' },
+];
+
+const bookFeatures = [
+  { icon: 'bible', title: '13 Bible stories', text: 'Carefully chosen stories that teach timeless lessons.' },
+  { icon: 'sparkle', title: 'Colouring pages', text: 'Beautiful illustrations to colour in.' },
+  { icon: 'puzzle', title: 'Mazes & word puzzles', text: 'Build focus and reinforce what they learn.' },
+  { icon: 'heart', title: 'Memory verses', text: 'Plus matching games and more activities.' },
 ];
 
 const more = [
-  { icon: 'card', title: 'Corporate sponsorship', text: 'Sponsor part or all of an outreach: transport, packaging, or a whole category of items.', cta: 'Enquire', msg: 'Hi DSGO! I’d like to ask about corporate sponsorship.' },
-  { icon: 'users', title: 'Run a collection drive', text: 'Churches, schools and community groups can collect items ahead of 26th December.', cta: 'Enquire', msg: 'Hi DSGO! We’d like to run a collection drive for the outreach.' },
-  { icon: 'hand', title: 'Give your time', text: 'Help sort, pack or hand out on the day. No money needed, just you.', cta: 'Sign up', href: '/get-involved#volunteer' },
+  { icon: 'card', title: 'Corporate sponsorship', text: 'Sponsor a part of the Funfest, from meals to play equipment, or the whole day.', cta: 'Enquire', msg: 'Hi DSGO! I’d like to ask about sponsoring the Child of Hope Funfest.' },
+  { icon: 'church', title: 'Run a collection drive', text: 'Churches, schools and fellowships can collect items or funds ahead of 26 December.', cta: 'Enquire', msg: 'Hi DSGO! We’d like to run a collection drive for the Funfest.' },
+  { icon: 'hand', title: 'Give your time', text: 'Serve with us on the day or help pack beforehand. No money needed, just you.', cta: 'Sign up', href: '/get-involved#volunteer' },
 ];
 
 const faqs = [
   {
     q: 'Where does my money actually go?',
-    a: 'Straight into the outreach: food, clothing, stationery and essentials for Kayayes, young mothers and their children at Agbogbloshie. We buy exactly what’s missing after item donations come in.',
+    a: 'Straight into the Child of Hope Funfest. Each GH₵50 covers one child: GH₵25 for food and refreshments, GH₵15 for their Bible-story colouring book, and GH₵10 towards play equipment, games and event logistics.',
+  },
+  {
+    q: 'What does “CHOF” mean in the reference?',
+    a: 'It stands for Child of Hope Funfest. Adding “CHOF” and your name to your Mobile Money reference helps us match your gift and thank you personally.',
   },
   {
     q: 'How will I know my gift made a difference?',
-    a: 'We keep track of what comes in and how it’s used, and we share photos from every outreach in our gallery. Ask us on WhatsApp any time and we’ll tell you how it went.',
+    a: 'Send us a quick WhatsApp once you’ve given and we’ll thank you personally. After the Funfest we share photos and an update on what your gifts made possible.',
   },
   {
     q: 'I live outside Ghana. Can I still give?',
-    a: 'Yes! Message us on WhatsApp and we’ll sort out the easiest way for you to give from wherever you are.',
+    a: 'Yes. You can use the bank details above, or message us on WhatsApp and we’ll help you find the easiest way to give from wherever you are.',
   },
   {
     q: 'Can I give items instead of money?',
-    a: 'Absolutely. Clothes, food, stationery, toiletries and children’s items are always needed. Use the form below and we’ll arrange pickup or drop-off.',
+    a: 'Absolutely. Snacks, drinks, water, clothing, stationery and learning materials are all needed. Use the form above and we’ll arrange pick-up or drop-off.',
   },
 ];
 ---
 
 <Layout
   title="Donate"
-  description="Give to DSGO's 26th December outreach. GH₵50 gives a mother and child a warm meal; GH₵300 gives a young mother a full care bundle."
+  description="Sponsor a child at the Child of Hope Funfest on 26 December. GH₵50 covers one child’s meal, Bible-story book and a day of play. Give by Mobile Money or bank transfer."
   ogPhoto="mother-baby-water"
   hideGiveBar
 >
@@ -48,41 +61,136 @@ const faqs = [
   <section class="dhero" id="give">
     <div class="wrap dhero__grid">
       <div class="dhero__copy">
-        <p class="eyebrow reveal">Give to the outreach</p>
-        <h1 class="reveal" style="--d:1">Give what you can. <span class="hl">It will reach someone.</span></h1>
+        <p class="eyebrow reveal">Child of Hope Funfest {campaign.year}</p>
+        <h1 class="reveal" style="--d:1">GH₵50 gives a child <span class="hl">a day they’ll never forget.</span></h1>
         <p class="lede reveal" style="--d:2">
-          Every gift goes straight into the 26th December outreach for Kayayes, young mothers and their children at Agbogbloshie.
+          Help us welcome 1,000 children from the Kayayei community of Agbogbloshie this 26 December. Every cedi goes into the day.
         </p>
         <div class="dhero__face reveal" style="--d:3">
-          <Photo slug="mother-baby-water" sizes="(max-width: 960px) 40vw, 20vw" position="50% 22%" />
-          <p>For a mother carrying loads all day, outreach day means food, supplies and a little breathing room.<small>Agbogbloshie, Accra</small></p>
+          <Photo slug="funfest-eating-5" sizes="(max-width: 960px) 40vw, 20vw" position="50% 40%" />
+          <p>For a child in Agbogbloshie, the Funfest means a hot meal, a book of their own and a whole day of play.<small>Agbogbloshie, Accra</small></p>
         </div>
       </div>
       <div class="reveal" style="--d:1">
         <GiveWidget id="donate-give" />
         <div class="alt">
-          <a href={wa('Hi DSGO! I’m outside Ghana and would like to give. What’s the easiest way?')} target="_blank" rel="noopener"><Icon name="globe" size={18} /> Giving from abroad?</a>
+          <a href="#pay"><Icon name="bank" size={18} /> All payment details</a>
           <a href="#items"><Icon name="gift" size={18} /> Give items instead</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- What it becomes -->
-  <section class="section becomes">
+  <!-- Goal + breakdown -->
+  <section class="section goal">
     <div class="wrap">
-      <p class="eyebrow reveal">What your gift becomes</p>
-      <h2 class="reveal" style="--d:1">Real things, in real hands.</h2>
-      <div class="bgrid">
+      <div class="goal__head">
+        <div>
+          <p class="eyebrow reveal">The GH₵{campaign.goal.toLocaleString()} goal</p>
+          <h2 class="reveal" style="--d:1">1,000 children. GH₵50 each. <span class="hl">Every cedi counts.</span></h2>
+        </div>
+        <p class="reveal" style="--d:2">Our goal is to raise GH₵{campaign.goal.toLocaleString()} to bring hope, joy and the love of Christ to {campaign.children.toLocaleString()} children. Here’s exactly what your GH₵{campaign.perChild} does.</p>
+      </div>
+      {
+        campaign.raised > 0 && (
+          <div class="bar reveal">
+            <div class="bar__track">
+              <span style={`width:${pct}%`} />
+            </div>
+            <p>
+              <b>GH₵{campaign.raised.toLocaleString()}</b> raised of GH₵{campaign.goal.toLocaleString()} · {pct}%
+            </p>
+          </div>
+        )
+      }
+      <div class="split3">
         {
-          giftTiers.map((t, i) => (
+          campaign.breakdown.map((b, i) => (
             <div class="bcard reveal" style={`--d:${i}`}>
+              <span class="bcard__ic">
+                <Icon name={b.icon} size={26} />
+              </span>
               <span class="bcard__amt">
                 <small>GH₵</small>
-                {t.amount}
+                {b.amount}
               </span>
-              <h3>{t.title}</h3>
-              <p>{t.impact}</p>
+              <h3>{b.title}</h3>
+              <p>{b.text}</p>
+            </div>
+          ))
+        }
+        <div class="bcard bcard--total reveal" style="--d:3">
+          <span class="bcard__amt">
+            <small>GH₵</small>
+            {campaign.perChild}
+          </span>
+          <h3>= One child’s whole day</h3>
+          <p>A meal, a book of their own and a day full of joy.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How to pay -->
+  <section class="section pay2" id="pay">
+    <div class="wrap">
+      <p class="eyebrow reveal">How to give</p>
+      <h2 class="reveal" style="--d:1">Two simple ways to send your gift.</h2>
+      <div class="pay2__grid">
+        <div class="pcard2 reveal">
+          <span class="pcard2__kind"><Icon name="phone" size={22} /> Mobile Money</span>
+          <b class="pcard2__big">{site.momo.number}</b>
+          <dl>
+            <dt>Name</dt>
+            <dd>{site.momo.name}</dd>
+            <dt>Reference</dt>
+            <dd>{site.momo.reference}</dd>
+          </dl>
+          <button type="button" class="btn btn--block" data-copy={site.momo.number.replace(/\s/g, '')}><Icon name="copy" /> Copy number</button>
+        </div>
+        <div class="pcard2 reveal" style="--d:1">
+          <span class="pcard2__kind"><Icon name="bank" size={22} /> Bank transfer</span>
+          <b class="pcard2__big">{site.bank.account}</b>
+          <dl>
+            <dt>Account name</dt>
+            <dd>{site.bank.name}</dd>
+            <dt>Bank</dt>
+            <dd>{site.bank.bank}</dd>
+          </dl>
+          <button type="button" class="btn btn--navy btn--block" data-copy={site.bank.account}><Icon name="copy" /> Copy account number</button>
+        </div>
+      </div>
+      <p class="pay2__after reveal">
+        <Icon name="whatsapp" size={20} />
+        <span>Once you’ve sent it, <a href={wa('Hi DSGO! I’ve just sent a gift for the Child of Hope Funfest. 🙏')} target="_blank" rel="noopener">drop us a WhatsApp</a> so we can thank you personally.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- The book -->
+  <section class="section book">
+    <div class="wrap book__grid">
+      <div>
+        <p class="eyebrow reveal">GH₵15 of every gift</p>
+        <h2 class="reveal" style="--d:1">A book of their own.</h2>
+        <p class="reveal" style="--d:2">
+          Every child at the Funfest takes home the <b>Child of Hope Bible Stories &amp; Colouring Book</b>, created by DSGO. It brings 13 much-loved Bible stories to life, so children can discover God’s love, learn timeless lessons and meet the heroes of faith while they colour, play and learn.
+        </p>
+        <blockquote class="book__verse reveal" style="--d:3">
+          “I have no greater joy than to hear that my children are walking in the truth.”
+          <cite>3 John 1:4</cite>
+        </blockquote>
+        <p class="book__meta reveal" style="--d:4">20 A4 pages · 1,000 copies · GH₵15,000 total</p>
+      </div>
+      <div class="book__feats">
+        {
+          bookFeatures.map((f, i) => (
+            <div class="bfeat reveal" style={`--d:${i}`}>
+              <span class="bfeat__ic">
+                <Icon name={f.icon} size={24} />
+              </span>
+              <b>{f.title}</b>
+              <span>{f.text}</span>
             </div>
           ))
         }
@@ -94,14 +202,16 @@ const faqs = [
   <section class="section items" id="items">
     <div class="wrap items__grid">
       <div>
-        <p class="eyebrow reveal">Give items</p>
+        <p class="eyebrow reveal">In-kind donations</p>
         <h2 class="reveal" style="--d:1">Got something to give? We’ll come and get it.</h2>
-        <p class="lede reveal" style="--d:2">These are always needed. Tell us what you have and we’ll sort out the details.</p>
+        <p class="lede reveal" style="--d:2">Anything that directly benefits the children and their families is welcome. Tell us what you have and we’ll sort out the rest.</p>
         <div class="ilist">
           {
             items.map((it, i) => (
               <div class="iitem reveal" style={`--d:${i}`}>
-                <span class="iitem__ic"><Icon name={it.icon} size={24} /></span>
+                <span class="iitem__ic">
+                  <Icon name={it.icon} size={24} />
+                </span>
                 <span>
                   <b>{it.title}</b>
                   {it.text}
@@ -113,7 +223,7 @@ const faqs = [
       </div>
       <div class="formcard reveal" style="--d:1">
         <h3>Tell us what you have</h3>
-        <form data-wa-form="Hi DSGO! I’d like to donate items 🎁">
+        <form data-wa-form="Hi DSGO! I’d like to donate items for the Child of Hope Funfest 🎁">
           <div class="field">
             <label for="d-name">Full name</label>
             <input id="d-name" name="name" required autocomplete="name" />
@@ -126,17 +236,16 @@ const faqs = [
             <label for="d-type">Type of donation</label>
             <select id="d-type" name="type" required>
               <option value="">Choose one</option>
-              <option>Clothes</option>
-              <option>Stationery</option>
-              <option>Food</option>
-              <option>Toiletries</option>
-              <option>Children’s items</option>
+              <option>Snacks, drinks &amp; water</option>
+              <option>Clothing</option>
+              <option>Stationery &amp; learning materials</option>
+              <option>Toiletries &amp; essentials</option>
               <option>Other</option>
             </select>
           </div>
           <div class="field">
             <label for="d-qty">What and roughly how much?</label>
-            <input id="d-qty" name="qty" placeholder="e.g. 2 bags of children’s clothes" />
+            <input id="d-qty" name="qty" placeholder="e.g. 10 crates of bottled water" />
           </div>
           <div class="field">
             <label for="d-hand">How should we get it?</label>
@@ -144,7 +253,7 @@ const faqs = [
               <option value="">Choose one</option>
               <option>Please pick it up</option>
               <option>I’ll drop it off</option>
-              <option>I’ll bring it to the outreach</option>
+              <option>I’ll bring it on the day</option>
               <option>Let’s discuss</option>
             </select>
           </div>
@@ -163,7 +272,7 @@ const faqs = [
   <section class="section more">
     <div class="wrap">
       <p class="eyebrow reveal">More ways to help</p>
-      <h2 class="reveal" style="--d:1">Sponsorship &amp; volunteering.</h2>
+      <h2 class="reveal" style="--d:1">Sponsor, collect or serve.</h2>
       <div class="mgrid">
         {
           more.map((m, i) => (
@@ -184,10 +293,10 @@ const faqs = [
     <div class="wrap trust__grid">
       <div>
         <div class="trust__badge reveal"><Icon name="shield" size={34} /></div>
-        <h2 class="reveal" style="--d:1">Every gift is tracked. Every outreach is shared.</h2>
+        <h2 class="reveal" style="--d:1">Every cedi, faithfully used.</h2>
         <p class="reveal" style="--d:2">
-          We keep track of what’s received and how it’s used, and we post photos from every outreach in our <a href="/gallery">gallery</a>. Got a question before you give? Message us on WhatsApp at
-          <a href={wa('Hi DSGO! I have a question before I give.')} target="_blank" rel="noopener">{site.whatsappDisplay}</a>.
+          Stewardship is one of our core values. We’re a {site.status.charAt(0).toLowerCase() + site.status.slice(1)}, we keep track of every gift, and we share photos from every Funfest in our <a href="/gallery">gallery</a>. Got a question before you give? Message us on WhatsApp at
+          <a href={wa('Hi DSGO! I have a question before I give.')} target="_blank" rel="noopener">{site.whatsappDisplay}</a> or email <a href={`mailto:${site.email}`}>{site.email}</a>.
         </p>
       </div>
       <div class="faq">
@@ -280,61 +389,6 @@ const faqs = [
     .dhero__grid {
       grid-template-columns: 1fr 1fr;
       gap: 5rem;
-    }
-  }
-
-  .bgrid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-top: 2rem;
-  }
-  .bcard {
-    background: #fff;
-    border-radius: var(--radius);
-    padding: 1.3rem;
-    box-shadow: 0 1px 0 var(--line);
-  }
-  .bcard:nth-child(3) {
-    background: var(--orange);
-    color: #fff;
-  }
-  .bcard:nth-child(3) p,
-  .bcard:nth-child(3) .bcard__amt {
-    color: #fff;
-  }
-  .bcard__amt {
-    font-family: var(--display);
-    font-weight: 800;
-    font-size: clamp(2rem, 1.6rem + 1.6vw, 3rem);
-    letter-spacing: -0.04em;
-    color: var(--orange);
-    line-height: 1;
-    display: block;
-    margin-bottom: 0.8rem;
-  }
-  .bcard__amt small {
-    font-size: 0.45em;
-    vertical-align: 0.6em;
-    margin-right: 2px;
-  }
-  .bcard h3 {
-    font-size: 1.15rem;
-    margin-bottom: 0.3rem;
-  }
-  .bcard p {
-    color: var(--ink-soft);
-    font-size: 0.92rem;
-    margin: 0;
-    line-height: 1.45;
-  }
-  @media (min-width: 900px) {
-    .bgrid {
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-    }
-    .bcard {
-      padding: 1.8rem;
     }
   }
 
@@ -500,6 +554,260 @@ const faqs = [
       grid-template-columns: 1fr 1.1fr;
       gap: 5rem;
       align-items: start;
+    }
+  }
+  .goal__head {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .goal__head h2 {
+    margin: 0;
+  }
+  .goal__head > p {
+    color: var(--ink-soft);
+    max-width: 44ch;
+    margin: 0;
+  }
+  @media (min-width: 860px) {
+    .goal__head {
+      grid-template-columns: 1.3fr 1fr;
+      align-items: end;
+      gap: 3rem;
+    }
+  }
+  .bar {
+    margin-bottom: 1.5rem;
+  }
+  .bar__track {
+    height: 14px;
+    border-radius: 999px;
+    background: var(--blush);
+    overflow: hidden;
+  }
+  .bar__track span {
+    display: block;
+    height: 100%;
+    background: var(--orange);
+    border-radius: inherit;
+  }
+  .bar p {
+    margin: 0.6rem 0 0;
+    color: var(--ink-soft);
+  }
+  .split3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .bcard {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 1.3rem;
+    box-shadow: 0 1px 0 var(--line);
+  }
+  .bcard__ic {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 16px;
+    background: var(--sun-soft);
+    color: var(--orange-deep);
+    margin-bottom: 0.9rem;
+  }
+  .bcard__amt {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(2rem, 1.6rem + 1.6vw, 3rem);
+    letter-spacing: -0.04em;
+    color: var(--orange);
+    line-height: 1;
+    display: block;
+    margin-bottom: 0.6rem;
+  }
+  .bcard__amt small {
+    font-size: 0.45em;
+    vertical-align: 0.6em;
+    margin-right: 2px;
+  }
+  .bcard h3 {
+    font-size: 1.12rem;
+    margin-bottom: 0.3rem;
+  }
+  .bcard p {
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    margin: 0;
+    line-height: 1.45;
+  }
+  .bcard--total {
+    background: var(--orange);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .bcard--total .bcard__amt,
+  .bcard--total p {
+    color: #fff;
+  }
+  @media (min-width: 900px) {
+    .split3 {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .bcard {
+      padding: 1.8rem;
+    }
+  }
+
+  .pay2 {
+    background: var(--paper);
+  }
+  .pay2__grid {
+    display: grid;
+    gap: 14px;
+    margin-top: 2rem;
+  }
+  .pcard2 {
+    display: grid;
+    gap: 0.8rem;
+    align-content: start;
+    padding: clamp(1.3rem, 3vw, 2rem);
+    border-radius: 26px;
+    background: #fff;
+    box-shadow: var(--shadow);
+  }
+  .pcard2__kind {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--orange-deep);
+  }
+  .pcard2__big {
+    font-family: var(--display);
+    font-size: clamp(1.8rem, 1.4rem + 1.8vw, 2.6rem);
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    overflow-wrap: anywhere;
+  }
+  .pcard2 dl {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.35rem 1rem;
+    margin: 0 0 0.4rem;
+    font-size: 0.97rem;
+  }
+  .pcard2 dt {
+    color: var(--ink-soft);
+  }
+  .pcard2 dd {
+    margin: 0;
+    font-weight: 700;
+  }
+  .pay2__after {
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-start;
+    margin: 1.5rem 0 0;
+    color: var(--ink-soft);
+  }
+  .pay2__after :global(svg) {
+    flex: none;
+    color: #1fa855;
+    margin-top: 3px;
+  }
+  .pay2__after a {
+    color: var(--orange-deep);
+    font-weight: 700;
+  }
+  @media (min-width: 760px) {
+    .pay2__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+  }
+
+  .book {
+    background: var(--blush);
+  }
+  .book__grid {
+    display: grid;
+    gap: 2.5rem;
+    align-items: center;
+  }
+  .book__grid p:not(.eyebrow) {
+    color: var(--ink-soft);
+    max-width: 50ch;
+  }
+  .book__grid p b {
+    color: var(--ink);
+  }
+  .book__verse {
+    margin: 1.5rem 0;
+    padding-left: 1.1rem;
+    border-left: 4px solid var(--orange);
+    font-family: var(--display);
+    font-weight: 650;
+    font-size: clamp(1.15rem, 1rem + 0.5vw, 1.4rem);
+    line-height: 1.3;
+  }
+  .book__verse cite {
+    display: block;
+    margin-top: 0.5rem;
+    font: 600 0.85rem var(--body);
+    font-style: normal;
+    color: var(--orange-deep);
+  }
+  .book__grid .book__meta {
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: var(--ink);
+  }
+  .book__feats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .bfeat {
+    display: grid;
+    gap: 0.25rem;
+    align-content: start;
+    padding: 1.2rem;
+    border-radius: var(--radius);
+    background: #fff;
+  }
+  .bfeat b {
+    font-family: var(--display);
+    font-size: 1.12rem;
+  }
+  .bfeat > span:last-child {
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    line-height: 1.45;
+  }
+  .bfeat__ic {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: var(--sun-soft);
+    color: var(--orange-deep);
+    margin-bottom: 0.6rem;
+  }
+  @media (min-width: 900px) {
+    .book__grid {
+      grid-template-columns: 1.05fr 1fr;
+      gap: 5rem;
+    }
+    .bfeat {
+      padding: 1.5rem;
     }
   }
 </style>

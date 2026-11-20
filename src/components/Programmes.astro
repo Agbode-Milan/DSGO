@@ -1,0 +1,139 @@
+---
+import Icon from './Icon.astro';
+import Photo from './Photo.astro';
+import { programmes } from '../data/site';
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  text?: string;
+}
+const {
+  eyebrow = 'What we do',
+  title = 'Three ways we share the love of Jesus.',
+  text = 'The Child of Hope Funfest is where most of our giving goes, but it is one part of a wider ministry to the whole person: body, mind and spirit.',
+} = Astro.props;
+const [main, ...rest] = programmes;
+---
+
+<section class="section prog">
+  <div class="wrap">
+    <div class="prog__head">
+      <p class="eyebrow reveal">{eyebrow}</p>
+      <h2 class="reveal" style="--d:1">{title}</h2>
+      <p class="reveal" style="--d:2">{text}</p>
+    </div>
+    <div class="prog__grid">
+      <article class="pcard pcard--main reveal">
+        <Photo slug="funfest-crowd-cheering" class="pcard__ph" sizes="(max-width: 860px) 100vw, 50vw" />
+        <div class="pcard__body">
+          <span class="pcard__when"><Icon name={main.icon} size={18} /> {main.when}</span>
+          <h3>{main.name}</h3>
+          <p>{main.text}</p>
+          {main.href && <a href={main.href} class="btn">{main.cta} <Icon name="arrow" /></a>}
+        </div>
+      </article>
+      {
+        rest.map((p, i) => (
+          <article class="pcard reveal" style={`--d:${i + 1}`}>
+            <span class="pcard__ic">
+              <Icon name={p.icon} size={28} />
+            </span>
+            <span class="pcard__when">{p.when}</span>
+            <h3>{p.name}</h3>
+            <p>{p.text}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .prog__head {
+    max-width: 720px;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+  }
+  .prog__head p:not(.eyebrow) {
+    color: var(--ink-soft);
+    max-width: 56ch;
+  }
+  .prog__grid {
+    display: grid;
+    gap: 14px;
+  }
+  .pcard {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 1.6rem;
+    box-shadow: 0 1px 0 var(--line);
+  }
+  .pcard p {
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .pcard h3 {
+    margin-bottom: 0.45em;
+  }
+  .pcard__ic {
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 18px;
+    background: #e6e7f7;
+    color: var(--navy);
+    margin-bottom: 1.1rem;
+  }
+  .pcard:nth-child(3) .pcard__ic {
+    background: #e4f2ea;
+    color: var(--leaf);
+  }
+  .pcard__when {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--orange-deep);
+    margin-bottom: 0.5rem;
+  }
+  .pcard--main {
+    padding: 0;
+    overflow: hidden;
+    background: var(--navy);
+    color: #fff;
+  }
+  .pcard--main :global(.pcard__ph) {
+    aspect-ratio: 16 / 10;
+    border-radius: 0;
+  }
+  .pcard__body {
+    padding: 1.6rem;
+  }
+  .pcard--main p {
+    color: #d6d5ec;
+    margin-bottom: 1.4rem;
+  }
+  .pcard--main .pcard__when {
+    color: var(--sun);
+  }
+  @media (min-width: 860px) {
+    .prog__grid {
+      grid-template-columns: 1.3fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 18px;
+    }
+    .pcard--main {
+      grid-row: span 2;
+    }
+    .pcard {
+      padding: 2rem;
+    }
+    .pcard__body {
+      padding: 2rem;
+    }
+  }
+</style>

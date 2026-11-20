@@ -5,26 +5,40 @@ import Photo from '../components/Photo.astro';
 import Icon from '../components/Icon.astro';
 import Stats from '../components/Stats.astro';
 import CtaBand from '../components/CtaBand.astro';
+import { campaign } from '../data/site';
+
+const highlights = [
+  { icon: 'health', title: 'Free health screenings', text: 'Basic health checks and care for children and their families.' },
+  { icon: 'food', title: 'Hot Christmas meals & gifts', text: 'A proper festive meal, drinks, gifts and essential items to take home.' },
+  { icon: 'party', title: 'A real funfair', text: 'Games, bouncy castles, horse rides, music and entertainment.' },
+  { icon: 'bulb', title: 'Skills for mothers', text: 'Skills training and livelihood opportunities for Kayayei head porters.' },
+];
+
+const plan = [
+  { icon: 'food', title: 'Lunch & refreshments', text: 'For every one of the 1,000 children taking part.' },
+  { icon: 'music', title: 'Music, dance & games', text: 'Plus performances by the children themselves.' },
+  { icon: 'bible', title: 'A book of their own', text: 'Each child takes home our Child of Hope Bible-story colouring book.' },
+];
 
 const stories = [
   {
-    tag: 'Young mothers',
-    title: 'Standing with young mothers',
-    text: 'Many of the women we meet are raising children while working long hours with very little support around them. We try to make that load a little lighter, one outreach at a time.',
+    tag: 'Mothers',
+    title: 'Standing with mothers',
+    text: 'Many of the women we meet are raising children alone while carrying loads from dawn to dusk. At the Funfest they get a hot meal, a health check and a few hours where someone else looks after them for a change.',
     slugs: ['mother-baby-water', 'mother-child-crowd'],
     pos: '50% 25%',
   },
   {
     tag: 'Children',
-    title: 'A childhood, looked after',
-    text: 'Children are at the heart of every outreach: shared meals, new clothes, or simply having fun with other kids. Small comforts add up to something they carry with them.',
+    title: 'A childhood, celebrated',
+    text: 'Children are at the heart of every Funfest. For one day there are no loads to carry, only food to share, games to win, songs to sing and stories of a God who knows them by name.',
     slugs: ['funfest-eating-8', 'funfest-dancing-kids'],
     pos: '50% 40%',
   },
   {
-    tag: 'Community',
-    title: 'Neighbours helping neighbours',
-    text: 'Every outreach depends on people who choose to show up: volunteers, neighbours and local partners who give their time freely. That generosity is what makes the work possible.',
+    tag: 'Volunteers',
+    title: 'The body of Christ, at work',
+    text: 'Every Funfest depends on people who choose to show up: volunteers, churches and partners who give their time and gifts freely. Their love is what makes the day possible.',
     slugs: ['funfest-team-crowd-cheer', 'outreach-table-service'],
     pos: '50% 40%',
   },
@@ -33,18 +47,39 @@ const stories = [
 
 <Layout
   title="Our Impact"
-  description="500+ people supported and 200+ families reached at Agbogbloshie, Accra. See the stories behind DSGO's numbers."
+  description="500+ people supported and 200+ families reached in Agbogbloshie, Accra since 2022. See what happens at the Child of Hope Funfest and our plan for 1,000 children in 2026."
   ogPhoto="funfest-crowd-cheering"
 >
-  <PageHero eyebrow="What we've delivered" slug="funfest-crowd-cheering">
+  <PageHero eyebrow="Our impact" slug="funfest-crowd-cheering">
     <Fragment slot="title">Every number <span class="hl">has a name.</span></Fragment>
-    <p>Each figure below is someone we met, listened to and supported in person.</p>
+    <p>Since 2022 we’ve kept going back to the same community in Agbogbloshie. Here is what God has done through people like you.</p>
   </PageHero>
 
   <section class="section" style="padding-top:0">
     <div class="wrap">
       <Stats />
-      <p class="note reveal"><Icon name="sparkle" size={16} /> We refresh these after every outreach, so they keep growing as more people are reached.</p>
+      <p class="note reveal"><Icon name="sparkle" size={16} /> We update these after every Funfest, so they keep growing as more families are reached.</p>
+    </div>
+  </section>
+
+  <!-- Every Christmas -->
+  <section class="section hl4">
+    <div class="wrap">
+      <p class="eyebrow reveal">Every Christmas</p>
+      <h2 class="reveal" style="--d:1">What happens at the Funfest.</h2>
+      <div class="hl4__grid">
+        {
+          highlights.map((h, i) => (
+            <div class="hcard reveal" style={`--d:${i}`}>
+              <span class="hcard__ic">
+                <Icon name={h.icon} size={26} />
+              </span>
+              <h3>{h.title}</h3>
+              <p>{h.text}</p>
+            </div>
+          ))
+        }
+      </div>
     </div>
   </section>
 
@@ -74,17 +109,46 @@ const stories = [
     </div>
   </section>
 
+  <!-- 2026 plan -->
+  <section class="section plan">
+    <div class="wrap plan__grid">
+      <div>
+        <p class="eyebrow reveal">The {campaign.year} edition</p>
+        <h2 class="reveal" style="--d:1">This year: <span class="hl">1,000 children.</span></h2>
+        <p class="reveal" style="--d:2">
+          Our biggest Funfest yet. We want to inspire hope and help children grow in every way by giving 1,000 children from the Kayayei community of Agbogbloshie a day that is educational, faith-filled and full of fun.
+        </p>
+        <a href="/donate#give" class="btn btn--sun reveal" style="--d:3"><Icon name="heart" /> Sponsor a child · GH₵{campaign.perChild}</a>
+      </div>
+      <ul class="plan__list">
+        {
+          plan.map((p, i) => (
+            <li class="reveal" style={`--d:${i}`}>
+              <span class="plan__ic">
+                <Icon name={p.icon} size={24} />
+              </span>
+              <span>
+                <b>{p.title}</b>
+                {p.text}
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
   <section class="section see">
     <div class="wrap see__in">
       <div>
         <p class="eyebrow reveal">See it for yourself</p>
-        <h2 class="reveal" style="--d:1">Photos from every outreach.</h2>
+        <h2 class="reveal" style="--d:1">Photos from every Funfest.</h2>
       </div>
       <a href="/gallery" class="btn btn--navy reveal" style="--d:2"><Icon name="camera" /> Open the gallery</a>
     </div>
   </section>
 
-  <CtaBand slug="children-eating" title="Help us grow these numbers this December." text="Your support goes straight into the next outreach: more meals, more school bags, more families reached." />
+  <CtaBand slug="children-eating" title="Help us reach 1,000 children this December." text="GH₵50 sends one child to the Funfest: a hot meal, a Bible-story book and a whole day of joy." />
 </Layout>
 
 <style>
@@ -170,6 +234,116 @@ const stories = [
     .see__in {
       grid-template-columns: 1fr auto;
       align-items: end;
+    }
+  }
+  .hl4 {
+    padding-top: 0;
+  }
+  .hl4__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 2rem;
+  }
+  .hcard {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 1.3rem;
+    box-shadow: 0 1px 0 var(--line);
+  }
+  .hcard h3 {
+    font-size: 1.15rem;
+    margin-bottom: 0.35rem;
+  }
+  .hcard p {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 0.93rem;
+    line-height: 1.45;
+  }
+  .hcard__ic {
+    display: grid;
+    place-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 16px;
+    background: var(--sun-soft);
+    color: var(--orange-deep);
+    margin-bottom: 1rem;
+  }
+  @media (max-width: 350px) {
+    .hl4__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (min-width: 900px) {
+    .hl4__grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .hcard {
+      padding: 1.7rem;
+    }
+  }
+
+  .plan {
+    background: var(--navy);
+    color: #fff;
+  }
+  .plan .eyebrow {
+    color: var(--sun);
+  }
+  .plan .hl {
+    color: var(--sun);
+  }
+  .plan__grid {
+    display: grid;
+    gap: 2.5rem;
+    align-items: center;
+  }
+  .plan__grid p:not(.eyebrow) {
+    color: #d6d5ec;
+    max-width: 46ch;
+  }
+  .plan__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 10px;
+  }
+  .plan__list li {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1.1rem 1.2rem;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.07);
+  }
+  .plan__list li > span:last-child {
+    display: grid;
+    color: #d6d5ec;
+    font-size: 0.97rem;
+  }
+  .plan__list b {
+    color: #fff;
+    font-family: var(--display);
+    font-size: 1.15rem;
+  }
+  .plan__ic {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: var(--sun);
+    color: var(--ink);
+  }
+  @media (min-width: 860px) {
+    .plan__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
     }
   }
 </style>

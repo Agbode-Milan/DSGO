@@ -31,7 +31,7 @@ const nav = [
   { href: '/get-involved', label: 'Get Involved' },
 ];
 const og = await getImage({ src: photo[ogPhoto], width: 1200, height: 630, format: 'jpg', fit: 'cover' });
-const fullTitle = path === '/' ? `${site.name} | Standing with Kayayes in Accra` : `${title} | ${site.name}`;
+const fullTitle = path === '/' ? `${site.name} | Child of Hope Funfest, Accra` : `${title} | ${site.name}`;
 const canonical = new URL(path, site.url).href;
 const socials = Object.entries(site.socials).filter(([, url]) => url);
 const giveHref = '/donate#give';
@@ -92,7 +92,7 @@ const giveHref = '/donate#give';
         {nav.map((n, i) => <a href={n.href} style={`--i:${i + 1}`} aria-current={path === n.href ? 'page' : undefined}>{n.label}</a>)}
       </nav>
       <div class="menu__foot wrap">
-        <a href={giveHref} class="btn btn--block"><Icon name="heart" /> Give to the December outreach</a>
+        <a href={giveHref} class="btn btn--block"><Icon name="heart" /> Sponsor a child for 26 Dec</a>
         <a href={wa('Hi DSGO! 👋')} class="btn btn--ghost btn--block" target="_blank" rel="noopener"><Icon name="whatsapp" /> Chat on WhatsApp</a>
       </div>
     </div>
@@ -105,7 +105,8 @@ const giveHref = '/donate#give';
       <div class="wrap ftr__grid">
         <div class="ftr__brand">
           <Image src={logo} alt={site.name} width={190} class="ftr__logo" />
-          <p>Showing up for Kayayes, young mothers and their children at Agbogbloshie, Accra, and for vulnerable communities across Ghana.</p>
+          <p>Lighting up the world with the love of Jesus, starting with the children and mothers of the Kayayei community in Agbogbloshie, Accra.</p>
+          <p class="ftr__reg">{site.status} · Founded {site.founded}</p>
           {socials.length > 0 && (
             <div class="ftr__social">
               {socials.map(([name, url]) => (
@@ -126,7 +127,7 @@ const giveHref = '/donate#give';
         <div>
           <h4>Give</h4>
           <ul>
-            <li><a href="/donate#give">Give money</a></li>
+            <li><a href="/donate#give">Sponsor a child</a></li>
             <li><a href="/donate#items">Give items</a></li>
             <li><a href="/get-involved#volunteer">Volunteer</a></li>
             <li><a href="/get-involved#partner">Partner with us</a></li>
@@ -137,13 +138,15 @@ const giveHref = '/donate#give';
           <ul>
             <li class="ftr__ico"><Icon name="pin" size={18} /> {site.location}</li>
             <li><a class="ftr__ico" href={wa('Hi DSGO! 👋')} target="_blank" rel="noopener"><Icon name="whatsapp" size={18} /> {site.whatsappDisplay}</a></li>
-            <li><a class="ftr__ico" href={wa('Hi DSGO! Please add me to your outreach updates.')} target="_blank" rel="noopener"><Icon name="sparkle" size={18} /> Get outreach updates</a></li>
+            <li><a class="ftr__ico" href={`tel:${site.phone}`}><Icon name="call" size={18} /> {site.phoneDisplay}</a></li>
+            <li><a class="ftr__ico" href={`mailto:${site.email}`}><Icon name="mail" size={18} /> {site.email}</a></li>
+            {site.socials.instagram && <li><a class="ftr__ico" href={site.socials.instagram} target="_blank" rel="noopener"><Icon name="instagram" size={18} /> {site.instagramHandle}</a></li>}
           </ul>
         </div>
       </div>
       <div class="wrap ftr__base">
         <span>© {new Date().getFullYear()} {site.name}</span>
-        <span>Made with love in Accra</span>
+        <span>“The Spirit of the Lord is upon me…” Isaiah 61:1</span>
       </div>
     </footer>
 
@@ -152,7 +155,7 @@ const giveHref = '/donate#give';
         <div class="givebar" data-givebar aria-hidden="true">
           <a href={giveHref} class="givebar__main" tabindex="-1">
             <span class="givebar__pulse"><Icon name="heart" /></span>
-            <span class="givebar__txt"><b>Help a family on 26 Dec</b><small>Gifts from GH₵50</small></span>
+            <span class="givebar__txt"><b>Sponsor a child</b><small>GH₵50 · Funfest, 26 Dec</small></span>
             <span class="givebar__go">Give</span>
           </a>
           <a href={wa('Hi DSGO! 👋')} class="givebar__wa" target="_blank" rel="noopener" tabindex="-1" aria-label="WhatsApp"><Icon name="whatsapp" /></a>
@@ -368,6 +371,13 @@ const giveHref = '/donate#give';
   .ftr__brand p {
     max-width: 36ch;
     color: #bdbbd2;
+  }
+  .ftr__brand .ftr__reg {
+    font-size: 0.85rem;
+    color: #9896b8;
+  }
+  .ftr__ico {
+    overflow-wrap: anywhere;
   }
   .ftr h4 {
     font-size: 0.82rem;
