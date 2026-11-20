@@ -29,8 +29,9 @@ import { galleryOrder, photo } from '../data/photos';
               class="mitem"
               style={`aspect-ratio:${photo[slug].width}/${photo[slug].height}`}
               sizes="(max-width: 600px) 50vw, (max-width: 1000px) 33vw, 25vw"
-              widths={[360, 600, 900]}
-              eager={i < 4}
+              widths={[320, 480, 640]}
+              quality={60}
+              eager={i < 6}
             >
               <span class="mitem__zoom"><Icon name="plus" size={18} /></span>
             </Photo>

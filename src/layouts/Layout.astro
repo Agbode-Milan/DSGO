@@ -563,6 +563,8 @@ const giveHref = '/donate#give';
     place-items: center;
     padding: 64px 12px;
     animation: fade 0.25s;
+    touch-action: none;
+    overscroll-behavior: contain;
   }
   .lb[hidden] {
     display: none;
@@ -579,7 +581,9 @@ const giveHref = '/donate#give';
     max-height: calc(100dvh - 170px);
     border-radius: 12px;
     object-fit: contain;
-    touch-action: pan-y;
+    will-change: transform, opacity;
+    user-select: none;
+    -webkit-user-drag: none;
   }
   .lb__fig figcaption {
     color: #fff;

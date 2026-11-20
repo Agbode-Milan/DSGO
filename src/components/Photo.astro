@@ -12,6 +12,7 @@ interface Props {
   position?: string;
   alt?: string;
   style?: string;
+  quality?: number;
 }
 
 const {
@@ -24,12 +25,13 @@ const {
   position = 'center',
   alt,
   style = '',
+  quality,
 } = Astro.props;
 
 const src = photo[slug];
 if (!src) throw new Error(`Unknown photo: ${slug}`);
 const caption = alt ?? captions[slug] ?? '';
-const full = lightbox ? await getImage({ src, width: 1800, format: 'webp' }) : null;
+const full = lightbox ? await getImage({ src, width: Math.min(1400, src.width), format: 'webp', quality: 72 }) : null;
 const usable = widths.filter((w) => w <= src.width);
 ---
 
@@ -49,6 +51,7 @@ const usable = widths.filter((w) => w <= src.width);
     widths={usable.length ? usable : [src.width]}
     sizes={sizes}
     formats={['avif', 'webp']}
+    quality={quality}
     loading={eager ? 'eager' : 'lazy'}
     fetchpriority={eager ? 'high' : undefined}
     decoding="async"

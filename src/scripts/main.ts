@@ -155,23 +155,81 @@ if (lb) {
   const img = $<HTMLImageElement>('[data-lb-img]', lb)!;
   const cap = $('[data-lb-cap]', lb)!;
   const count = $('[data-lb-count]', lb)!;
+  const loaded = new Set<string>();
   let items: HTMLElement[] = [];
   let i = 0;
   let last: HTMLElement | null = null;
+  let busy = false;
+  const ease = 'cubic-bezier(0.22, 1, 0.36, 1)';
+  const dur = (ms: number) => (reduceMotion ? 0 : ms);
+  const wrapI = (n: number) => (n + items.length) % items.length;
+  const fullOf = (el: HTMLElement) => el.dataset.full || el.querySelector('img')?.currentSrc || '';
+  const thumbOf = (el: HTMLElement) => el.querySelector('img')?.currentSrc || '';
+
+  // Warm the cache so neighbours open instantly.
+  const preload = (n: number) => {
+    const src = fullOf(items[wrapI(n)]);
+    if (!src || loaded.has(src)) return;
+    const p = new Image();
+    p.decoding = 'async';
+    p.onload = () => loaded.add(src);
+    p.src = src;
+  };
+
+  // Show the (already loaded) thumbnail at once, then swap in the sharp version.
   const show = (n: number) => {
-    i = (n + items.length) % items.length;
+    i = wrapI(n);
     const it = items[i];
-    img.src = it.dataset.full || it.querySelector('img')?.currentSrc || '';
+    const full = fullOf(it);
     img.alt = it.dataset.caption || '';
     cap.textContent = it.dataset.caption || '';
     count.textContent = `${i + 1} / ${items.length}`;
+    if (loaded.has(full)) img.src = full;
+    else {
+      img.src = thumbOf(it) || full;
+      const p = new Image();
+      p.onload = () => {
+        loaded.add(full);
+        if (items[i] === it) img.src = full;
+      };
+      p.src = full;
+    }
+    preload(i + 1);
+    preload(i - 1);
   };
+
+  // Slide out in the swipe direction, then slide the next photo in.
+  const go = async (delta: number, fromX = 0) => {
+    if (busy || items.length < 2) return;
+    busy = true;
+    const w = Math.min(innerWidth, 900);
+    await img.animate(
+      [
+        { transform: `translateX(${fromX}px)`, opacity: 1 - Math.min(Math.abs(fromX) / w, 0.6) },
+        { transform: `translateX(${-delta * w * 0.55}px)`, opacity: 0 },
+      ],
+      { duration: dur(200), easing: 'ease-in' },
+    ).finished;
+    show(i + delta);
+    img.style.transform = '';
+    img.style.opacity = '';
+    await img.animate(
+      [
+        { transform: `translateX(${delta * w * 0.35}px)`, opacity: 0 },
+        { transform: 'translateX(0)', opacity: 1 },
+      ],
+      { duration: dur(360), easing: ease },
+    ).finished;
+    busy = false;
+  };
+
   const open = (el: HTMLElement) => {
     items = $$('[data-lightbox]');
     last = el;
     lb.hidden = false;
     document.documentElement.style.overflow = 'hidden';
     show(items.indexOf(el));
+    img.animate([{ transform: 'scale(0.94)', opacity: 0 }, { transform: 'scale(1)', opacity: 1 }], { duration: dur(320), easing: ease });
     $<HTMLElement>('[data-lb-close]', lb)?.focus();
   };
   const close = () => {
@@ -179,6 +237,7 @@ if (lb) {
     document.documentElement.style.overflow = '';
     last?.focus();
   };
+
   document.addEventListener('click', (e) => {
     const t = (e.target as HTMLElement).closest<HTMLElement>('[data-lightbox]');
     if (t) {
@@ -197,20 +256,71 @@ if (lb) {
       return;
     }
     if (e.key === 'Escape') close();
-    if (e.key === 'ArrowRight') show(i + 1);
-    if (e.key === 'ArrowLeft') show(i - 1);
+    if (e.key === 'ArrowRight') go(1);
+    if (e.key === 'ArrowLeft') go(-1);
   });
   $('[data-lb-close]', lb)?.addEventListener('click', close);
-  $('[data-lb-next]', lb)?.addEventListener('click', () => show(i + 1));
-  $('[data-lb-prev]', lb)?.addEventListener('click', () => show(i - 1));
+  $('[data-lb-next]', lb)?.addEventListener('click', () => go(1));
+  $('[data-lb-prev]', lb)?.addEventListener('click', () => go(-1));
   lb.addEventListener('click', (e) => e.target === lb && close());
+
+  // Drag: the photo follows your finger, then glides to the next one or snaps back.
   let sx = 0;
-  lb.addEventListener('touchstart', (e) => (sx = e.touches[0].clientX), { passive: true });
-  lb.addEventListener('touchend', (e) => {
-    const dx = e.changedTouches[0].clientX - sx;
-    if (Math.abs(dx) > 50) show(dx < 0 ? i + 1 : i - 1);
+  let sy = 0;
+  let dx = 0;
+  let dragging = false;
+  let horizontal: boolean | null = null;
+  lb.addEventListener(
+    'touchstart',
+    (e) => {
+      if (busy || e.touches.length > 1) return;
+      sx = e.touches[0].clientX;
+      sy = e.touches[0].clientY;
+      dx = 0;
+      dragging = true;
+      horizontal = null;
+    },
+    { passive: true },
+  );
+  lb.addEventListener(
+    'touchmove',
+    (e) => {
+      if (!dragging) return;
+      const x = e.touches[0].clientX - sx;
+      const y = e.touches[0].clientY - sy;
+      if (horizontal === null && Math.abs(x) + Math.abs(y) > 8) horizontal = Math.abs(x) > Math.abs(y);
+      if (!horizontal) return;
+      e.preventDefault();
+      dx = x;
+      img.style.transform = `translateX(${dx}px)`;
+      img.style.opacity = String(1 - Math.min(Math.abs(dx) / innerWidth, 0.5));
+    },
+    { passive: false },
+  );
+  lb.addEventListener('touchend', () => {
+    if (!dragging) return;
+    dragging = false;
+    if (!horizontal) return;
+    if (Math.abs(dx) > Math.min(80, innerWidth * 0.18)) {
+      go(dx < 0 ? 1 : -1, dx);
+    } else {
+      const from = dx;
+      img.style.transform = '';
+      img.style.opacity = '';
+      img.animate([{ transform: `translateX(${from}px)` }, { transform: 'translateX(0)' }], { duration: dur(300), easing: ease });
+    }
   });
 }
+
+/* ── Photos fade in as they load ─────────────── */
+$$<HTMLImageElement>('.ph img').forEach((im) => {
+  const done = () => im.classList.add('ld');
+  if (im.complete && im.naturalWidth) done();
+  else {
+    im.addEventListener('load', done, { once: true });
+    im.addEventListener('error', done, { once: true });
+  }
+});
 
 /* ── Hero slideshow ───────────────────────────── */
 $$('[data-slides]').forEach((wrap) => {

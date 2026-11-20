@@ -267,7 +267,15 @@ p {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.9s var(--ease);
+  transition:
+    transform 0.9s var(--ease),
+    opacity 0.5s ease;
+}
+.js .ph img {
+  opacity: 0;
+}
+.js .ph img.ld {
+  opacity: 1;
 }
 [data-lightbox] {
   cursor: zoom-in;
